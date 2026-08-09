@@ -11,6 +11,14 @@ export const packageRoot = join(__dirname, "..", "..");
 
 export type { CatalogEntry } from "./types.js";
 
+// package.json's version is the single version tag for both the CLI and the
+// catalog snapshot it ships — bump it whenever a skill is added or updated
+// (see CONTRIBUTING.md) so `--version` and the install-time note stay accurate.
+export function packageVersion(): string {
+  const pkg = JSON.parse(readFileSync(join(packageRoot, "package.json"), "utf-8")) as { version: string };
+  return pkg.version;
+}
+
 export function loadCatalog(): CatalogEntry[] {
   const catalogPath = join(__dirname, "..", "generated", "catalog.json");
   const raw = readFileSync(catalogPath, "utf-8");

@@ -50,6 +50,13 @@ $ npx github:letStayFoolish/ai-flow-setup
 └  Done.
 ```
 
+## Learn the flow
+
+[`docs/ai-coding-guide.pdf`](./docs/ai-coding-guide.pdf) walks through the
+7-step AI-coding flow these skills and rules are built around, and how to use
+them day to day. Read it before your first `npx github:letStayFoolish/ai-flow-setup`
+run if the skill names above don't mean anything yet.
+
 ## Catalog contents
 
 See `catalog/global/` (installs under `~/.claude/`) and `catalog/project/`

@@ -9,24 +9,20 @@ This repo has two parts:
 
 ## Layout
 
+Nothing below is new except the two lines marked `(new)` — everything else in
+`catalog/` is unchanged.
+
 ```
 catalog/
-├── global/                        → installs under ~/.claude/
-│   ├── CLAUDE.md
-│   ├── rules/*.md
-│   ├── commands/*.md
+├── global/                             → installs under ~/.claude/
 │   └── skills/
-│       ├── <name>/SKILL.md        (+ any supporting files)
-│       ├── dotnet/<name>/SKILL.md      — organizational category, .NET-specific
-│       ├── engineering/<name>/SKILL.md — organizational category, general dev workflow
-│       └── ...                    — any category folder you like
-└── project/                        → installs into the target project root
-    ├── CLAUDE.md
-    ├── CONTEXT-MAP.md
+│       ├── dotnet/<name>/SKILL.md      (new) organizational category, .NET-specific
+│       └── engineering/<name>/SKILL.md (new) organizational category, general dev workflow
+└── project/                             → installs into the target project root
     └── skills/
-        └── iws/<name>/SKILL.md    — installs into ./.claude/skills/<name>/,
-                                      not ~/.claude — only meant for whichever
-                                      project you run the CLI in
+        └── iws/<name>/SKILL.md         (new) installs into ./.claude/skills/<name>/,
+                                               not ~/.claude — only meant for whichever
+                                               project you run the CLI in
 ```
 
 The destination path is derived from the file's path relative to its scope
@@ -65,7 +61,11 @@ company-internal review skills tied to that repo's own conventions).
    - `catalog/project/skills/` (optionally inside a category folder like
      `iws/`) for a skill that only belongs in one specific project.
 2. Run `npm run catalog:build`.
-3. Commit the new folder and the updated manifest.
+3. Bump `version` in `package.json` (patch is fine for a single skill
+   add/update). It's the only version tag this repo has — shown in
+   `ai-flow-setup --version` and in the CLI's install-time note — so it must
+   move whenever the catalog changes, even without a code change.
+4. Commit the new folder, the updated manifest, and the version bump.
 
 ### Adding a reused (non-original) skill
 
