@@ -51,14 +51,17 @@ program
     const catalog = loadCatalog();
     const selected = await selectEntries(catalog);
 
-    const skillEntries = selected.filter((entry) => entry.type === "skill");
-    const otherEntries = selected.filter((entry) => entry.type !== "skill");
+    // Project-scope skills (e.g. company-internal) always install straight
+    // into this project's .claude/skills/ — the copy/symlink/project-local
+    // choice below only makes sense for machine-wide (global) skills.
+    const globalSkillEntries = selected.filter((entry) => entry.type === "skill" && entry.scope === "global");
+    const otherEntries = selected.filter((entry) => !(entry.type === "skill" && entry.scope === "global"));
 
     await installEntries(otherEntries, cwd);
 
-    if (skillEntries.length > 0) {
+    if (globalSkillEntries.length > 0) {
       const mode = await askSkillInstallMode();
-      await installSkills(skillEntries, cwd, mode);
+      await installSkills(globalSkillEntries, cwd, mode);
     }
 
     clack.outro("Done.");

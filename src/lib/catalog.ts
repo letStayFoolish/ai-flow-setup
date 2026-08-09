@@ -2,6 +2,7 @@ import { readFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { dirname, join } from "node:path";
 import type { CatalogEntry } from "./types.js";
+import { skillNameFromDestPath } from "./paths.js";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
@@ -19,8 +20,7 @@ export function loadCatalog(): CatalogEntry[] {
 export function groupBySkill(entries: CatalogEntry[]): Map<string, CatalogEntry[]> {
   const groups = new Map<string, CatalogEntry[]>();
   for (const entry of entries) {
-    const skillMatch = entry.sourcePath.match(/skills\/([^/]+)\//);
-    const key = skillMatch ? `skill:${skillMatch[1]}` : entry.id;
+    const key = entry.type === "skill" ? `skill:${skillNameFromDestPath(entry.destPath)}` : entry.id;
     const group = groups.get(key) ?? [];
     group.push(entry);
     groups.set(key, group);

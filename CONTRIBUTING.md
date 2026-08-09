@@ -11,19 +11,44 @@ This repo has two parts:
 
 ```
 catalog/
-├── global/            → installs under ~/.claude/
+├── global/                        → installs under ~/.claude/
 │   ├── CLAUDE.md
 │   ├── rules/*.md
-│   ├── skills/<name>/SKILL.md (+ any supporting files)
-│   └── commands/*.md
-└── project/            → installs into the target project root
+│   ├── commands/*.md
+│   └── skills/
+│       ├── <name>/SKILL.md        (+ any supporting files)
+│       ├── dotnet/<name>/SKILL.md      — organizational category, .NET-specific
+│       ├── engineering/<name>/SKILL.md — organizational category, general dev workflow
+│       └── ...                    — any category folder you like
+└── project/                        → installs into the target project root
     ├── CLAUDE.md
-    └── CONTEXT-MAP.md
+    ├── CONTEXT-MAP.md
+    └── skills/
+        └── iws/<name>/SKILL.md    — installs into ./.claude/skills/<name>/,
+                                      not ~/.claude — only meant for whichever
+                                      project you run the CLI in
 ```
 
 The destination path is derived from the file's path relative to its scope
 folder — e.g. `catalog/global/rules/foo.md` → `~/.claude/rules/foo.md`,
 `catalog/project/CLAUDE.md` → `./CLAUDE.md`.
+
+**Skills are the exception.** Category folders under `skills/` (`dotnet/`,
+`engineering/`, `iws/`, or any new one) exist purely to keep the source tree
+browsable — the build script finds each skill's root by locating the nearest
+ancestor directory containing `SKILL.md`, and flattens the category out of
+the install path. So `catalog/global/skills/dotnet/review-dotnet/SKILL.md`
+still installs to `~/.claude/skills/review-dotnet/SKILL.md`, not
+`~/.claude/skills/dotnet/review-dotnet/SKILL.md`. A skill can live directly
+under `skills/` with no category at all — both are valid.
+
+**Scope decides where a skill installs, not the category.** A skill under
+`catalog/global/skills/...` (in any category) installs machine-wide, with the
+user choosing copy/symlink/project-local at install time. A skill under
+`catalog/project/skills/...` always installs into `./.claude/skills/<name>/`
+of whatever project the CLI is run in — no install-mode prompt. Use `project`
+scope for anything that only makes sense inside one specific repo (e.g.
+company-internal review skills tied to that repo's own conventions).
 
 ## Add a `.md` file (rule, doc, command)
 
@@ -33,8 +58,12 @@ folder — e.g. `catalog/global/rules/foo.md` → `~/.claude/rules/foo.md`,
 
 ## Add a skill
 
-1. Create `catalog/global/skills/<skill-name>/SKILL.md` (plus any supporting
-   files the skill needs, same layout it has in `~/.claude/skills/<name>/`).
+1. Create `<skill-name>/SKILL.md` (plus any supporting files, same layout it
+   has in `~/.claude/skills/<name>/`) under:
+   - `catalog/global/skills/` (optionally inside a category folder like
+     `dotnet/` or `engineering/`) for a machine-wide skill, or
+   - `catalog/project/skills/` (optionally inside a category folder like
+     `iws/`) for a skill that only belongs in one specific project.
 2. Run `npm run catalog:build`.
 3. Commit the new folder and the updated manifest.
 
