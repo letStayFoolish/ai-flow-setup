@@ -1,0 +1,155 @@
+import * as clack from "@clack/prompts";
+import type { CatalogEntry } from "./catalog.js";
+import { groupBySkill } from "./catalog.js";
+import type { ProjectKind } from "./detect.js";
+
+export async function confirmProjectKind(detected: ProjectKind): Promise<ProjectKind> {
+  const choice = await clack.select({
+    message: `Detected a ${detected === "greenfield" ? "fresh (greenfield)" : "existing (brownfield)"} project. Confirm?`,
+    initialValue: detected,
+    options: [
+      { value: "greenfield", label: "Greenfield — no CLAUDE.md/CONTEXT-MAP.md yet" },
+      { value: "brownfield", label: "Brownfield — project already has AI-flow files" },
+    ],
+  });
+  if (clack.isCancel(choice)) {
+    clack.cancel("Cancelled.");
+    process.exit(0);
+  }
+  return choice as ProjectKind;
+}
+
+export async function selectEntries(entries: CatalogEntry[]): Promise<CatalogEntry[]> {
+  const wantsAll = await clack.confirm({
+    message: "Install everything in the catalog?",
+    initialValue: false,
+  });
+  if (clack.isCancel(wantsAll)) {
+    clack.cancel("Cancelled.");
+    process.exit(0);
+  }
+  if (wantsAll) return entries;
+
+  const groups = groupBySkill(entries);
+
+  const byGroupLabel = new Map<string, { value: string; label: string }[]>();
+  for (const [key, group] of groups) {
+    const groupLabel = `${group[0].scope}/${group[0].type}`;
+    const itemLabel = key.startsWith("skill:") ? key.slice("skill:".length) : group[0].destPath;
+    const list = byGroupLabel.get(groupLabel) ?? [];
+    list.push({ value: key, label: itemLabel });
+    byGroupLabel.set(groupLabel, list);
+  }
+
+  clack.note(
+    [
+      "↑/↓  move",
+      "Space  toggle the highlighted item (or a whole group, if a group heading is highlighted)",
+      "Enter  confirm selection and continue",
+      "Ctrl+C  cancel",
+    ].join("\n"),
+    "Keys",
+  );
+
+  const selected = await clack.groupMultiselect({
+    message: "Select what to pull into place:",
+    options: Object.fromEntries(byGroupLabel),
+    required: true,
+  });
+
+  if (clack.isCancel(selected)) {
+    clack.cancel("Cancelled.");
+    process.exit(0);
+  }
+
+  const selectedKeys = new Set(selected as string[]);
+  return [...groups.entries()]
+    .filter(([key]) => selectedKeys.has(key))
+    .flatMap(([, group]) => group);
+}
+
+export type SkillInstallMode = "copy-global" | "symlink-global" | "project-local";
+
+export async function askSkillInstallMode(): Promise<SkillInstallMode> {
+  const choice = await clack.select({
+    message: "How should skills be installed?",
+    options: [
+      {
+        value: "copy-global",
+        label: "Copy into ~/.claude/skills (default)",
+        hint: "independent copy, available in every project on this machine",
+      },
+      {
+        value: "symlink-global",
+        label: "Symlink ~/.claude/skills/<name> to a managed shared copy",
+        hint: "copy stored once in ~/.ai-flow-setup/skills-source, easy to update centrally",
+      },
+      {
+        value: "project-local",
+        label: "Copy into this project's ./.claude/skills",
+        hint: "travels with the repo, not shared globally",
+      },
+    ],
+  });
+  if (clack.isCancel(choice)) {
+    clack.cancel("Cancelled.");
+    process.exit(0);
+  }
+  return choice as SkillInstallMode;
+}
+
+export type SymlinkConflictChoice = "replace" | "keep" | "skip";
+
+export async function askSymlinkConflict(target: string): Promise<SymlinkConflictChoice> {
+  const choice = await clack.select({
+    message: `${target} already exists and is not a symlink to the managed copy. What do you want to do?`,
+    options: [
+      { value: "keep", label: "Keep existing — do nothing" },
+      { value: "replace", label: "Replace it with a symlink to the managed copy" },
+      { value: "skip", label: "Skip for now" },
+    ],
+  });
+  if (clack.isCancel(choice)) {
+    clack.cancel("Cancelled.");
+    process.exit(0);
+  }
+  return choice as SymlinkConflictChoice;
+}
+
+export type ConflictChoice = "overwrite" | "keep" | "merge" | "skip";
+export type BulkConflictChoice = ConflictChoice | "per-file";
+
+export async function askBulkConflictChoice(conflictCount: number): Promise<BulkConflictChoice> {
+  const choice = await clack.select({
+    message: `${conflictCount} files already exist and differ. Apply one choice to all of them, or decide per file?`,
+    options: [
+      { value: "per-file", label: "Decide per file — show a diff for each" },
+      { value: "keep", label: "Keep existing for all — do nothing" },
+      { value: "overwrite", label: "Overwrite all with incoming version" },
+      { value: "merge", label: "Merge all — append missing incoming lines" },
+      { value: "skip", label: "Skip all for now" },
+    ],
+  });
+  if (clack.isCancel(choice)) {
+    clack.cancel("Cancelled.");
+    process.exit(0);
+  }
+  return choice as BulkConflictChoice;
+}
+
+export async function askConflictChoice(destPath: string): Promise<ConflictChoice> {
+  const choice = await clack.select({
+    message: `${destPath} already exists and differs. What do you want to do?`,
+    options: [
+      { value: "keep", label: "Keep existing file — do nothing" },
+      { value: "overwrite", label: "Overwrite with incoming version" },
+      { value: "merge", label: "Append missing incoming lines to existing file" },
+      { value: "skip", label: "Skip this file for now" },
+    ],
+  });
+  if (clack.isCancel(choice)) {
+    clack.cancel("Cancelled.");
+    process.exit(0);
+  }
+  return choice as ConflictChoice;
+}
