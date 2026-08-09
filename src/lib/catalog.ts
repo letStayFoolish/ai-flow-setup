@@ -1,19 +1,14 @@
 import { readFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { dirname, join } from "node:path";
+import type { CatalogEntry } from "./types.js";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
 // package root: dist/lib/catalog.js -> dist/lib -> dist -> <package root>
 export const packageRoot = join(__dirname, "..", "..");
 
-export type CatalogEntry = {
-  id: string;
-  scope: "global" | "project";
-  type: "doc" | "rule" | "skill" | "command";
-  sourcePath: string;
-  destPath: string;
-};
+export type { CatalogEntry } from "./types.js";
 
 export function loadCatalog(): CatalogEntry[] {
   const catalogPath = join(__dirname, "..", "generated", "catalog.json");

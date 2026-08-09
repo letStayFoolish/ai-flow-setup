@@ -105,6 +105,20 @@
     "destPath": "~/.claude/skills/ask-matt/agents/openai.yaml"
   },
   {
+    "id": "global:skills/backend-learning-mentor/REFERENCE.md",
+    "scope": "global",
+    "type": "skill",
+    "sourcePath": "catalog/global/skills/backend-learning-mentor/REFERENCE.md",
+    "destPath": "~/.claude/skills/backend-learning-mentor/REFERENCE.md"
+  },
+  {
+    "id": "global:skills/backend-learning-mentor/SKILL.md",
+    "scope": "global",
+    "type": "skill",
+    "sourcePath": "catalog/global/skills/backend-learning-mentor/SKILL.md",
+    "destPath": "~/.claude/skills/backend-learning-mentor/SKILL.md"
+  },
+  {
     "id": "global:skills/caveman/SKILL.md",
     "scope": "global",
     "type": "skill",
@@ -217,6 +231,34 @@
     "destPath": "~/.claude/skills/domain-modeling/agents/openai.yaml"
   },
   {
+    "id": "global:skills/ef-core-query-review/MISTAKES.md",
+    "scope": "global",
+    "type": "skill",
+    "sourcePath": "catalog/global/skills/ef-core-query-review/MISTAKES.md",
+    "destPath": "~/.claude/skills/ef-core-query-review/MISTAKES.md"
+  },
+  {
+    "id": "global:skills/ef-core-query-review/SKILL.md",
+    "scope": "global",
+    "type": "skill",
+    "sourcePath": "catalog/global/skills/ef-core-query-review/SKILL.md",
+    "destPath": "~/.claude/skills/ef-core-query-review/SKILL.md"
+  },
+  {
+    "id": "global:skills/feature-deep-dive/REFERENCE.md",
+    "scope": "global",
+    "type": "skill",
+    "sourcePath": "catalog/global/skills/feature-deep-dive/REFERENCE.md",
+    "destPath": "~/.claude/skills/feature-deep-dive/REFERENCE.md"
+  },
+  {
+    "id": "global:skills/feature-deep-dive/SKILL.md",
+    "scope": "global",
+    "type": "skill",
+    "sourcePath": "catalog/global/skills/feature-deep-dive/SKILL.md",
+    "destPath": "~/.claude/skills/feature-deep-dive/SKILL.md"
+  },
+  {
     "id": "global:skills/find-skills/SKILL.md",
     "scope": "global",
     "type": "skill",
@@ -315,6 +357,20 @@
     "destPath": "~/.claude/skills/improve-codebase-architecture/agents/openai.yaml"
   },
   {
+    "id": "global:skills/merge-request/REVIEW-RULES.md",
+    "scope": "global",
+    "type": "skill",
+    "sourcePath": "catalog/global/skills/merge-request/REVIEW-RULES.md",
+    "destPath": "~/.claude/skills/merge-request/REVIEW-RULES.md"
+  },
+  {
+    "id": "global:skills/merge-request/SKILL.md",
+    "scope": "global",
+    "type": "skill",
+    "sourcePath": "catalog/global/skills/merge-request/SKILL.md",
+    "destPath": "~/.claude/skills/merge-request/SKILL.md"
+  },
+  {
     "id": "global:skills/prototype/LOGIC.md",
     "scope": "global",
     "type": "skill",
@@ -369,6 +425,48 @@
     "type": "skill",
     "sourcePath": "catalog/global/skills/resolving-merge-conflicts/agents/openai.yaml",
     "destPath": "~/.claude/skills/resolving-merge-conflicts/agents/openai.yaml"
+  },
+  {
+    "id": "global:skills/review-dotnet/SKILL.md",
+    "scope": "global",
+    "type": "skill",
+    "sourcePath": "catalog/global/skills/review-dotnet/SKILL.md",
+    "destPath": "~/.claude/skills/review-dotnet/SKILL.md"
+  },
+  {
+    "id": "global:skills/scada-review/DOTNET-BEST-PRACTICES.md",
+    "scope": "global",
+    "type": "skill",
+    "sourcePath": "catalog/global/skills/scada-review/DOTNET-BEST-PRACTICES.md",
+    "destPath": "~/.claude/skills/scada-review/DOTNET-BEST-PRACTICES.md"
+  },
+  {
+    "id": "global:skills/scada-review/REVIEW-FLOW.md",
+    "scope": "global",
+    "type": "skill",
+    "sourcePath": "catalog/global/skills/scada-review/REVIEW-FLOW.md",
+    "destPath": "~/.claude/skills/scada-review/REVIEW-FLOW.md"
+  },
+  {
+    "id": "global:skills/scada-review/RULES-SYNC.md",
+    "scope": "global",
+    "type": "skill",
+    "sourcePath": "catalog/global/skills/scada-review/RULES-SYNC.md",
+    "destPath": "~/.claude/skills/scada-review/RULES-SYNC.md"
+  },
+  {
+    "id": "global:skills/scada-review/RULES.md",
+    "scope": "global",
+    "type": "skill",
+    "sourcePath": "catalog/global/skills/scada-review/RULES.md",
+    "destPath": "~/.claude/skills/scada-review/RULES.md"
+  },
+  {
+    "id": "global:skills/scada-review/SKILL.md",
+    "scope": "global",
+    "type": "skill",
+    "sourcePath": "catalog/global/skills/scada-review/SKILL.md",
+    "destPath": "~/.claude/skills/scada-review/SKILL.md"
   },
   {
     "id": "global:skills/setup-matt-pocock-skills/SKILL.md",

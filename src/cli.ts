@@ -4,7 +4,8 @@ import * as clack from "@clack/prompts";
 import { detectGlobalSetup, detectProjectKind } from "./lib/detect.js";
 import { loadCatalog } from "./lib/catalog.js";
 import { askSkillInstallMode, confirmProjectKind, selectEntries } from "./lib/prompts.js";
-import { installEntries, installSkills } from "./lib/install.js";
+import { installEntries } from "./lib/install.js";
+import { installSkills } from "./lib/skillInstall.js";
 
 const program = new Command();
 

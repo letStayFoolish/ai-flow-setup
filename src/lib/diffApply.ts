@@ -2,7 +2,7 @@ import { readFileSync } from "node:fs";
 import { createTwoFilesPatch } from "diff";
 import * as clack from "@clack/prompts";
 
-export function printDiff(sourcePath: string, destPath: string, incoming: string, existing: string): void {
+export function printDiff(destPath: string, incoming: string, existing: string): void {
   const patch = createTwoFilesPatch(destPath, destPath, existing, incoming, "existing", "incoming");
   const colored = patch
     .split("\n")

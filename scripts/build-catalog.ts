@@ -1,13 +1,7 @@
 import { existsSync, mkdirSync, readdirSync, statSync, writeFileSync } from "node:fs";
 import { join, relative } from "node:path";
-
-type CatalogEntry = {
-  id: string;
-  scope: "global" | "project";
-  type: "doc" | "rule" | "skill" | "command";
-  sourcePath: string;
-  destPath: string;
-};
+import type { CatalogEntry } from "../src/lib/types.js";
+import { globalDestPath, projectDestPath } from "../src/lib/paths.js";
 
 const CATALOG_ROOT = join(process.cwd(), "catalog");
 const OUT_FILE = join(process.cwd(), "src", "generated", "catalog.json");
@@ -32,7 +26,7 @@ function classify(scope: "global" | "project", relPath: string): CatalogEntry["t
 }
 
 function destFor(scope: "global" | "project", relPath: string): string {
-  return scope === "global" ? join("~/.claude", relPath) : join(".", relPath);
+  return scope === "global" ? globalDestPath(relPath) : projectDestPath(relPath);
 }
 
 function buildScope(scope: "global" | "project"): CatalogEntry[] {

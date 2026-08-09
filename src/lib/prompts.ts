@@ -32,28 +32,29 @@ export async function selectEntries(entries: CatalogEntry[]): Promise<CatalogEnt
 
   const groups = groupBySkill(entries);
 
-  const byGroupLabel = new Map<string, { value: string; label: string }[]>();
-  for (const [key, group] of groups) {
+  const options = [...groups.entries()].map(([key, group]) => {
     const groupLabel = `${group[0].scope}/${group[0].type}`;
     const itemLabel = key.startsWith("skill:") ? key.slice("skill:".length) : group[0].destPath;
-    const list = byGroupLabel.get(groupLabel) ?? [];
-    list.push({ value: key, label: itemLabel });
-    byGroupLabel.set(groupLabel, list);
-  }
+    return { value: key, label: `${groupLabel} — ${itemLabel}` };
+  });
 
   clack.note(
     [
-      "↑/↓  move",
-      "Space  toggle the highlighted item (or a whole group, if a group heading is highlighted)",
+      "↑/↓  move (list scrolls automatically once it's taller than your terminal)",
+      "Space  toggle the highlighted item",
       "Enter  confirm selection and continue",
       "Ctrl+C  cancel",
     ].join("\n"),
     "Keys",
   );
 
-  const selected = await clack.groupMultiselect({
+  // Plain multiselect, not groupMultiselect: groupMultiselect renders its
+  // entire option list on every keypress with no viewport limit, which
+  // corrupts the terminal once the catalog has more entries than fit on
+  // screen. multiselect windows itself to terminal height instead.
+  const selected = await clack.multiselect({
     message: "Select what to pull into place:",
-    options: Object.fromEntries(byGroupLabel),
+    options,
     required: true,
   });
 
