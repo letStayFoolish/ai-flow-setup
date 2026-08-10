@@ -113,11 +113,17 @@ building or testing the CLI — `src/cli.ts` reads the generated manifest, not
 the filesystem directly.
 
 **`dist/` is committed, not gitignored.** `npx github:...` installs this repo
-as a git dependency, and that install path skips `devDependencies` — so a
-`prepare`-style auto-build (which needs `tsx`/`typescript`) silently fails
-and the install produces nothing runnable. Consumers only ever get what's
-already in `dist/`, so every change under `src/` or `catalog/` must be
-built and committed before pushing — there's no build-on-install fallback.
+as a git dependency, and consumers only ever get what's already in `dist/` —
+there's no build-on-install step. Every change under `src/` or `catalog/`
+must be built and committed before pushing.
+
+(Historical note: this used to also route around a `prepare`-script build
+failing under `npx`. That theory turned out to be wrong — `npm` versions
+around 11.12.0 have a bug where installing *any* git dependency fails with
+`--prefer-online cannot be provided when using --prefer-offline`, regardless
+of whether the package has a `prepare` script. Fixed in npm 11.19.0+. If
+`npx github:...` fails with that error, the fix is `npm install -g npm@latest`,
+not a change to this repo.)
 
 ## Testing locally
 
