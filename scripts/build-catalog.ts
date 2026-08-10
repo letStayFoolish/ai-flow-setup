@@ -1,10 +1,14 @@
-import { existsSync, mkdirSync, readdirSync, statSync, writeFileSync } from "node:fs";
+import { existsSync, mkdirSync, readdirSync, readFileSync, statSync, writeFileSync } from "node:fs";
 import { dirname, join, relative } from "node:path";
 import type { CatalogEntry } from "../src/lib/types.js";
 import { globalDestPath, globalSkillDestPath, projectDestPath, projectSkillDestPath } from "../src/lib/paths.js";
 
 const CATALOG_ROOT = join(process.cwd(), "catalog");
 const OUT_FILE = join(process.cwd(), "src", "generated", "catalog.json");
+const RULES_DIR = join(CATALOG_ROOT, "global", "rules");
+const CLAUDE_MD = join(CATALOG_ROOT, "global", "CLAUDE.md");
+const RULES_INDEX_START = "<!-- RULES-INDEX:START -->";
+const RULES_INDEX_END = "<!-- RULES-INDEX:END -->";
 
 function walk(dir: string, files: string[] = []): string[] {
   for (const entry of readdirSync(dir)) {
@@ -76,9 +80,37 @@ function buildScope(scope: "global" | "project"): CatalogEntry[] {
     });
 }
 
+function syncRulesIndex(): void {
+  if (!existsSync(RULES_DIR) || !existsSync(CLAUDE_MD)) return;
+
+  const rows = readdirSync(RULES_DIR)
+    .filter((f) => f.endsWith(".md"))
+    .sort()
+    .map((file) => {
+      const contents = readFileSync(join(RULES_DIR, file), "utf8");
+      const match = contents.match(/^Applies when:\s*(.+)$/m);
+      const appliesWhen = match ? match[1].trim() : "(no 'Applies when:' line found)";
+      return `| \`rules/${file}\` | ${appliesWhen} |`;
+    });
+
+  const table = ["| Rule file | When it applies |", "| --- | --- |", ...rows].join("\n");
+  const block = `${RULES_INDEX_START}\n${table}\n${RULES_INDEX_END}`;
+
+  const claudeMd = readFileSync(CLAUDE_MD, "utf8");
+  const pattern = new RegExp(`${RULES_INDEX_START}[\\s\\S]*?${RULES_INDEX_END}`);
+  if (!pattern.test(claudeMd)) {
+    console.warn(`catalog:build — no ${RULES_INDEX_START}/${RULES_INDEX_END} markers found in ${relative(process.cwd(), CLAUDE_MD)}, skipping Rules Index sync`);
+    return;
+  }
+
+  writeFileSync(CLAUDE_MD, claudeMd.replace(pattern, block));
+  console.log(`catalog:build — synced Rules Index (${rows.length} rules) in ${relative(process.cwd(), CLAUDE_MD)}`);
+}
+
 const catalog: CatalogEntry[] = [...buildScope("global"), ...buildScope("project")];
 
 mkdirSync(join(process.cwd(), "src", "generated"), { recursive: true });
 writeFileSync(OUT_FILE, JSON.stringify(catalog, null, 2) + "\n");
+syncRulesIndex();
 
 console.log(`catalog:build — wrote ${catalog.length} entries to ${relative(process.cwd(), OUT_FILE)}`);
