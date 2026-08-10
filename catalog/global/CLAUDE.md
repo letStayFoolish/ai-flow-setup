@@ -73,6 +73,7 @@ dotnet ef database update \
 | `rules/security.md` | Auth, secrets, input validation, sensitive data |
 | `rules/git-workflow.md` | Branches, commits, merge checklist |
 | `rules/clean-code.md` | Any code change — YAGNI, KISS, SRP, DRY, coupling/cohesion |
+| `rules/design-patterns.md` | Designing a module, choosing where behaviour lives, reviewing new abstractions |
 
 ## Docs Index
 
