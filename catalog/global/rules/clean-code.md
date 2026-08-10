@@ -50,6 +50,20 @@ Components should be easy to change in isolation.
 - **High cohesion**: things that change together belong together. If two classes always change at the same time, they probably belong in the same unit. If a class has methods that never interact, it should be split.
 - Avoid reaching across layer boundaries — `Api` does not touch `Infrastructure`, `Domain` has zero external dependencies.
 
+## The Three Principles Underneath
+
+Reach for these when the rules above feel abstract — most design patterns are one of the three applied to a specific shape of problem.
+
+- **Encapsulate what varies** — separate the parts that change for their own reasons from the parts that stay still. Start by extracting a method; escalate to a class only once the extracted logic grows its own fields and helpers.
+- **Program to an interface, not an implementation** — derive the interface from what the caller actually needs, not from everything the callee can do. Be honest about the trade: extracting an interface makes the code more complicated *immediately* and more useful only *later*. That is why the DRY and YAGNI rules above gate it.
+- **Favour composition over inheritance** — inheritance is the cheapest reuse and the most expensive coupling. A subclass cannot narrow its parent's interface, overrides must stay behaviour-compatible, and reuse across two independent axes multiplies subclasses. The moment you extend along a second axis, stop and compose.
+
+## Choosing a Structure
+
+Once the rules above establish that structure *is* needed — and only then — [design-patterns.md](design-patterns.md) covers *which*: a symptom→pattern table, the 22 GoF patterns with their real costs, the confusion pairs (Adapter/Decorator/Proxy, Bridge/Strategy, State/Strategy), and the anti-triggers that mark a pattern as over-applied.
+
+It is subordinate to YAGNI: it names patterns for pain already visible in the code, never for anticipated pain.
+
 ## What NOT to do
 
 - Do not introduce an abstraction to satisfy a single caller — wait for the second

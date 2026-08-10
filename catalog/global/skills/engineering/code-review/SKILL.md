@@ -55,6 +55,17 @@ Each smell reads *what it is* → *how to fix*; match it against the diff:
 - **Middle Man** — a class or function that mostly just delegates onward. → cut it, call the real target direct.
 - **Refused Bequest** — a subclass or implementer that ignores or overrides most of what it inherits. → drop the inheritance, use composition.
 
+#### The structural lens
+
+Four of those smells are the entry point to a *structural* decision rather than a local fix — Repeated Switches, Divergent Change, Refused Bequest, and Speculative Generality. When one lands, name the structure at stake, not just the smell. `~/.claude/rules/design-patterns.md` carries the symptom→pattern table, each pattern's real cost, and the anti-trigger list.
+
+The lens cuts **both** ways, and the second direction is the one usually missed:
+
+- **Missing structure** — name the candidate pattern *and* the evidence that it is already earned: two real occurrences in the code, not one plus an imagined third.
+- **Over-applied structure** — an interface or factory with exactly one implementation and no architectural boundary crossed; a hand-rolled Singleton in a codebase with a DI container; a Facade or Mediator grown into a God Object; a class carrying a pattern name it hasn't earned; a Visitor over a hierarchy still gaining element types.
+
+Both directions are judgement calls of the same weight as the smells above, and `~/.claude/rules/clean-code.md`'s YAGNI rule governs them: pain already visible in the diff, never anticipated pain.
+
 ### 4. Spawn both sub-agents in parallel
 
 Send a single message with two `Agent` tool calls. Use the `general-purpose` subagent for both.
@@ -63,7 +74,8 @@ Send a single message with two `Agent` tool calls. Use the `general-purpose` sub
 
 - The full diff command and commit list.
 - The list of standards-source files you found in step 3, **plus the smell baseline from step 3** pasted in full — the sub-agent has no other access to it.
-- The brief: "Report — per file/hunk where relevant — (a) every place the diff violates a documented standard: cite the standard (file + the rule); and (b) any baseline smell you spot: name it and quote the hunk. Distinguish hard violations from judgement calls — documented-standard breaches can be hard, but baseline smells are always judgement calls, and a documented repo standard overrides the baseline. Skip anything tooling enforces. Under 400 words."
+- An instruction to read `~/.claude/rules/design-patterns.md` before reporting, for the structural lens.
+- The brief: "Report — per file/hunk where relevant — (a) every place the diff violates a documented standard: cite the standard (file + the rule); (b) any baseline smell you spot: name it and quote the hunk; and (c) structural findings in both directions — missing structure (name the candidate pattern and quote the two occurrences that earn it) and over-applied structure (name the anti-trigger). Distinguish hard violations from judgement calls — documented-standard breaches can be hard, but baseline smells and all structural findings are always judgement calls, and a documented repo standard overrides the baseline. Skip anything tooling enforces. Under 400 words."
 
 **Spec sub-agent prompt** — include:
 

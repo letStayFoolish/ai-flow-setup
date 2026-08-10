@@ -25,7 +25,7 @@ All GitLab calls: `curl -sf -H "PRIVATE-TOKEN: $GITLAB_TOKEN" "$API/..."`. All J
 
 When two sources disagree, the **later one wins**:
 
-1. `~/.claude/rules/dotnet-conventions.md`, `ef-core.md`, `api-conventions.md`, `api-design.md`, `code-style.md`, `clean-code.md`, `testing.md`, `security.md`, `git-workflow.md` — generic C#/.NET baseline.
+1. `~/.claude/rules/dotnet-conventions.md`, `ef-core.md`, `api-conventions.md`, `api-design.md`, `code-style.md`, `clean-code.md`, `design-patterns.md`, `testing.md`, `security.md`, `git-workflow.md` — generic C#/.NET baseline. `design-patterns.md` is the stack-agnostic structural reference (symptom→pattern table, per-pattern costs, confusion pairs, anti-triggers) — open it only when a finding is genuinely structural, not on every diff.
 2. [`DOTNET-BEST-PRACTICES.md`](DOTNET-BEST-PRACTICES.md) — modern C#/.NET/EF Core/SOLID/system-design guidance not already in rung 1. Use it to catch things rung 1 doesn't mention; it never overrides rung 1 or RULES.md.
 3. `CLAUDE.md` at the repo root — repo-specific architecture (Kafka topics, Redis layout, custom IoC, monolith vs microservices). Find the root with `git rev-parse --show-toplevel` from inside the working tree — never hardcode a machine-specific path, since this skill runs from different checkouts on different machines.
 4. [`RULES.md`](RULES.md) — this team's actual enforced conventions, mined from real review comments. Where it contradicts a lower rung (e.g. `DateTime.Now` over `UtcNow`), RULES.md wins — it reflects what this codebase actually does, not generic advice.

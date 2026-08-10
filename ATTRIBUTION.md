@@ -17,7 +17,7 @@ distributed here under that project's MIT license (see
 |---|---|
 | `ask-matt` | Reused as-is |
 | `caveman` | Reused as-is |
-| `code-review` | Reused as-is |
+| `code-review` | Adapted — structural design lens added to the smell baseline and the Standards sub-agent brief |
 | `codebase-design` | Reused as-is |
 | `diagnose` | Reused as-is |
 | `diagnosing-bugs` | Reused as-is |
@@ -27,7 +27,7 @@ distributed here under that project's MIT license (see
 | `grill-with-docs` | Reused as-is |
 | `grilling` | Reused as-is |
 | `handoff` | Reused as-is |
-| `implement` | Reused as-is |
+| `implement` | Adapted — pre-implementation structure check added |
 | `improve-codebase-architecture` | Reused as-is |
 | `prototype` | Reused as-is |
 | `research` | Reused as-is |
@@ -54,6 +54,16 @@ Each of these skill folders also carries its own `ATTRIBUTION.md`.
 Full credit for design and authorship of these skills belongs to Matt Pocock.
 If you rely on them heavily, consider going to the source and supporting the
 original project directly.
+
+## Sources informing original rules
+
+These entries are **original writing**, but their framing is derived from a
+named source and the debt is worth recording:
+
+| Entry | Source |
+|---|---|
+| `catalog/global/rules/design-patterns.md` | Alexander Shvets, *Dive Into Design Patterns* (Refactoring.Guru, 2021), chapters "Software Design Principles" and "Catalog of Design Patterns" — plus the Gang of Four pattern set it documents. The applicability triggers, cost lines, and confusion pairs follow that book's framing; the symptom→pattern table and the anti-trigger list are original. No text is reproduced from the book. |
+| `catalog/global/skills/engineering/code-review/` smell baseline | Martin Fowler, *Refactoring*, ch. 3 (as inherited from the upstream skill) |
 
 ## How to add a new reused skill
 

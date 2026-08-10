@@ -73,6 +73,14 @@ Push back on vague answers. "I'll figure it out as I go" is how debt starts.
 
 Step-by-step, each step: what + where (layer, file, project), why (principle/pattern), model after (existing file), tests. Share before building. Get agreement. See [REFERENCE.md](REFERENCE.md) for the step template and example.
 
+**Structure check — before writing the plan, not after.** This is the last cheap moment to choose the shape; after Phase 6 it costs a rewrite. Read `~/.claude/rules/design-patterns.md` and answer three questions in the plan itself:
+
+1. **What varies here?** Name the axis this feature changes along, and where in the plan that variation is isolated. If it isn't isolated, say why that's acceptable.
+2. **Does the codebase already have a shape for this?** Phase 2 found what to model after — an existing Strategy set, a repository convention, a base controller. Matching the existing shape beats introducing a better one; say so explicitly when you're matching.
+3. **Is any new abstraction in this plan earned?** For each interface, factory, or base class the plan introduces: does a second concrete implementation exist *today*, or does it cross an architectural boundary? If neither, cut it from the plan. The YAGNI rule in `~/.claude/rules/clean-code.md` applies to plans exactly as it applies to code.
+
+Keep this to a short paragraph in Delivery mode. In Mentor mode, walk the user through the three questions rather than answering them — this is where pattern knowledge actually gets built.
+
 ---
 
 ## Phase 5.5 — Plan Stress-Test

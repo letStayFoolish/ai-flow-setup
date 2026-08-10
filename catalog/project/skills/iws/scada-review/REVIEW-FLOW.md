@@ -47,7 +47,7 @@ curl -sf -H "PRIVATE-TOKEN: $GITLAB_TOKEN" "$API/merge_requests/$MR_ID/notes?per
 Walk the diff file by file. For every changed hunk:
 
 - Check it against `RULES.md` (§1–§7) in priority order (§8's table) — this is the team's real, enforced convention set.
-- Check it against the standards sources rung above RULES.md for anything RULES.md doesn't cover, including [`DOTNET-BEST-PRACTICES.md`](DOTNET-BEST-PRACTICES.md) for modern-language/SOLID/system-design gaps.
+- Check it against the standards sources rung above RULES.md for anything RULES.md doesn't cover, including [`DOTNET-BEST-PRACTICES.md`](DOTNET-BEST-PRACTICES.md) for modern-language/SOLID/structure/system-design gaps. Its §2 deliberately runs the over-abstraction direction *before* the missing-structure one, and a missing-structure finding needs two occurrences quoted from the diff — one plus an imagined third is not a finding.
 - Mark any pre-existing violation the diff merely touches (doesn't introduce) as a **carry-over** — not blocking, propose the better shape.
 - Cross off checklist items from step 2 as you find evidence they're satisfied; anything left unchecked after the full diff is a spec gap, not a style note.
 

@@ -15,12 +15,39 @@ Use this to flag findings the global rules and RULES.md don't cover — not as a
 - **Interface Segregation** — no interface with methods half its implementers throw `NotImplementedException` on. Prefer several narrow interfaces (`IOrderReader`, `IOrderWriter`) over one fat one, when callers genuinely only need one side.
 - **Dependency Inversion** — already enforced structurally by Clean Architecture (`Api → Application → Domain`), but watch for `Infrastructure.EF` types (e.g. `DbContext`, EF entities) leaking into `Application` signatures — that inverts the dependency back.
 
-## 2. Avoid unnecessary abstraction (C#-specific tells)
+## 2. Structure — too much, and too little
+
+`~/.claude/rules/design-patterns.md` (rung 1) carries the general symptom→pattern table, each pattern's cost, and the confusion pairs. Open it only once a finding is genuinely structural. This section is the C#/SCADA translation.
+
+**Check the over-abstraction direction first.** This codebase has a DI container and settled layering, so surplus structure is the more common defect — and a reviewer who only ever asks for *more* structure trains the wrong instinct.
+
+### Too much (C#-specific tells)
 
 - An interface with exactly one implementation and no test-double need is a wrapper, not an abstraction — don't introduce `IFooService` until a second implementation or a mock is actually required.
 - A generic `<T>` used with only one concrete type argument anywhere in the codebase is speculative generality — inline it.
 - A `Manager`, `Helper`, or `Processor` class that aggregates unrelated static-ish methods is a dumping ground — split by actual responsibility or delete if the methods can live on the types they operate on.
 - Mapping layers (manual or AutoMapper-style) that mirror the source type 1:1 with no transformation add a layer without adding value — project directly.
+- **A container `Resolve<T>()` call inside business logic is Service Locator, not DI.** RULES.md §2 already flags the custom IoC; structurally it is worse than a perf issue — the dependency vanishes from the constructor, so the class lies about what it needs and can't be built in a test without the container. Resolve belongs at composition roots (entry points, background-service startup) only.
+- **A new hand-rolled singleton where a container lifetime would do.** RULES.md §2 deprecates the `*Dao` classes and §7 documents the volatile + double-checked-locking idiom for what remains — that idiom is the *cost* of the pattern, not an endorsement. A new static `Instance` violates SRP by design (one instance **and** a global access point), carries its own thread-safety burden, and can't be mocked through a private constructor.
+- **A class carrying a pattern name it hasn't earned** — an `XFactory` that `new`s up one concrete type, an `XStrategy` selected by a hard-coded constant.
+- **A base class or shared helper grown into a God Object** — the right home for genuinely cross-cutting helpers, wrong the moment it accumulates members only one or two callers use.
+
+### Too little
+
+Each of these needs **two real occurrences quoted from the diff**. One occurrence plus an imagined third is not a finding, and per the Diff scope rule a shape that only exists outside the diff is a carry-over at most.
+
+- **A repeated `switch`/`if` on a variable, driver, or protocol type** in two or more places → Strategy, one implementation per protocol, resolved from the container. With two stable variants a `Dictionary<TKey, Func<...>>` or a delegate is the right answer and class-per-strategy is overhead.
+- **A DTO that gains a typed field per new subtype** (`OpcValue`, `ModbusValue`, …) → Open/Closed failing at the contract boundary. A generic `value` + `name` pair keeps the DTO stable as protocols are added.
+- **Client code branching on "node or leaf?"** across a tag tree or location hierarchy → Composite. Only when the structure is genuinely recursive — a fixed two-level parent/child is not a tree.
+- **A class thick with conditionals on its own status field**, many states, changing often → State. The WorkRequest lifecycle (RULES.md §2, terminal `FINISHED`/`ERROR`) is the candidate shape — but with a handful of stable states an enum plus a guarded transition method beats it.
+- **A repeated read that needs caching** → a caching Proxy in front of the repository: same interface, callers unchanged. Beats scattering cache lookups through the service.
+- **Near-identical background-service loops** (loop, try-catch the body, sleep outside the try, log the exception object) → the skeleton is a Template Method waiting for a base class, with the per-service work as the overridable step.
+- **The same logic copy-pasted between microservices** — already RULES.md §2. Decide *what* is shared before extracting: a shared helper, or a shared abstraction each service implements differently.
+
+### Liskov, where it actually bites here
+
+- An override that throws `NotSupportedException`/`NotImplementedException` — the hierarchy is upside down; make the more restricted type the base.
+- An override that weakens a postcondition. Concretely: RULES.md §2 fixes UnitOfWork ownership on the caller, so an override that calls `Complete()` itself — or one that leaves connections open where the base always closed them — breaks every caller.
 
 ## 3. Modern C# / .NET (12–13, .NET 8–9) — features worth using over older idioms
 

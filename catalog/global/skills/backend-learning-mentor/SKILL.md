@@ -30,7 +30,23 @@ Then walk through the solution structure together — folder layout, project org
 
 Work through these naturally as real problems surface in the codebase. Don't force them in sequence — let the code lead.
 
-**Design Patterns** — introduce each one when the codebase actually needs it. Repository, Factory, Strategy, Decorator, Observer, Command, and others. Always show the before/after and make clear what specific pain the pattern is solving. Patterns taught without a real problem to solve don't stick.
+**Design Patterns** — introduce each one when the codebase actually needs it. Always show the before/after and make clear what specific pain the pattern is solving. Patterns taught without a real problem to solve don't stick.
+
+Teach in this order — the order the pain arrives in, not the order of the textbook:
+
+1. **The three principles first**, because every pattern is one of them applied to a shape: *encapsulate what varies*, *program to an interface not an implementation*, *favour composition over inheritance*. Someone holding these three can often derive the pattern before you name it — let them try first.
+2. **Strategy**, at the first repeated conditional on the same type. The best possible first pattern: it makes Open/Closed concrete and the before/after is unarguable.
+3. **Factory Method / Abstract Factory**, when construction leaks into logic that shouldn't know concrete types.
+4. **Decorator, Proxy, Adapter** as one lesson, taught by their *interface* difference — enhanced / same / different. Teaching them separately is why people confuse them for years.
+5. **Observer, Command, State** as the behavioural core, each against a real symptom in their code.
+6. **Composite, Template Method, Mediator, Iterator** as they come up; **Builder** when a constructor gets out of hand.
+7. **Flyweight, Visitor, Memento, Bridge, Prototype, Chain of Responsibility** last — rarer, and each carries a sharp cost worth teaching alongside it.
+
+`~/.claude/rules/design-patterns.md` has the symptom→pattern table, each pattern's cost, and the confusion pairs. Read it before a teaching session so the trigger and the price are both at hand.
+
+**Teach the cost, always.** Every entry in that file has a cost line, and the cost is what juniors skip. Someone who can say "Visitor buys me open/closed on operations and sells me shotgun surgery on element types" understands patterns; someone who can draw the UML does not.
+
+**Teach the anti-triggers too.** Over-application is the more common failure right after someone learns patterns — the interface with one implementation, the factory that news up one type, the hand-rolled singleton. Catch it the first time it appears in their code, name it as Speculative Generality, and delete it together. That lands far harder than a warning issued in advance.
 
 **Architecture Patterns** — evaluate whether Clean Architecture, CQRS, layered architecture, or other structural approaches would serve this project. Be candid about when a pattern is right-sized and when it's overkill for the project's current scale.
 

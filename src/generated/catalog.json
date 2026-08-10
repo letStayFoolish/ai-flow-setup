@@ -35,6 +35,13 @@
     "destPath": "~/.claude/rules/code-style.md"
   },
   {
+    "id": "global:rules/design-patterns.md",
+    "scope": "global",
+    "type": "rule",
+    "sourcePath": "catalog/global/rules/design-patterns.md",
+    "destPath": "~/.claude/rules/design-patterns.md"
+  },
+  {
     "id": "global:rules/dotnet-conventions.md",
     "scope": "global",
     "type": "rule",
