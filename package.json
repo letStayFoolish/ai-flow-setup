@@ -20,7 +20,6 @@
     "build": "tsc -p tsconfig.json && mkdir -p dist/generated && cp src/generated/catalog.json dist/generated/catalog.json",
     "catalog:build": "tsx scripts/build-catalog.ts",
     "dev": "tsx src/cli.ts",
-    "prepare": "npm run catalog:build && npm run build",
     "prepublishOnly": "npm run catalog:build && npm run build"
   },
   "dependencies": {

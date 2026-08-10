@@ -49,8 +49,8 @@ company-internal review skills tied to that repo's own conventions).
 ## Add a `.md` file (rule, doc, command)
 
 1. Drop it under `catalog/global/<rules|commands>/` or `catalog/project/`.
-2. Run `npm run catalog:build`.
-3. Commit both the new file and the updated `src/generated/catalog.json`.
+2. Run `npm run catalog:build && npm run build`.
+3. Commit the new file, the updated `src/generated/catalog.json`, and `dist/`.
 
 ## Add a skill
 
@@ -60,12 +60,13 @@ company-internal review skills tied to that repo's own conventions).
      `dotnet/` or `engineering/`) for a machine-wide skill, or
    - `catalog/project/skills/` (optionally inside a category folder like
      `iws/`) for a skill that only belongs in one specific project.
-2. Run `npm run catalog:build`.
+2. Run `npm run catalog:build && npm run build`.
 3. Bump `version` in `package.json` (patch is fine for a single skill
    add/update). It's the only version tag this repo has — shown in
    `ai-flow-setup --version` and in the CLI's install-time note — so it must
    move whenever the catalog changes, even without a code change.
-4. Commit the new folder, the updated manifest, and the version bump.
+4. Commit the new folder, the updated manifest, `dist/`, and the version
+   bump.
 
 ### Adding a reused (non-original) skill
 
@@ -110,6 +111,13 @@ npm run dev               # run the CLI against source (tsx, no build step)
 Always run `catalog:build` after touching anything under `catalog/`, before
 building or testing the CLI — `src/cli.ts` reads the generated manifest, not
 the filesystem directly.
+
+**`dist/` is committed, not gitignored.** `npx github:...` installs this repo
+as a git dependency, and that install path skips `devDependencies` — so a
+`prepare`-style auto-build (which needs `tsx`/`typescript`) silently fails
+and the install produces nothing runnable. Consumers only ever get what's
+already in `dist/`, so every change under `src/` or `catalog/` must be
+built and committed before pushing — there's no build-on-install fallback.
 
 ## Testing locally
 
