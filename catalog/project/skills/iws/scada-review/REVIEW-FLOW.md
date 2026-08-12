@@ -1,6 +1,6 @@
 # Review flow
 
-Disclosed from [`SKILL.md`](SKILL.md). Read the Setup, Standards sources, and Diff scope sections there first.
+Disclosed from [`SKILL.md`](SKILL.md). Read the Setup, The three axes, and Diff scope sections there first.
 
 ## 1. Resolve the MR
 
@@ -42,24 +42,45 @@ curl -sf -H "PRIVATE-TOKEN: $GITLAB_TOKEN" "$API/merge_requests/$MR_ID/notes?per
 
 **Done when:** you know which findings, if any, are already posted.
 
-## 5. Analyze
+## 5. Spawn all three axis sub-agents in parallel
 
-Walk the diff file by file. For every changed hunk:
+Send **one message with three `Agent` tool calls** — Standards, Best Practices, Spec — using the `general-purpose` subagent for each. They must not share context; each gets only what its prompt carries.
 
-- Check it against `RULES.md` (§1–§7) in priority order (§8's table) — this is the team's real, enforced convention set.
-- Check it against the standards sources rung above RULES.md for anything RULES.md doesn't cover, including [`DOTNET-BEST-PRACTICES.md`](DOTNET-BEST-PRACTICES.md) for modern-language/SOLID/structure/system-design gaps. Its §2 deliberately runs the over-abstraction direction *before* the missing-structure one, and a missing-structure finding needs two occurrences quoted from the diff — one plus an imagined third is not a finding.
-- Mark any pre-existing violation the diff merely touches (doesn't introduce) as a **carry-over** — not blocking, propose the better shape.
-- Cross off checklist items from step 2 as you find evidence they're satisfied; anything left unchecked after the full diff is a spec gap, not a style note.
+Every prompt carries: the diff (from step 3, with new_line numbers already mapped), the Diff scope rule (findings must trace to a touched line; pre-existing issues merely touched are carry-overs, not blocking), and the finding format each must return — `file`, `new_line`, category, priority (🔴🟠🟡🟢), comment text, carry-over flag (yes/no).
 
-A finding needs: file, `new_line`, category (from RULES.md §1–§7, or "spec gap" for unmet ticket items), priority (🔴🟠🟡🟢 per RULES.md §8, spec gaps default 🔴), the comment text, and whether it's a carry-over.
+**Standards sub-agent prompt** — include:
+- The full diff, mapped to `new_line`.
+- The complete text of `RULES.md` §1–§8 (priority table), and the generic `~/.claude/rules/*.md` files listed in SKILL.md's Standards row, and the repo-root `CLAUDE.md`.
+- Brief: "Check every changed hunk against RULES.md §1–§7 first (priority per §8's table), then against the generic rules files and CLAUDE.md for anything RULES.md doesn't cover. RULES.md always wins on conflict. Mark violations the diff merely touches (doesn't introduce) as carry-over. Return one finding per line using the format above. Under 400 words."
 
-**Done when:** every changed file has been walked, every checklist item from step 2 has a yes/no verdict with evidence (file:line or "not found in diff"), and no finding lacks a file:line.
+**Best Practices sub-agent prompt** — include:
+- The full diff, mapped to `new_line`.
+- The complete text of `DOTNET-BEST-PRACTICES.md`.
+- Brief: "Check every changed hunk against DOTNET-BEST-PRACTICES.md — modern C#/.NET, EF Core, SOLID, design-pattern practice. Run this independent of any repo-specific convention; if a best practice looks like it conflicts with something repo-specific, still report it and note the possible conflict rather than silently dropping it. Mark violations the diff merely touches as carry-over. Return one finding per line using the format above. Under 400 words."
 
-## 6. Present and confirm
+**Spec sub-agent prompt** — include:
+- The full diff, mapped to `new_line`.
+- The Jira ticket checklist built in step 2.
+- Brief: "Cross off each checklist item as you find evidence in the diff it's satisfied (file:line). Report: (a) checklist items with no evidence in the diff — spec gap, priority 🔴 unless the ticket marks it optional; (b) diff behaviour not asked for by any checklist item — scope creep; (c) checklist items that look addressed but where the implementation looks wrong. Return one finding per line using the format above, category always 'spec gap' or 'scope creep'. Under 400 words."
 
-Show findings grouped by priority, ticket checklist with verdicts, and a "what's done well" section. Ask: "Šta da pošaljem? Sve nalaze, samo kritične/visoke, ili odaberi brojeve?" **Never post anything before this confirmation.**
+**Done when:** all three sub-agents have returned.
 
-## 7. Post inline comments
+## 6. Aggregate
+
+Merge the three finding lists. Do not rerank across axes — a Standards 🟡 and a Spec 🔴 both stay at their own priority; only sort within an axis.
+
+Two dedup passes, in order:
+
+1. **Cross-axis** — Standards and Best Practices run blind to each other, so the same hunk can surface twice (e.g. both flag a missing `AsNoTracking`). Same file + same line + same underlying point → merge into one finding, keep the higher priority, note both axes in its tag (`Standards + Best Practices`).
+2. **Against existing comments** — drop anything that duplicates a note already on the MR from step 4.
+
+**Done when:** one combined, de-duplicated finding list exists, each finding tagged with its originating axis (or axes, if merged).
+
+## 7. Present and confirm
+
+Show findings grouped by axis, then by priority within axis; ticket checklist with verdicts; and a "what's done well" section. Ask: "Šta da pošaljem? Sve nalaze, samo kritične/visoke, ili odaberi brojeve?" **Never post anything before this confirmation.**
+
+## 8. Post inline comments
 
 ```bash
 VERSIONS=$(curl -sf -H "PRIVATE-TOKEN: $GITLAB_TOKEN" "$API/merge_requests/$MR_ID/versions")
@@ -72,10 +93,10 @@ curl -sf -X POST -H "PRIVATE-TOKEN: $GITLAB_TOKEN" -H "Content-Type: application
   -d "{\"body\": \"$BODY\", \"position\": {\"base_sha\": \"$BASE\", \"start_sha\": \"$START\", \"head_sha\": \"$HEAD\", \"position_type\": \"text\", \"new_path\": \"$FILE\", \"new_line\": $LINE, \"old_path\": \"$FILE\"}}"
 ```
 
-Skip any finding that duplicates an existing comment from step 4. Sleep ~300ms between posts (rate limiting).
+Duplicates against step 4's existing comments were already dropped in step 6 — nothing further to skip here. Sleep ~300ms between posts (rate limiting).
 
-**Done when:** every confirmed finding has either been posted or explicitly skipped as a duplicate.
+**Done when:** every confirmed finding has been posted.
 
-## 8. Offer draft
+## 9. Offer draft
 
 If any 🔴 or 🟠 finding was posted, offer to mark the MR as draft (`PUT` with `{"title": "Draft: <original title>"}` if the `draft` field isn't supported by this GitLab version).
