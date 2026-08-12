@@ -1,102 +1,54 @@
-# Review flow
+# .NET / C# — Modern Best Practices
 
-Disclosed from [`SKILL.md`](SKILL.md). Read the Setup, The three axes, and Diff scope sections there first.
+Disclosed from [`SKILL.md`](SKILL.md) — sole source for the **Best Practices** axis (see "The three axes" there). This axis runs independent of Standards: its sub-agent never sees `RULES.md` or `~/.claude/rules/*.md`, so don't assume it and don't try to hand-tune this file to dodge overlap. Any duplicate finding between axes gets merged when `REVIEW-FLOW.md` aggregates (step 6) — that's where overlap gets resolved, not here.
 
-## 1. Resolve the MR
+Generic, framework/language-level guidance — modern C#/.NET, EF Core, SOLID, design patterns — independent of this repo's own conventions.
 
-Accept an MR number or a full GitLab URL; if neither was passed, ask for one.
+---
 
-```bash
-curl -sf -H "PRIVATE-TOKEN: $GITLAB_TOKEN" "$API/merge_requests/$MR_ID" | jq '{title, description, source_branch, target_branch, author: .author.name, state}'
-```
+## 1. SOLID — the four global rules don't spell out
 
-**Done when:** you have title, description, branches, author, state.
+`~/.claude/rules/clean-code.md` covers SRP/DRY/KISS/YAGNI. These four are the rest of SOLID:
 
-## 2. Fetch the ticket
+- **Open/Closed** — new behavior should be addable without editing tested, working code. A `switch` on a type enum that grows every sprint is a smell; polymorphism or a lookup table beats another `case`. But don't pre-build extension points for a variant that doesn't exist yet — that's YAGNI winning over OCP.
+- **Liskov Substitution** — a derived type must be usable anywhere the base is expected without surprising the caller. An override that throws `NotSupportedException` for a subset of inputs the base type accepts is a violation — split the abstraction instead.
+- **Interface Segregation** — no interface with methods half its implementers throw `NotImplementedException` on. Prefer several narrow interfaces (`IOrderReader`, `IOrderWriter`) over one fat one, when callers genuinely only need one side.
+- **Dependency Inversion** — already enforced structurally by Clean Architecture (`Api → Application → Domain`), but watch for `Infrastructure.EF` types (e.g. `DbContext`, EF entities) leaking into `Application` signatures — that inverts the dependency back.
 
-Extract the Jira ID from the MR title (`IWS-\d+`). If none is found, tell the user and ask whether to proceed without ticket context — don't silently skip.
+## 2. Avoid unnecessary abstraction (C#-specific tells)
 
-```bash
-curl -sf -u "$JIRA_EMAIL:$JIRA_TOKEN" "$JIRA_URL/rest/api/3/issue/$JIRA_ID" | jq -r '.fields.description.content[]?.content[]?.text // empty'
-```
+- An interface with exactly one implementation and no test-double need is a wrapper, not an abstraction — don't introduce `IFooService` until a second implementation or a mock is actually required.
+- A generic `<T>` used with only one concrete type argument anywhere in the codebase is speculative generality — inline it.
+- A `Manager`, `Helper`, or `Processor` class that aggregates unrelated static-ish methods is a dumping ground — split by actual responsibility or delete if the methods can live on the types they operate on.
+- Mapping layers (manual or AutoMapper-style) that mirror the source type 1:1 with no transformation add a layer without adding value — project directly.
 
-Turn the ticket description into an explicit checklist of what was asked — each item will need a verdict in step 5.
+## 3. Modern C# / .NET (12–13, .NET 8–9) — features worth using over older idioms
 
-**Done when:** you have a checklist of concrete, individually-verifiable asks (not a paragraph summary).
+- **Primary constructors** on services/handlers (already in rung 1) — also apply to plain DTOs where a positional `record` reads awkwardly but a class doesn't need one.
+- **Collection expressions** (`[]`, `[..existing, newItem]`) over `new List<T> { }` / `.Concat()` chains where the target type supports them.
+- **`required` members** on DTOs/config classes instead of constructor boilerplate purely to enforce "must be set" — pairs well with `init`.
+- **Pattern matching (`is`, `switch` expressions, list patterns)** over chained `if`/`as` — already in rung 1's style guide; extend to list patterns (`[var first, .. var rest]`) where it reads clearer than `.First()`/`.Skip(1)`.
+- **`ArgumentNullException.ThrowIfNull(x)`** / `ArgumentException.ThrowIfNullOrEmpty(x)` over hand-written null checks at boundaries — but only at actual system boundaries per rung 1's "no defensive checks for internal code" rule.
+- **`TimeProvider`** (injectable, testable clock) instead of `DateTime.Now` calls sprinkled through business logic — note this project's RULES.md explicitly keeps `DateTime.Now` over `UtcNow` for the *value*, `TimeProvider` is only about making time *testable*, not about which clock. Don't conflate the two — flag missing testability, not the `Now`/`UtcNow` choice.
+- **`[GeneratedRegex]`** over `new Regex(...)` for compile-time-checked, faster regexes on hot paths.
+- **Frozen collections (`FrozenDictionary`/`FrozenSet`)** for read-only lookups built once and read many times (e.g. static config maps) — cheaper reads than `Dictionary` at the cost of build time.
 
-## 3. Fetch the diff and build the line map
+## 4. EF Core — beyond the rung-1 query rules
 
-```bash
-curl -sf -H "PRIVATE-TOKEN: $GITLAB_TOKEN" "$API/merge_requests/$MR_ID/changes" | jq '.changes[] | {new_path, diff}'
-```
+Rung 1 (`ef-core.md`) already mandates `AsNoTracking`, `Select`, no in-memory filtering, `AsSplitQuery`. Additional things worth flagging:
 
-For each file's unified diff, track which output lines are `+` (added), `-` (removed), or context, and the running `new_line` number (reset at each `@@ -a,b +c,d @@` hunk header to `c`, incrementing on every non-`-` line). Only `+` lines and touched context are in scope per the Diff scope rule in `SKILL.md`.
+- **`ExecuteUpdateAsync` / `ExecuteDeleteAsync`** for bulk mutations instead of load-then-save loops — skips the change tracker entirely for set-based updates.
+- **Compiled queries (`EF.CompileAsyncQuery`)** only on genuinely hot, repeatedly-shaped queries — not a default, a targeted fix once profiling shows the query plan cost matters.
+- **Owned types / value converters** over a second table + join for value objects that never need independent querying.
+- **Global query filters** for the project-scope isolation rule already in RULES.md §7 — enforcing `projectId` filtering in the entity configuration is more robust than remembering it in every query.
 
-**Done when:** every changed file has a line map from diff position → new file line number.
+## 5. System design — lightweight checks for this codebase's shape
 
-## 4. Fetch existing comments (avoid duplicates)
+- **Idempotency at Kafka consumer boundaries** — any new consumer on `LIVE_VALUES_TOPIC`/`SEND_TO_CLIENT_TOPIC` etc. must tolerate at-least-once delivery (duplicate messages) without corrupting state.
+- **Backpressure / bounded queues** — a new in-memory queue or `Channel<T>` between pipeline stages needs a bound; unbounded queues in a high-throughput SCADA read path are a memory-leak-shaped landmine.
+- **Redis as cache, not source of truth** — any new code path that treats Storage/Process-Image Redis as durable (no DB fallback, no rebuild-on-miss path) is a design smell for this architecture.
+- **Microservice boundary discipline** — a new field or behavior added to one microservice's model must be checked against every other service that deserializes the same Kafka message shape (already flagged in RULES.md §2 "Mikroservisna podrška").
 
-```bash
-curl -sf -H "PRIVATE-TOKEN: $GITLAB_TOKEN" "$API/merge_requests/$MR_ID/notes?per_page=100" | jq '[.[] | select(.system == false)]'
-```
+---
 
-**Done when:** you know which findings, if any, are already posted.
-
-## 5. Spawn all three axis sub-agents in parallel
-
-Send **one message with three `Agent` tool calls** — Standards, Best Practices, Spec — using the `general-purpose` subagent for each. They must not share context; each gets only what its prompt carries.
-
-Every prompt carries: the diff (from step 3, with new_line numbers already mapped), the Diff scope rule (findings must trace to a touched line; pre-existing issues merely touched are carry-overs, not blocking), and the finding format each must return — `file`, `new_line`, category, priority (🔴🟠🟡🟢), comment text, carry-over flag (yes/no).
-
-**Standards sub-agent prompt** — include:
-- The full diff, mapped to `new_line`.
-- The complete text of `RULES.md` §1–§8 (priority table), and the generic `~/.claude/rules/*.md` files listed in SKILL.md's Standards row, and the repo-root `CLAUDE.md`.
-- Brief: "Check every changed hunk against RULES.md §1–§7 first (priority per §8's table), then against the generic rules files and CLAUDE.md for anything RULES.md doesn't cover. RULES.md always wins on conflict. Mark violations the diff merely touches (doesn't introduce) as carry-over. Return one finding per line using the format above. Under 400 words."
-
-**Best Practices sub-agent prompt** — include:
-- The full diff, mapped to `new_line`.
-- The complete text of `DOTNET-BEST-PRACTICES.md`.
-- Brief: "Check every changed hunk against DOTNET-BEST-PRACTICES.md — modern C#/.NET, EF Core, SOLID, design-pattern practice. Run this independent of any repo-specific convention; if a best practice looks like it conflicts with something repo-specific, still report it and note the possible conflict rather than silently dropping it. Mark violations the diff merely touches as carry-over. Return one finding per line using the format above. Under 400 words."
-
-**Spec sub-agent prompt** — include:
-- The full diff, mapped to `new_line`.
-- The Jira ticket checklist built in step 2.
-- Brief: "Cross off each checklist item as you find evidence in the diff it's satisfied (file:line). Report: (a) checklist items with no evidence in the diff — spec gap, priority 🔴 unless the ticket marks it optional; (b) diff behaviour not asked for by any checklist item — scope creep; (c) checklist items that look addressed but where the implementation looks wrong. Return one finding per line using the format above, category always 'spec gap' or 'scope creep'. Under 400 words."
-
-**Done when:** all three sub-agents have returned.
-
-## 6. Aggregate
-
-Merge the three finding lists. Do not rerank across axes — a Standards 🟡 and a Spec 🔴 both stay at their own priority; only sort within an axis.
-
-Two dedup passes, in order:
-
-1. **Cross-axis** — Standards and Best Practices run blind to each other, so the same hunk can surface twice (e.g. both flag a missing `AsNoTracking`). Same file + same line + same underlying point → merge into one finding, keep the higher priority, note both axes in its tag (`Standards + Best Practices`).
-2. **Against existing comments** — drop anything that duplicates a note already on the MR from step 4.
-
-**Done when:** one combined, de-duplicated finding list exists, each finding tagged with its originating axis (or axes, if merged).
-
-## 7. Present and confirm
-
-Show findings grouped by axis, then by priority within axis; ticket checklist with verdicts; and a "what's done well" section. Ask: "Šta da pošaljem? Sve nalaze, samo kritične/visoke, ili odaberi brojeve?" **Never post anything before this confirmation.**
-
-## 8. Post inline comments
-
-```bash
-VERSIONS=$(curl -sf -H "PRIVATE-TOKEN: $GITLAB_TOKEN" "$API/merge_requests/$MR_ID/versions")
-BASE=$(echo "$VERSIONS" | jq -r '.[0].base_commit_sha')
-START=$(echo "$VERSIONS" | jq -r '.[0].start_commit_sha')
-HEAD=$(echo "$VERSIONS" | jq -r '.[0].head_commit_sha')
-
-curl -sf -X POST -H "PRIVATE-TOKEN: $GITLAB_TOKEN" -H "Content-Type: application/json" \
-  "$API/merge_requests/$MR_ID/discussions" \
-  -d "{\"body\": \"$BODY\", \"position\": {\"base_sha\": \"$BASE\", \"start_sha\": \"$START\", \"head_sha\": \"$HEAD\", \"position_type\": \"text\", \"new_path\": \"$FILE\", \"new_line\": $LINE, \"old_path\": \"$FILE\"}}"
-```
-
-Duplicates against step 4's existing comments were already dropped in step 6 — nothing further to skip here. Sleep ~300ms between posts (rate limiting).
-
-**Done when:** every confirmed finding has been posted.
-
-## 9. Offer draft
-
-If any 🔴 or 🟠 finding was posted, offer to mark the MR as draft (`PUT` with `{"title": "Draft: <original title>"}` if the `draft` field isn't supported by this GitLab version).
+Default findings from this file to 🟡/🟢 unless the failure mode is concrete and severe (e.g. LSP violation causing a runtime `NotSupportedException`, unbounded queue on a hot path) — those earn 🟠/🔴.
