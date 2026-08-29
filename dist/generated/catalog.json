@@ -7,81 +7,81 @@
     "destPath": "~/.claude/CLAUDE.md"
   },
   {
-    "id": "global:rules/api-conventions.md",
+    "id": "global:docs/api-guidelines.md",
     "scope": "global",
-    "type": "rule",
-    "sourcePath": "catalog/global/rules/api-conventions.md",
-    "destPath": "~/.claude/rules/api-conventions.md"
+    "type": "doc",
+    "sourcePath": "catalog/global/docs/api-guidelines.md",
+    "destPath": "~/.claude/docs/api-guidelines.md"
   },
   {
-    "id": "global:rules/api-design.md",
+    "id": "global:docs/architecture.md",
     "scope": "global",
-    "type": "rule",
-    "sourcePath": "catalog/global/rules/api-design.md",
-    "destPath": "~/.claude/rules/api-design.md"
+    "type": "doc",
+    "sourcePath": "catalog/global/docs/architecture.md",
+    "destPath": "~/.claude/docs/architecture.md"
   },
   {
-    "id": "global:rules/clean-code.md",
+    "id": "global:docs/clean-code.md",
     "scope": "global",
-    "type": "rule",
-    "sourcePath": "catalog/global/rules/clean-code.md",
-    "destPath": "~/.claude/rules/clean-code.md"
+    "type": "doc",
+    "sourcePath": "catalog/global/docs/clean-code.md",
+    "destPath": "~/.claude/docs/clean-code.md"
   },
   {
-    "id": "global:rules/code-style.md",
+    "id": "global:docs/coding-standards.md",
     "scope": "global",
-    "type": "rule",
-    "sourcePath": "catalog/global/rules/code-style.md",
-    "destPath": "~/.claude/rules/code-style.md"
+    "type": "doc",
+    "sourcePath": "catalog/global/docs/coding-standards.md",
+    "destPath": "~/.claude/docs/coding-standards.md"
   },
   {
-    "id": "global:rules/design-patterns.md",
+    "id": "global:docs/deployment.md",
     "scope": "global",
-    "type": "rule",
-    "sourcePath": "catalog/global/rules/design-patterns.md",
-    "destPath": "~/.claude/rules/design-patterns.md"
+    "type": "doc",
+    "sourcePath": "catalog/global/docs/deployment.md",
+    "destPath": "~/.claude/docs/deployment.md"
   },
   {
-    "id": "global:rules/dotnet-conventions.md",
+    "id": "global:docs/design-patterns.md",
     "scope": "global",
-    "type": "rule",
-    "sourcePath": "catalog/global/rules/dotnet-conventions.md",
-    "destPath": "~/.claude/rules/dotnet-conventions.md"
+    "type": "doc",
+    "sourcePath": "catalog/global/docs/design-patterns.md",
+    "destPath": "~/.claude/docs/design-patterns.md"
   },
   {
-    "id": "global:rules/ef-core.md",
+    "id": "global:docs/ef-core.md",
     "scope": "global",
-    "type": "rule",
-    "sourcePath": "catalog/global/rules/ef-core.md",
-    "destPath": "~/.claude/rules/ef-core.md"
+    "type": "doc",
+    "sourcePath": "catalog/global/docs/ef-core.md",
+    "destPath": "~/.claude/docs/ef-core.md"
   },
   {
-    "id": "global:rules/git-workflow.md",
+    "id": "global:docs/git-workflow.md",
     "scope": "global",
-    "type": "rule",
-    "sourcePath": "catalog/global/rules/git-workflow.md",
-    "destPath": "~/.claude/rules/git-workflow.md"
+    "type": "doc",
+    "sourcePath": "catalog/global/docs/git-workflow.md",
+    "destPath": "~/.claude/docs/git-workflow.md"
   },
   {
-    "id": "global:rules/react-conventions.md",
+    "id": "global:docs/react-conventions.md",
     "scope": "global",
-    "type": "rule",
-    "sourcePath": "catalog/global/rules/react-conventions.md",
-    "destPath": "~/.claude/rules/react-conventions.md"
+    "type": "doc",
+    "sourcePath": "catalog/global/docs/react-conventions.md",
+    "destPath": "~/.claude/docs/react-conventions.md"
   },
   {
-    "id": "global:rules/security.md",
+    "id": "global:docs/security.md",
     "scope": "global",
-    "type": "rule",
-    "sourcePath": "catalog/global/rules/security.md",
-    "destPath": "~/.claude/rules/security.md"
+    "type": "doc",
+    "sourcePath": "catalog/global/docs/security.md",
+    "destPath": "~/.claude/docs/security.md"
   },
   {
-    "id": "global:rules/testing.md",
+    "id": "global:docs/testing-strategy.md",
     "scope": "global",
-    "type": "rule",
-    "sourcePath": "catalog/global/rules/testing.md",
-    "destPath": "~/.claude/rules/testing.md"
+    "type": "doc",
+    "sourcePath": "catalog/global/docs/testing-strategy.md",
+    "destPath": "~/.claude/docs/testing-strategy.md"
   },
   {
     "id": "global:skills/UPSTREAM-LICENSE-mattpocock-skills.txt",
@@ -89,69 +89,6 @@
     "type": "skill",
     "sourcePath": "catalog/global/skills/UPSTREAM-LICENSE-mattpocock-skills.txt",
     "destPath": "~/.claude/skills/UPSTREAM-LICENSE-mattpocock-skills.txt"
-  },
-  {
-    "id": "global:skills/ask-matt/PHASE-BOUNDARIES.md",
-    "scope": "global",
-    "type": "skill",
-    "sourcePath": "catalog/global/skills/ask-matt/PHASE-BOUNDARIES.md",
-    "destPath": "~/.claude/skills/ask-matt/PHASE-BOUNDARIES.md"
-  },
-  {
-    "id": "global:skills/ask-matt/SKILL.md",
-    "scope": "global",
-    "type": "skill",
-    "sourcePath": "catalog/global/skills/ask-matt/SKILL.md",
-    "destPath": "~/.claude/skills/ask-matt/SKILL.md"
-  },
-  {
-    "id": "global:skills/ask-matt/agents/openai.yaml",
-    "scope": "global",
-    "type": "skill",
-    "sourcePath": "catalog/global/skills/ask-matt/agents/openai.yaml",
-    "destPath": "~/.claude/skills/ask-matt/agents/openai.yaml"
-  },
-  {
-    "id": "global:skills/backend-learning-mentor/REFERENCE.md",
-    "scope": "global",
-    "type": "skill",
-    "sourcePath": "catalog/global/skills/backend-learning-mentor/REFERENCE.md",
-    "destPath": "~/.claude/skills/backend-learning-mentor/REFERENCE.md"
-  },
-  {
-    "id": "global:skills/backend-learning-mentor/SKILL.md",
-    "scope": "global",
-    "type": "skill",
-    "sourcePath": "catalog/global/skills/backend-learning-mentor/SKILL.md",
-    "destPath": "~/.claude/skills/backend-learning-mentor/SKILL.md"
-  },
-  {
-    "id": "global:skills/caveman/SKILL.md",
-    "scope": "global",
-    "type": "skill",
-    "sourcePath": "catalog/global/skills/caveman/SKILL.md",
-    "destPath": "~/.claude/skills/caveman/SKILL.md"
-  },
-  {
-    "id": "global:skills/dotnet/ef-core-query-review/MISTAKES.md",
-    "scope": "global",
-    "type": "skill",
-    "sourcePath": "catalog/global/skills/dotnet/ef-core-query-review/MISTAKES.md",
-    "destPath": "~/.claude/skills/ef-core-query-review/MISTAKES.md"
-  },
-  {
-    "id": "global:skills/dotnet/ef-core-query-review/SKILL.md",
-    "scope": "global",
-    "type": "skill",
-    "sourcePath": "catalog/global/skills/dotnet/ef-core-query-review/SKILL.md",
-    "destPath": "~/.claude/skills/ef-core-query-review/SKILL.md"
-  },
-  {
-    "id": "global:skills/dotnet/review-dotnet/SKILL.md",
-    "scope": "global",
-    "type": "skill",
-    "sourcePath": "catalog/global/skills/dotnet/review-dotnet/SKILL.md",
-    "destPath": "~/.claude/skills/review-dotnet/SKILL.md"
   },
   {
     "id": "global:skills/engineering/code-review/SKILL.md",
@@ -194,41 +131,6 @@
     "type": "skill",
     "sourcePath": "catalog/global/skills/engineering/codebase-design/agents/openai.yaml",
     "destPath": "~/.claude/skills/codebase-design/agents/openai.yaml"
-  },
-  {
-    "id": "global:skills/engineering/diagnose/SKILL.md",
-    "scope": "global",
-    "type": "skill",
-    "sourcePath": "catalog/global/skills/engineering/diagnose/SKILL.md",
-    "destPath": "~/.claude/skills/diagnose/SKILL.md"
-  },
-  {
-    "id": "global:skills/engineering/diagnose/scripts/hitl-loop.template.sh",
-    "scope": "global",
-    "type": "skill",
-    "sourcePath": "catalog/global/skills/engineering/diagnose/scripts/hitl-loop.template.sh",
-    "destPath": "~/.claude/skills/diagnose/scripts/hitl-loop.template.sh"
-  },
-  {
-    "id": "global:skills/engineering/diagnosing-bugs/SKILL.md",
-    "scope": "global",
-    "type": "skill",
-    "sourcePath": "catalog/global/skills/engineering/diagnosing-bugs/SKILL.md",
-    "destPath": "~/.claude/skills/diagnosing-bugs/SKILL.md"
-  },
-  {
-    "id": "global:skills/engineering/diagnosing-bugs/agents/openai.yaml",
-    "scope": "global",
-    "type": "skill",
-    "sourcePath": "catalog/global/skills/engineering/diagnosing-bugs/agents/openai.yaml",
-    "destPath": "~/.claude/skills/diagnosing-bugs/agents/openai.yaml"
-  },
-  {
-    "id": "global:skills/engineering/diagnosing-bugs/scripts/hitl-loop.template.sh",
-    "scope": "global",
-    "type": "skill",
-    "sourcePath": "catalog/global/skills/engineering/diagnosing-bugs/scripts/hitl-loop.template.sh",
-    "destPath": "~/.claude/skills/diagnosing-bugs/scripts/hitl-loop.template.sh"
   },
   {
     "id": "global:skills/engineering/domain-modeling/ADR-FORMAT.md",
@@ -448,34 +350,6 @@
     "destPath": "~/.claude/skills/tdd/tests.md"
   },
   {
-    "id": "global:skills/engineering/to-issues/SKILL.md",
-    "scope": "global",
-    "type": "skill",
-    "sourcePath": "catalog/global/skills/engineering/to-issues/SKILL.md",
-    "destPath": "~/.claude/skills/to-issues/SKILL.md"
-  },
-  {
-    "id": "global:skills/engineering/to-prd/SKILL.md",
-    "scope": "global",
-    "type": "skill",
-    "sourcePath": "catalog/global/skills/engineering/to-prd/SKILL.md",
-    "destPath": "~/.claude/skills/to-prd/SKILL.md"
-  },
-  {
-    "id": "global:skills/engineering/to-questionnaire/SKILL.md",
-    "scope": "global",
-    "type": "skill",
-    "sourcePath": "catalog/global/skills/engineering/to-questionnaire/SKILL.md",
-    "destPath": "~/.claude/skills/to-questionnaire/SKILL.md"
-  },
-  {
-    "id": "global:skills/engineering/to-questionnaire/agents/openai.yaml",
-    "scope": "global",
-    "type": "skill",
-    "sourcePath": "catalog/global/skills/engineering/to-questionnaire/agents/openai.yaml",
-    "destPath": "~/.claude/skills/to-questionnaire/agents/openai.yaml"
-  },
-  {
     "id": "global:skills/engineering/to-spec/SKILL.md",
     "scope": "global",
     "type": "skill",
@@ -504,34 +378,6 @@
     "destPath": "~/.claude/skills/to-tickets/agents/openai.yaml"
   },
   {
-    "id": "global:skills/engineering/triage/AGENT-BRIEF.md",
-    "scope": "global",
-    "type": "skill",
-    "sourcePath": "catalog/global/skills/engineering/triage/AGENT-BRIEF.md",
-    "destPath": "~/.claude/skills/triage/AGENT-BRIEF.md"
-  },
-  {
-    "id": "global:skills/engineering/triage/OUT-OF-SCOPE.md",
-    "scope": "global",
-    "type": "skill",
-    "sourcePath": "catalog/global/skills/engineering/triage/OUT-OF-SCOPE.md",
-    "destPath": "~/.claude/skills/triage/OUT-OF-SCOPE.md"
-  },
-  {
-    "id": "global:skills/engineering/triage/SKILL.md",
-    "scope": "global",
-    "type": "skill",
-    "sourcePath": "catalog/global/skills/engineering/triage/SKILL.md",
-    "destPath": "~/.claude/skills/triage/SKILL.md"
-  },
-  {
-    "id": "global:skills/engineering/triage/agents/openai.yaml",
-    "scope": "global",
-    "type": "skill",
-    "sourcePath": "catalog/global/skills/engineering/triage/agents/openai.yaml",
-    "destPath": "~/.claude/skills/triage/agents/openai.yaml"
-  },
-  {
     "id": "global:skills/engineering/wait-what/SKILL.md",
     "scope": "global",
     "type": "skill",
@@ -558,69 +404,6 @@
     "type": "skill",
     "sourcePath": "catalog/global/skills/engineering/wayfinder/agents/openai.yaml",
     "destPath": "~/.claude/skills/wayfinder/agents/openai.yaml"
-  },
-  {
-    "id": "global:skills/engineering/zoom-out/SKILL.md",
-    "scope": "global",
-    "type": "skill",
-    "sourcePath": "catalog/global/skills/engineering/zoom-out/SKILL.md",
-    "destPath": "~/.claude/skills/zoom-out/SKILL.md"
-  },
-  {
-    "id": "global:skills/find-skills/SKILL.md",
-    "scope": "global",
-    "type": "skill",
-    "sourcePath": "catalog/global/skills/find-skills/SKILL.md",
-    "destPath": "~/.claude/skills/find-skills/SKILL.md"
-  },
-  {
-    "id": "global:skills/setup-matt-pocock-skills/SKILL.md",
-    "scope": "global",
-    "type": "skill",
-    "sourcePath": "catalog/global/skills/setup-matt-pocock-skills/SKILL.md",
-    "destPath": "~/.claude/skills/setup-matt-pocock-skills/SKILL.md"
-  },
-  {
-    "id": "global:skills/setup-matt-pocock-skills/agents/openai.yaml",
-    "scope": "global",
-    "type": "skill",
-    "sourcePath": "catalog/global/skills/setup-matt-pocock-skills/agents/openai.yaml",
-    "destPath": "~/.claude/skills/setup-matt-pocock-skills/agents/openai.yaml"
-  },
-  {
-    "id": "global:skills/setup-matt-pocock-skills/domain.md",
-    "scope": "global",
-    "type": "skill",
-    "sourcePath": "catalog/global/skills/setup-matt-pocock-skills/domain.md",
-    "destPath": "~/.claude/skills/setup-matt-pocock-skills/domain.md"
-  },
-  {
-    "id": "global:skills/setup-matt-pocock-skills/issue-tracker-github.md",
-    "scope": "global",
-    "type": "skill",
-    "sourcePath": "catalog/global/skills/setup-matt-pocock-skills/issue-tracker-github.md",
-    "destPath": "~/.claude/skills/setup-matt-pocock-skills/issue-tracker-github.md"
-  },
-  {
-    "id": "global:skills/setup-matt-pocock-skills/issue-tracker-gitlab.md",
-    "scope": "global",
-    "type": "skill",
-    "sourcePath": "catalog/global/skills/setup-matt-pocock-skills/issue-tracker-gitlab.md",
-    "destPath": "~/.claude/skills/setup-matt-pocock-skills/issue-tracker-gitlab.md"
-  },
-  {
-    "id": "global:skills/setup-matt-pocock-skills/issue-tracker-local.md",
-    "scope": "global",
-    "type": "skill",
-    "sourcePath": "catalog/global/skills/setup-matt-pocock-skills/issue-tracker-local.md",
-    "destPath": "~/.claude/skills/setup-matt-pocock-skills/issue-tracker-local.md"
-  },
-  {
-    "id": "global:skills/setup-matt-pocock-skills/triage-labels.md",
-    "scope": "global",
-    "type": "skill",
-    "sourcePath": "catalog/global/skills/setup-matt-pocock-skills/triage-labels.md",
-    "destPath": "~/.claude/skills/setup-matt-pocock-skills/triage-labels.md"
   },
   {
     "id": "global:skills/teach/GLOSSARY-FORMAT.md",
@@ -665,34 +448,6 @@
     "destPath": "~/.claude/skills/teach/agents/openai.yaml"
   },
   {
-    "id": "global:skills/wizard/SKILL.md",
-    "scope": "global",
-    "type": "skill",
-    "sourcePath": "catalog/global/skills/wizard/SKILL.md",
-    "destPath": "~/.claude/skills/wizard/SKILL.md"
-  },
-  {
-    "id": "global:skills/wizard/agents/openai.yaml",
-    "scope": "global",
-    "type": "skill",
-    "sourcePath": "catalog/global/skills/wizard/agents/openai.yaml",
-    "destPath": "~/.claude/skills/wizard/agents/openai.yaml"
-  },
-  {
-    "id": "global:skills/wizard/template.sh",
-    "scope": "global",
-    "type": "skill",
-    "sourcePath": "catalog/global/skills/wizard/template.sh",
-    "destPath": "~/.claude/skills/wizard/template.sh"
-  },
-  {
-    "id": "global:skills/write-a-skill/SKILL.md",
-    "scope": "global",
-    "type": "skill",
-    "sourcePath": "catalog/global/skills/write-a-skill/SKILL.md",
-    "destPath": "~/.claude/skills/write-a-skill/SKILL.md"
-  },
-  {
     "id": "global:skills/writing-for-agents/SKILL-MECHANICS.md",
     "scope": "global",
     "type": "skill",
@@ -714,20 +469,6 @@
     "destPath": "~/.claude/skills/writing-for-agents/agents/openai.yaml"
   },
   {
-    "id": "global:skills/writing-great-skills/GLOSSARY.md",
-    "scope": "global",
-    "type": "skill",
-    "sourcePath": "catalog/global/skills/writing-great-skills/GLOSSARY.md",
-    "destPath": "~/.claude/skills/writing-great-skills/GLOSSARY.md"
-  },
-  {
-    "id": "global:skills/writing-great-skills/SKILL.md",
-    "scope": "global",
-    "type": "skill",
-    "sourcePath": "catalog/global/skills/writing-great-skills/SKILL.md",
-    "destPath": "~/.claude/skills/writing-great-skills/SKILL.md"
-  },
-  {
     "id": "project:CLAUDE.md",
     "scope": "project",
     "type": "doc",
@@ -740,20 +481,6 @@
     "type": "doc",
     "sourcePath": "catalog/project/CONTEXT-MAP.md",
     "destPath": "CONTEXT-MAP.md"
-  },
-  {
-    "id": "project:skills/iws/merge-request/REVIEW-RULES.md",
-    "scope": "project",
-    "type": "skill",
-    "sourcePath": "catalog/project/skills/iws/merge-request/REVIEW-RULES.md",
-    "destPath": ".claude/skills/merge-request/REVIEW-RULES.md"
-  },
-  {
-    "id": "project:skills/iws/merge-request/SKILL.md",
-    "scope": "project",
-    "type": "skill",
-    "sourcePath": "catalog/project/skills/iws/merge-request/SKILL.md",
-    "destPath": ".claude/skills/merge-request/SKILL.md"
   },
   {
     "id": "project:skills/iws/scada-review/DOTNET-BEST-PRACTICES.md",
