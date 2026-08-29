@@ -1,20 +1,5 @@
 import * as clack from "@clack/prompts";
 import { groupBySkill } from "./catalog.js";
-export async function confirmProjectKind(detected) {
-    const choice = await clack.select({
-        message: `Detected a ${detected === "greenfield" ? "fresh (greenfield)" : "existing (brownfield)"} project. Confirm?`,
-        initialValue: detected,
-        options: [
-            { value: "greenfield", label: "Greenfield — no CLAUDE.md/CONTEXT-MAP.md yet" },
-            { value: "brownfield", label: "Brownfield — project already has AI-flow files" },
-        ],
-    });
-    if (clack.isCancel(choice)) {
-        clack.cancel("Cancelled.");
-        process.exit(0);
-    }
-    return choice;
-}
 export async function selectEntries(entries) {
     const wantsAll = await clack.confirm({
         message: "Install everything in the catalog?",
@@ -55,33 +40,6 @@ export async function selectEntries(entries) {
     return [...groups.entries()]
         .filter(([key]) => selectedKeys.has(key))
         .flatMap(([, group]) => group);
-}
-export async function askSkillInstallMode() {
-    const choice = await clack.select({
-        message: "How should skills be installed?",
-        options: [
-            {
-                value: "copy-global",
-                label: "Copy into ~/.claude/skills (default)",
-                hint: "independent copy, available in every project on this machine",
-            },
-            {
-                value: "symlink-global",
-                label: "Symlink ~/.claude/skills/<name> to a managed shared copy",
-                hint: "copy stored once in ~/.ai-flow-setup/skills-source, easy to update centrally",
-            },
-            {
-                value: "project-local",
-                label: "Copy into this project's ./.claude/skills",
-                hint: "travels with the repo, not shared globally",
-            },
-        ],
-    });
-    if (clack.isCancel(choice)) {
-        clack.cancel("Cancelled.");
-        process.exit(0);
-    }
-    return choice;
 }
 export async function askSymlinkConflict(target) {
     const choice = await clack.select({

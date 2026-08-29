@@ -1,23 +1,6 @@
 import * as clack from "@clack/prompts";
 import type { CatalogEntry } from "./catalog.js";
 import { groupBySkill } from "./catalog.js";
-import type { ProjectKind } from "./detect.js";
-
-export async function confirmProjectKind(detected: ProjectKind): Promise<ProjectKind> {
-  const choice = await clack.select({
-    message: `Detected a ${detected === "greenfield" ? "fresh (greenfield)" : "existing (brownfield)"} project. Confirm?`,
-    initialValue: detected,
-    options: [
-      { value: "greenfield", label: "Greenfield — no CLAUDE.md/CONTEXT-MAP.md yet" },
-      { value: "brownfield", label: "Brownfield — project already has AI-flow files" },
-    ],
-  });
-  if (clack.isCancel(choice)) {
-    clack.cancel("Cancelled.");
-    process.exit(0);
-  }
-  return choice as ProjectKind;
-}
 
 export async function selectEntries(entries: CatalogEntry[]): Promise<CatalogEntry[]> {
   const wantsAll = await clack.confirm({
@@ -70,34 +53,6 @@ export async function selectEntries(entries: CatalogEntry[]): Promise<CatalogEnt
 }
 
 export type SkillInstallMode = "copy-global" | "symlink-global" | "project-local";
-
-export async function askSkillInstallMode(): Promise<SkillInstallMode> {
-  const choice = await clack.select({
-    message: "How should skills be installed?",
-    options: [
-      {
-        value: "copy-global",
-        label: "Copy into ~/.claude/skills (default)",
-        hint: "independent copy, available in every project on this machine",
-      },
-      {
-        value: "symlink-global",
-        label: "Symlink ~/.claude/skills/<name> to a managed shared copy",
-        hint: "copy stored once in ~/.ai-flow-setup/skills-source, easy to update centrally",
-      },
-      {
-        value: "project-local",
-        label: "Copy into this project's ./.claude/skills",
-        hint: "travels with the repo, not shared globally",
-      },
-    ],
-  });
-  if (clack.isCancel(choice)) {
-    clack.cancel("Cancelled.");
-    process.exit(0);
-  }
-  return choice as SkillInstallMode;
-}
 
 export type SymlinkConflictChoice = "replace" | "keep" | "skip";
 

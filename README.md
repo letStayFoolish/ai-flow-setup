@@ -5,18 +5,23 @@ commands — into any machine or project, without a manual copy-paste ritual
 and without clobbering work you already have in place.
 
 ```bash
+# Browse the catalog interactively
 npx github:letStayFoolish/ai-flow-setup
+
+# Or install specific skills/rules/docs directly by name — no prompts
+npx github:letStayFoolish/ai-flow-setup grilling code-review
 ```
 
 ## What it does
 
-1. **Detects your setup**:
-   - Checks whether `~/.claude` already exists (global Claude Code config).
-   - Checks the current project for `CLAUDE.md` / `CONTEXT-MAP.md` /
-     `CONTEXT.md` to decide if it's **greenfield** (nothing yet) or
-     **brownfield** (already has AI-flow files) — and asks you to confirm.
-2. **Lets you pick** which rules, skills, and docs to pull, grouped by scope
-   (`global` → `~/.claude/...`, `project` → `./...`) and type.
+1. **No args** → lets you pick which rules, skills, and docs to pull from an
+   interactive multiselect, grouped by scope (`global` → `~/.claude/...`,
+   `project` → `./...`) and type.
+2. **Args given** → installs exactly those catalog entries by name, no
+   prompts. A name is either a skill's name (`grilling`), a rule/doc's
+   filename without extension (`clean-code`), or — if that's ambiguous
+   across scopes — the entry's full id as reported in the error (e.g.
+   `global:CLAUDE.md`).
 3. **Never silently overwrites.** For any destination file that already
    exists and differs from the incoming version, it shows a unified diff and
    asks:
@@ -28,24 +33,20 @@ npx github:letStayFoolish/ai-flow-setup
 Files that don't exist yet are created directly; files that are byte-identical
 are left alone and reported as unchanged.
 
+Global skills install by copying into `~/.claude/skills` by default. Pass
+`--mode symlink-global` (symlink to a centrally-updatable copy) or
+`--mode project-local` (install into `./.claude/skills` instead) to change
+that.
+
 ## Example
 
 ```
-$ npx github:letStayFoolish/ai-flow-setup
+$ npx github:letStayFoolish/ai-flow-setup grilling
 ┌  ai-flow-setup
 │
 ●  Global setup found at /Users/you/.claude
 │
-◆  Detected a fresh (greenfield) project. Confirm?
-│  ● Greenfield — no CLAUDE.md/CONTEXT-MAP.md yet
-│
-◆  Select what to pull into place (space to toggle, enter to confirm):
-│  ◼ [global/rule] clean-code.md
-│  ◼ [global/skill] grilling
-│  ◻ [project/doc] CLAUDE.md
-│
-◆  rules/clean-code.md already exists and differs. What do you want to do?
-│  ● Merge — append missing incoming lines to existing file
+◆  created /Users/you/.claude/skills/grilling/SKILL.md
 │
 └  Done.
 ```
