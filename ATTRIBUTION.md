@@ -14,15 +14,10 @@ distributed here under that project's MIT license (see
 `catalog/global/skills/UPSTREAM-LICENSE-mattpocock-skills.txt`):
 
 | Skill | Notes |
-|---|---|
-| `ask-matt` | Reused as-is |
-| `caveman` | Reused as-is |
+| --- | --- |
 | `code-review` | Adapted — structural design lens added to the smell baseline and the Standards sub-agent brief |
 | `codebase-design` | Reused as-is |
-| `diagnose` | Reused as-is |
-| `diagnosing-bugs` | Reused as-is |
 | `domain-modeling` | Reused as-is |
-| `find-skills` | Reused as-is |
 | `grill-me` | Reused as-is |
 | `grill-with-docs` | Reused as-is |
 | `grilling` | Reused as-is |
@@ -31,23 +26,13 @@ distributed here under that project's MIT license (see
 | `improve-codebase-architecture` | Reused as-is |
 | `prototype` | Reused as-is |
 | `research` | Reused as-is |
-| `resolving-merge-conflicts` | Reused as-is |
-| `setup-matt-pocock-skills` | Reused as-is |
 | `tdd` | Reused as-is |
 | `teach` | Reused as-is |
-| `to-issues` | Reused as-is |
-| `to-prd` | Reused as-is |
-| `to-questionnaire` | Reused as-is |
 | `to-spec` | Reused as-is |
 | `to-tickets` | Reused as-is |
-| `triage` | Reused as-is |
-| `wait-what` | Reused as-is |
 | `wayfinder` | Reused as-is |
-| `wizard` | Reused as-is |
-| `write-a-skill` | Reused as-is |
 | `writing-for-agents` | Reused as-is |
-| `writing-great-skills` | Reused as-is |
-| `zoom-out` | Reused as-is |
+| `wait-what` | Reused as-is |
 
 Each of these skill folders also carries its own `ATTRIBUTION.md`.
 
@@ -61,7 +46,7 @@ These entries are **original writing**, but their framing is derived from a
 named source and the debt is worth recording:
 
 | Entry | Source |
-|---|---|
+| --- | --- |
 | `catalog/global/rules/design-patterns.md` | Alexander Shvets, *Dive Into Design Patterns* (Refactoring.Guru, 2021), chapters "Software Design Principles" and "Catalog of Design Patterns" — plus the Gang of Four pattern set it documents. The applicability triggers, cost lines, and confusion pairs follow that book's framing; the symptom→pattern table and the anti-trigger list are original. No text is reproduced from the book. |
 | `catalog/global/skills/engineering/code-review/` smell baseline | Martin Fowler, *Refactoring*, ch. 3 (as inherited from the upstream skill) |
 

@@ -1,6 +1,6 @@
 # iWS — Team Review Patterns
 >
-> Seeded from `.claude/skills/merge-request/REVIEW-RULES.md` (345 MR-ova, Robert Sabo). Extended by `sync-rules`, koji od sad prati komentare i od `robert.sabo0` i od `mapatovic`.
+> Seeded from `.claude/skills/iws/merge-request/REVIEW-RULES.md` (345 MR-ova, Robert Sabo). Extended by `sync-rules`, koji od sad prati komentare i od `robert.sabo0` i od `mapatovic`.
 
 <!-- sync-cursor: 2026-08-08 -->
 
@@ -217,6 +217,27 @@
 - Pita pitanjem kada je nešto principijelno loše.
 - Sigurnosna rupa ili arhitekturalni propust → vraća u draft odmah.
 - Pohvaljuje kada je urađeno dobro.
+
+### Format komentara — plain text, bez emoji/boja
+
+**Pravilo:** MR komentar se objavljuje kao plain text. Code snippet ide u komentar
+samo ako je neophodan za razumevanje nalaza (npr. konkretna izmena, ili isečak
+pronađen tokom `/research`). Nema emoji indikatora ni boja za prioritet/severity
+u samom komentaru — 🔴/🟠/🟡/🟢 iz Sekcije 8 su interna klasifikacija za trijažu
+findinga unutar skill-a, ne deo teksta koji ide na GitLab.
+
+## 9a. Nesigurnost → eskalacija na `/research`
+
+**Pravilo:** Ako agent nije 100% siguran u tačnost nalaza (API ponašanje, EF Core
+specifičnost/verzija, ponašanje biblioteke, Jira spec detalj, itd.), obavezno
+pokreće `/research` pre nego što ostavi komentar. Nagađanje ili generičko
+"best practice" tvrđenje bez provere nije prihvatljivo — posebno jer je danas
+većina koda AI-generisana, review mora biti stvarna verifikacija, ne formalnost.
+
+Ako `/research` pronađe kod, konfiguraciju ili dokumentacioni isečak koji čini
+nalaz jasnijim ili ga potvrđuje/obara, taj isečak se **copy-paste-uje direktno**
+u komentar (ne parafrazira) — komentar mora biti razumljiv i proverljiv sam za
+sebe, bez da čitalac mora da veruje agentu na reč.
 
 ---
 
