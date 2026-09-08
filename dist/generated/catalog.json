@@ -322,6 +322,41 @@
     "destPath": "~/.claude/skills/resolving-merge-conflicts/agents/openai.yaml"
   },
   {
+    "id": "global:skills/engineering/setup-agent-skills/MIGRATION.md",
+    "scope": "global",
+    "type": "skill",
+    "sourcePath": "catalog/global/skills/engineering/setup-agent-skills/MIGRATION.md",
+    "destPath": "~/.claude/skills/setup-agent-skills/MIGRATION.md"
+  },
+  {
+    "id": "global:skills/engineering/setup-agent-skills/SKILL.md",
+    "scope": "global",
+    "type": "skill",
+    "sourcePath": "catalog/global/skills/engineering/setup-agent-skills/SKILL.md",
+    "destPath": "~/.claude/skills/setup-agent-skills/SKILL.md"
+  },
+  {
+    "id": "global:skills/engineering/setup-agent-skills/TRACKER-EXTERNAL.md",
+    "scope": "global",
+    "type": "skill",
+    "sourcePath": "catalog/global/skills/engineering/setup-agent-skills/TRACKER-EXTERNAL.md",
+    "destPath": "~/.claude/skills/setup-agent-skills/TRACKER-EXTERNAL.md"
+  },
+  {
+    "id": "global:skills/engineering/setup-agent-skills/TRACKER-LOCAL.md",
+    "scope": "global",
+    "type": "skill",
+    "sourcePath": "catalog/global/skills/engineering/setup-agent-skills/TRACKER-LOCAL.md",
+    "destPath": "~/.claude/skills/setup-agent-skills/TRACKER-LOCAL.md"
+  },
+  {
+    "id": "global:skills/engineering/setup-agent-skills/agents/openai.yaml",
+    "scope": "global",
+    "type": "skill",
+    "sourcePath": "catalog/global/skills/engineering/setup-agent-skills/agents/openai.yaml",
+    "destPath": "~/.claude/skills/setup-agent-skills/agents/openai.yaml"
+  },
+  {
     "id": "global:skills/engineering/tdd/SKILL.md",
     "scope": "global",
     "type": "skill",

@@ -1,0 +1,3 @@
+interface:
+  display_name: "Setup Agent Skills"
+  short_description: "Scaffold a repo's issue-tracker and domain doc locations"

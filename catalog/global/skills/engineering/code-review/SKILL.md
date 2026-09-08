@@ -10,7 +10,7 @@ Two-axis review of the diff between `HEAD` and a fixed point the user supplies:
 
 Both axes run as **parallel sub-agents** so they don't pollute each other's context, then this skill aggregates their findings.
 
-The issue tracker should have been provided to you — run `/setup-matt-pocock-skills` if `docs/agents/issue-tracker.md` is missing.
+The issue tracker should have been provided to you — run `/setup-agent-skills` if `docs/agents/issue-tracker.md` is missing.
 
 ## Process
 
@@ -33,7 +33,9 @@ Look for the originating spec, in this order:
 
 ### 3. Identify the standards sources
 
-Anything in the repo that documents how code should be written, such as `CODING_STANDARDS.md` or `CONTRIBUTING.md`.
+Anything in the repo that documents how code should be written, such as `CODING_STANDARDS.md` or `CONTRIBUTING.md` — search nested and root.
+
+If nothing is found, create empty `CODING_STANDARDS.md` and `CONTRIBUTING.md` at the repo root and note in the final report that they're new and empty. This gives the user a place to grow standards over time, starting with step 6 below.
 
 On top of whatever the repo documents, the Standards axis always carries the **smell baseline** below — a fixed set of Fowler code smells (_Refactoring_, ch.3) that applies even when a repo documents nothing. Two rules bind it:
 
@@ -90,6 +92,10 @@ If the spec is missing, skip the Spec sub-agent and note this in the final repor
 Present the two reports under `## Standards` and `## Spec` headings, verbatim or lightly cleaned. Do **not** merge or rerank findings — the two axes are deliberately separate (see _Why two axes_).
 
 End with a one-line summary: total findings per axis, and the worst issue _within each axis_ (if any). Don't pick a single winner across axes — that's the reranking the separation exists to prevent.
+
+### 6. Capture standards feedback
+
+Watch the rest of the conversation, not just this step. Whenever the user explains why a Standards finding was wrong or complains about one, ask whether to add that as a rule in the standards file from step 3 (or one of the step-3 stubs, if this run created them). If they agree, append it there under a fitting heading.
 
 ## Why two axes
 

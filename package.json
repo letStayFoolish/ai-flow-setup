@@ -1,6 +1,6 @@
 {
   "name": "ai-flow-setup",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Pull your Claude Code AI-flow (CLAUDE.md, rules, skills, commands) into any project or machine via npx, with safe diff-based merging.",
   "type": "module",
   "license": "MIT",
