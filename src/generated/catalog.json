@@ -266,6 +266,13 @@
     "destPath": "~/.claude/skills/improve-codebase-architecture/agents/openai.yaml"
   },
   {
+    "id": "global:skills/engineering/pairing/SKILL.md",
+    "scope": "global",
+    "type": "skill",
+    "sourcePath": "catalog/global/skills/engineering/pairing/SKILL.md",
+    "destPath": "~/.claude/skills/pairing/SKILL.md"
+  },
+  {
     "id": "global:skills/engineering/prototype/LOGIC.md",
     "scope": "global",
     "type": "skill",
