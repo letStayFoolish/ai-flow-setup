@@ -50,6 +50,8 @@ A lesson is the main thing you produce — the unit in which knowledge and skill
 
 A lesson should be **beautiful** — clean, readable typography and layout — since the user will return to these later to review. Think Tufte.
 
+Every lesson ships in light, dark, and system mode — follow [THEME.md](./THEME.md). A lesson without the toggle isn't finished.
+
 The lesson should be short, and completable very quickly. Learners' working memory is very small, and we need to stay within it. But each lesson should give the user a single tangible win that they can build on. It should be directly tied to the mission, and should be in the user's zone of proximal development.
 
 If possible, open the lesson file for the user by running a CLI command.
@@ -66,7 +68,7 @@ Lessons are built from reusable **components**, stored in `./assets/`: styleshee
 
 Reuse is the default, not the exception. Before authoring a lesson, read `./assets/` and build from the components already there. When a lesson needs something new and reusable, write it as a component in `./assets/` and link to it — never inline code a future lesson would duplicate.
 
-A shared stylesheet is the first component every workspace earns: every lesson links it, so the lessons look like one consistent course rather than a pile of one-offs. As the workspace grows, so should the component library.
+A shared stylesheet is the first component every workspace earns: every lesson links it, so the lessons look like one consistent course rather than a pile of one-offs. As the workspace grows, so should the component library. The shared stylesheet and script are also where the light/dark/system toggle lives — see [THEME.md](./THEME.md).
 
 ## The Mission
 
@@ -124,6 +126,8 @@ You should attempt to find high-reputation communities the user can join. If the
 While creating lessons, you should also create reference documents. Lessons can reference these documents - they are useful for tracking raw units of knowledge useful across lessons.
 
 Lessons will rarely be revisited later - reference documents will be. They should be the compressed essence of the lesson, in a format designed for quick reference.
+
+Reference documents also ship light, dark, and system mode, per [THEME.md](./THEME.md). Since a reference document is single-file (it must print and travel on its own), inline the theme CSS/JS directly rather than linking the lesson assets.
 
 Some learning topics lend themselves to reference:
 

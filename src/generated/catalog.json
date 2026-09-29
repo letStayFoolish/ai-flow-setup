@@ -483,6 +483,13 @@
     "destPath": "~/.claude/skills/teach/SKILL.md"
   },
   {
+    "id": "global:skills/teach/THEME.md",
+    "scope": "global",
+    "type": "skill",
+    "sourcePath": "catalog/global/skills/teach/THEME.md",
+    "destPath": "~/.claude/skills/teach/THEME.md"
+  },
+  {
     "id": "global:skills/teach/agents/openai.yaml",
     "scope": "global",
     "type": "skill",
