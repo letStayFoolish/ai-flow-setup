@@ -329,6 +329,20 @@
     "destPath": "~/.claude/skills/resolving-merge-conflicts/agents/openai.yaml"
   },
   {
+    "id": "global:skills/engineering/review-to-learn/HOSTS.md",
+    "scope": "global",
+    "type": "skill",
+    "sourcePath": "catalog/global/skills/engineering/review-to-learn/HOSTS.md",
+    "destPath": "~/.claude/skills/review-to-learn/HOSTS.md"
+  },
+  {
+    "id": "global:skills/engineering/review-to-learn/SKILL.md",
+    "scope": "global",
+    "type": "skill",
+    "sourcePath": "catalog/global/skills/engineering/review-to-learn/SKILL.md",
+    "destPath": "~/.claude/skills/review-to-learn/SKILL.md"
+  },
+  {
     "id": "global:skills/engineering/setup-agent-skills/MIGRATION.md",
     "scope": "global",
     "type": "skill",

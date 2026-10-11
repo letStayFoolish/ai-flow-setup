@@ -266,6 +266,13 @@
     "destPath": "~/.claude/skills/improve-codebase-architecture/agents/openai.yaml"
   },
   {
+    "id": "global:skills/engineering/pairing/SKILL.md",
+    "scope": "global",
+    "type": "skill",
+    "sourcePath": "catalog/global/skills/engineering/pairing/SKILL.md",
+    "destPath": "~/.claude/skills/pairing/SKILL.md"
+  },
+  {
     "id": "global:skills/engineering/prototype/LOGIC.md",
     "scope": "global",
     "type": "skill",
@@ -320,6 +327,20 @@
     "type": "skill",
     "sourcePath": "catalog/global/skills/engineering/resolving-merge-conflicts/agents/openai.yaml",
     "destPath": "~/.claude/skills/resolving-merge-conflicts/agents/openai.yaml"
+  },
+  {
+    "id": "global:skills/engineering/review-to-learn/HOSTS.md",
+    "scope": "global",
+    "type": "skill",
+    "sourcePath": "catalog/global/skills/engineering/review-to-learn/HOSTS.md",
+    "destPath": "~/.claude/skills/review-to-learn/HOSTS.md"
+  },
+  {
+    "id": "global:skills/engineering/review-to-learn/SKILL.md",
+    "scope": "global",
+    "type": "skill",
+    "sourcePath": "catalog/global/skills/engineering/review-to-learn/SKILL.md",
+    "destPath": "~/.claude/skills/review-to-learn/SKILL.md"
   },
   {
     "id": "global:skills/engineering/setup-agent-skills/MIGRATION.md",
@@ -474,6 +495,13 @@
     "type": "skill",
     "sourcePath": "catalog/global/skills/teach/SKILL.md",
     "destPath": "~/.claude/skills/teach/SKILL.md"
+  },
+  {
+    "id": "global:skills/teach/THEME.md",
+    "scope": "global",
+    "type": "skill",
+    "sourcePath": "catalog/global/skills/teach/THEME.md",
+    "destPath": "~/.claude/skills/teach/THEME.md"
   },
   {
     "id": "global:skills/teach/agents/openai.yaml",
