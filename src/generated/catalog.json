@@ -245,6 +245,20 @@
     "destPath": "~/.claude/skills/implement/agents/openai.yaml"
   },
   {
+    "id": "global:skills/engineering/implement-spec/SKILL.md",
+    "scope": "global",
+    "type": "skill",
+    "sourcePath": "catalog/global/skills/engineering/implement-spec/SKILL.md",
+    "destPath": "~/.claude/skills/implement-spec/SKILL.md"
+  },
+  {
+    "id": "global:skills/engineering/implement-spec/agents/openai.yaml",
+    "scope": "global",
+    "type": "skill",
+    "sourcePath": "catalog/global/skills/engineering/implement-spec/agents/openai.yaml",
+    "destPath": "~/.claude/skills/implement-spec/agents/openai.yaml"
+  },
+  {
     "id": "global:skills/engineering/improve-codebase-architecture/HTML-REPORT.md",
     "scope": "global",
     "type": "skill",
@@ -271,6 +285,27 @@
     "type": "skill",
     "sourcePath": "catalog/global/skills/engineering/pairing/SKILL.md",
     "destPath": "~/.claude/skills/pairing/SKILL.md"
+  },
+  {
+    "id": "global:skills/engineering/pr/CREDITS.md",
+    "scope": "global",
+    "type": "skill",
+    "sourcePath": "catalog/global/skills/engineering/pr/CREDITS.md",
+    "destPath": "~/.claude/skills/pr/CREDITS.md"
+  },
+  {
+    "id": "global:skills/engineering/pr/SKILL.md",
+    "scope": "global",
+    "type": "skill",
+    "sourcePath": "catalog/global/skills/engineering/pr/SKILL.md",
+    "destPath": "~/.claude/skills/pr/SKILL.md"
+  },
+  {
+    "id": "global:skills/engineering/pr/agents/openai.yaml",
+    "scope": "global",
+    "type": "skill",
+    "sourcePath": "catalog/global/skills/engineering/pr/agents/openai.yaml",
+    "destPath": "~/.claude/skills/pr/agents/openai.yaml"
   },
   {
     "id": "global:skills/engineering/prototype/LOGIC.md",
@@ -327,6 +362,20 @@
     "type": "skill",
     "sourcePath": "catalog/global/skills/engineering/resolving-merge-conflicts/agents/openai.yaml",
     "destPath": "~/.claude/skills/resolving-merge-conflicts/agents/openai.yaml"
+  },
+  {
+    "id": "global:skills/engineering/retro/SKILL.md",
+    "scope": "global",
+    "type": "skill",
+    "sourcePath": "catalog/global/skills/engineering/retro/SKILL.md",
+    "destPath": "~/.claude/skills/retro/SKILL.md"
+  },
+  {
+    "id": "global:skills/engineering/retro/agents/openai.yaml",
+    "scope": "global",
+    "type": "skill",
+    "sourcePath": "catalog/global/skills/engineering/retro/agents/openai.yaml",
+    "destPath": "~/.claude/skills/retro/agents/openai.yaml"
   },
   {
     "id": "global:skills/engineering/review-to-learn/HOSTS.md",
