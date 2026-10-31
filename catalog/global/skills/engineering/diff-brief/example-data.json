@@ -1,0 +1,122 @@
+{
+  "meta": {
+    "label": "feature-order-cancel-20261031-1420",
+    "base": "a1b2c3d",
+    "head": "e4f5g6h",
+    "timestamp": "2026-10-31 14:20",
+    "dirty": false,
+    "spec": "Cancelling an order must only be possible while it is still Pending. Refunds stay out of scope.",
+    "logicFiles": 7,
+    "cosmeticFiles": 3,
+    "cosmeticHunks": 11,
+    "testCommand": "dotnet test tests/Domain.Tests",
+    "rejected": 1,
+    "notExamined": ["frontend bundle", "infrastructure manifests"]
+  },
+  "claims": [
+    {
+      "id": "a3f1c2", "type": "delta", "order": 1,
+      "text": "Before: Cancel succeeded in any status. Now: OrderService.Cancel throws InvalidOperationException unless status is Pending.",
+      "anchors": [{ "path": "src/Domain/OrderService.cs", "symbol": "Cancel", "lines": [88, 96], "code": "if (order.Status != OrderStatus.Pending)\n    throw new InvalidOperationException(...);" }],
+      "hunks": [{ "id": "src/Domain/OrderService.cs@@-84,6+84,14", "patch": "@@ -84,6 +84,14 @@\n-    order.Cancel();\n+    if (order.Status != OrderStatus.Pending)\n+        throw new InvalidOperationException(...);" }]
+    },
+    {
+      "id": "b7d4e1", "type": "delta", "order": 2,
+      "text": "Before: the cancel endpoint returned 204 for every request. Now: OrdersController.Cancel returns 409 when the order is not Pending.",
+      "anchors": [{ "path": "src/Api/OrdersController.cs", "symbol": "Cancel", "lines": [51, 58], "code": "catch (InvalidOperationException)\n{\n    return Conflict();\n}" }],
+      "hunks": []
+    },
+    {
+      "id": "c9a0f3", "type": "delta", "order": 3,
+      "text": "Before: CancelledAt was never written. Now: OrderRepository.Save persists CancelledAt on every cancellation.",
+      "anchors": [{ "path": "src/Infrastructure/OrderRepository.cs", "symbol": "Save", "lines": [120, 127], "code": "entity.CancelledAt = order.CancelledAt;" }],
+      "hunks": []
+    },
+    {
+      "id": "d1e2f3", "type": "flow", "order": 1,
+      "text": "POST /orders/{id}/cancel\n  OrdersController.Cancel          (409 on conflict)   ← new\n    OrderService.Cancel\n      Order.Cancel                 (status guard)      ← new\n      OrderRepository.Save         (CancelledAt)       ← new",
+      "anchors": [{ "path": "src/Api/OrdersController.cs", "symbol": "Cancel", "lines": [44, 44], "code": "[HttpPost(\"{id}/cancel\")]" }],
+      "hunks": []
+    },
+    {
+      "id": "e5f6a7", "type": "coverage", "order": 1, "deltaRef": "a3f1c2",
+      "text": "Delta 1 is touched by tests/Domain.Tests/OrderServiceTests.cs:88 (Cancel_Throws_When_Not_Pending).",
+      "anchors": [{ "path": "tests/Domain.Tests/OrderServiceTests.cs", "symbol": "Cancel_Throws_When_Not_Pending", "lines": [88, 101], "code": "[Fact]\npublic void Cancel_Throws_When_Not_Pending()" }],
+      "hunks": []
+    },
+    {
+      "id": "f8b9c0", "type": "coverage", "order": 2, "deltaRef": "b7d4e1",
+      "text": "Delta 2: I did not find a test that touches OrdersController.Cancel.",
+      "anchors": [{ "path": "src/Api/OrdersController.cs", "symbol": "Cancel", "lines": [51, 58] }],
+      "hunks": []
+    },
+    {
+      "id": "0a1b2c", "type": "coverage", "order": 3, "deltaRef": "c9a0f3",
+      "text": "Delta 3: I did not find a test that touches OrderRepository.Save.",
+      "anchors": [{ "path": "src/Infrastructure/OrderRepository.cs", "symbol": "Save", "lines": [120, 127] }],
+      "hunks": []
+    },
+    {
+      "id": "1c2d3e", "type": "question", "order": 1,
+      "text": "Before: Cancel was reachable by any authenticated user. Now: the [Authorize(Roles=\"Admin\")] attribute is gone from OrdersController.Cancel — intentional?",
+      "anchors": [{ "path": "src/Api/OrdersController.cs", "symbol": "Cancel", "lines": [43, 44], "code": "-[Authorize(Roles = \"Admin\")]\n [HttpPost(\"{id}/cancel\")]" }],
+      "hunks": []
+    },
+    {
+      "id": "2d3e4f", "type": "question", "order": 2,
+      "text": "Before: orders loaded in one query. Now: OrderReport.Build loads Items inside the foreach over orders — intentional?",
+      "anchors": [{ "path": "src/Domain/OrderReport.cs", "symbol": "Build", "lines": [33, 39], "code": "foreach (var o in orders)\n    o.Items = _db.Items.Where(i => i.OrderId == o.Id).ToList();" }],
+      "hunks": []
+    },
+    {
+      "id": "3e4f5a", "type": "question", "order": 3,
+      "text": "The spec asked only for the Pending guard. OrderNotificationService.SendCancellationEmail is new and was not asked for — intentional?",
+      "anchors": [{ "path": "src/Domain/OrderNotificationService.cs", "symbol": "SendCancellationEmail", "lines": [12, 30] }],
+      "hunks": []
+    },
+    {
+      "id": "4f5a6b", "type": "merge-danger", "order": 1,
+      "text": "Door: one-way\nBlast radius: orders\nThe migration adds CancelledAt as NOT NULL with a backfill; reverting it drops the backfilled values.",
+      "anchors": [{ "path": "src/Infrastructure/Migrations/20261031_AddCancelledAt.cs", "symbol": "Up", "lines": [10, 22], "code": "migrationBuilder.AddColumn<DateTime>(name: \"CancelledAt\", nullable: false);" }],
+      "hunks": []
+    },
+    {
+      "id": "5a6b7c", "type": "manual-check", "order": 1, "deltaRef": "a3f1c2",
+      "text": "Covered by an existing test — run it rather than clicking: dotnet test tests/Domain.Tests --filter Cancel_Throws_When_Not_Pending",
+      "anchors": [{ "path": "tests/Domain.Tests/OrderServiceTests.cs", "symbol": "Cancel_Throws_When_Not_Pending", "lines": [88, 101] }],
+      "hunks": []
+    },
+    {
+      "id": "6b7c8d", "type": "manual-check", "order": 2, "deltaRef": "b7d4e1",
+      "text": "Precondition: an order in status Shipped. Action: curl -i -X POST localhost:5001/orders/42/cancel -H 'Authorization: Bearer $TOKEN'. Expected BEFORE: 204. Expected AFTER: 409 Conflict.",
+      "anchors": [{ "path": "src/Api/OrdersController.cs", "symbol": "Cancel", "lines": [44, 58] }],
+      "hunks": []
+    },
+    {
+      "id": "7c8d9e", "type": "manual-check", "order": 3, "deltaRef": "c9a0f3",
+      "text": "Precondition: an order in status Pending. Action: cancel it, then select CancelledAt from the orders row. Expected BEFORE: null. Expected AFTER: the cancellation timestamp.",
+      "anchors": [{ "path": "src/Infrastructure/OrderRepository.cs", "symbol": "Save", "lines": [120, 127] }],
+      "hunks": []
+    },
+    {
+      "id": "8d9e0f", "type": "unplaced", "order": 1,
+      "text": "src/Shared/Clock.cs changed and I could not reach it within two hops from any changed symbol.",
+      "anchors": [{ "path": "src/Shared/Clock.cs", "symbol": "UtcNow", "lines": [7, 9], "code": "public static DateTime UtcNow => DateTime.UtcNow;" }],
+      "hunks": []
+    },
+    {
+      "id": "9e0f1a", "type": "cosmetic", "order": 1,
+      "text": "Whitespace only, proven by git diff -w: src/Api/Startup.cs, src/Api/Program.cs, src/Domain/Money.cs.",
+      "anchors": [],
+      "hunks": []
+    },
+    {
+      "id": "0f1a2b", "type": "delta", "order": 9,
+      "text": "Before: retries were capped at 3. Now: HttpOrderClient retries indefinitely.",
+      "anchors": [{ "path": "src/Infrastructure/HttpOrderClient.cs", "symbol": "SendWithRetry", "lines": [999, 1010] }],
+      "hunks": [],
+      "verdict": "rejected",
+      "reason": "anchor does not resolve — file has 212 lines"
+    }
+  ]
+}
