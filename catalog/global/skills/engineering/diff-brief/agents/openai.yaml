@@ -1,0 +1,3 @@
+interface:
+  display_name: "Diff brief"
+  short_description: "One page on what a change actually does — deltas anchored to code, coverage, merge danger"

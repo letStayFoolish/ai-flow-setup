@@ -1,0 +1,164 @@
+</script>
+<script>
+(function () {
+  var payload = JSON.parse(document.getElementById('brief-data').textContent);
+  var meta = payload.meta || {};
+  var claims = payload.claims || [];
+  var doc = document.getElementById('doc');
+
+  function esc(s) {
+    return String(s == null ? '' : s)
+      .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+  }
+  function add(html) { if (html) doc.insertAdjacentHTML('beforeend', html); }
+  function num(v) { return v == null ? '—' : v; }
+
+  function byType(t) {
+    return claims
+      .filter(function (c) { return c.type === t && c.verdict !== 'rejected'; })
+      .sort(function (a, b) { return (a.order || 0) - (b.order || 0); });
+  }
+
+  function toast(msg) {
+    var el = document.getElementById('toast');
+    el.textContent = msg; el.classList.add('on');
+    setTimeout(function () { el.classList.remove('on'); }, 1200);
+  }
+
+  document.addEventListener('click', function (e) {
+    var chip = e.target.closest('.chip');
+    if (!chip) return;
+    if (navigator.clipboard) navigator.clipboard.writeText(chip.dataset.ref);
+    toast(chip.dataset.ref + ' kopirano');
+  });
+
+  function anchorBlock(a) {
+    var ref = a.path + ':' + (a.lines ? a.lines[0] : '');
+    var label = esc(a.path) + (a.symbol ? ' · ' + esc(a.symbol) : '') +
+      (a.lines ? ':' + a.lines[0] + '-' + a.lines[1] : '');
+    var code = a.code ? '<pre>' + esc(a.code) + '</pre>' : '';
+    return '<div class="chips"><span class="chip" data-ref="' + esc(ref) + '">' + label + '</span></div>' + code;
+  }
+
+  function patch(p) {
+    return esc(p).split('\n').map(function (l) {
+      if (l.indexOf('@@') === 0) return '<span class="hh">' + l + '</span>';
+      if (l.indexOf('+') === 0) return '<span class="add">' + l + '</span>';
+      if (l.indexOf('-') === 0) return '<span class="del">' + l + '</span>';
+      return l;
+    }).join('\n');
+  }
+
+  function hunkBlock(c) {
+    var hs = (c.hunks || []).filter(function (x) { return x && x.patch; });
+    if (!hs.length) return '';
+    return '<details><summary>' + hs.length + ' hunk' + (hs.length > 1 ? 'ova' : '') +
+      '</summary>' + hs.map(function (x) { return '<pre>' + patch(x.patch) + '</pre>'; }).join('') +
+      '</details>';
+  }
+
+  function claimCard(c, n) {
+    return '<div class="claim" id="c-' + esc(c.id) + '">' +
+      (n ? '<span class="n">' + n + '</span>' : '') +
+      '<span class="t">' + esc(c.text) + '</span>' +
+      (c.anchors || []).map(anchorBlock).join('') +
+      hunkBlock(c) + '</div>';
+  }
+
+  function section(title, list, opts) {
+    opts = opts || {};
+    if (!list.length) {
+      if (opts.emptyNote) add('<h2>' + esc(title) + '</h2><div class="banner info">' + esc(opts.emptyNote) + '</div>');
+      return;
+    }
+    add('<h2>' + esc(title) + '</h2>');
+    var top = opts.top ? list.slice(0, opts.top) : list;
+    var rest = opts.top ? list.slice(opts.top) : [];
+    add(top.map(function (c, i) { return claimCard(c, opts.numbered ? i + 1 : ''); }).join(''));
+    if (rest.length) {
+      add('<details><summary>još ' + rest.length + '</summary>' +
+        rest.map(function (c, i) { return claimCard(c, opts.numbered ? opts.top + i + 1 : ''); }).join('') +
+        '</details>');
+    }
+  }
+
+  /* --- zaglavlje --- */
+  add('<h1>Diff brief — ' + esc(meta.label || 'izmena') + '</h1>');
+  add('<div class="sub">base <code>' + esc(meta.base || '?') + '</code>' +
+    (meta.head ? ' → <code>' + esc(meta.head) + '</code>' : '') +
+    ' · generisano ' + esc(meta.timestamp || '') + '</div>');
+
+  var deltas = byType('delta');
+  var coverage = byType('coverage');
+  var uncovered = coverage.filter(function (c) { return /did not find/i.test(c.text || ''); });
+  var questions = byType('question');
+
+  add('<div class="stats">' + [
+    [num(deltas.length), 'promena ponašanja'],
+    [num(uncovered.length) + ' / ' + num(coverage.length), 'bez testa'],
+    [num(questions.length), 'pitanja za tebe'],
+    [num(meta.logicFiles) + ' / ' + num(meta.cosmeticFiles), 'logika / kozmetika']
+  ].map(function (s) {
+    return '<div class="stat"><b>' + esc(s[0]) + '</b><span>' + esc(s[1]) + '</span></div>';
+  }).join('') + '</div>');
+
+  if (meta.testCommand) add('<div class="banner info">Pokreni postojeće testove: <code>' + esc(meta.testCommand) + '</code></div>');
+  if (!meta.spec) add('<div class="banner">Nema spec-a — scope creep se ne može utvrditi.</div>');
+  if (meta.dirty) add('<div class="banner">Radni direktorijum je prljav — necommitovane izmene su uključene.</div>');
+  if (meta.spec) add('<h2>Spec</h2><div class="claim"><span class="t">' + esc(meta.spec) + '</span></div>');
+
+  /* --- sekcije --- */
+  section('Delta ponašanja', deltas, { numbered: true, emptyNote: 'Nijedna promena ponašanja nije utvrđena.' });
+  section('Kako teče', byType('flow'));
+  section('Pokrivenost', coverage, { numbered: true });
+  section('Pitanja', questions, { top: 5 });
+
+  var danger = byType('merge-danger');
+  if (danger.length) {
+    add('<h2>Merge Danger</h2>');
+    add(danger.map(function (c) { return claimCard(c, ''); }).join(''));
+  }
+
+  section('Proveri ručno', byType('manual-check'), { numbered: true,
+    emptyNote: 'Nijedan korak nije predložen — pročitaj ovo kao nalaz, ne kao odobrenje.' });
+
+  var unplaced = byType('unplaced');
+  if (unplaced.length) {
+    add('<h2>Nisam utvrdio</h2>');
+    add('<div class="banner">Ovo nije smešteno ni u jednu deltu. Tu gledaj prvi.</div>');
+    add(unplaced.map(function (c) { return claimCard(c, ''); }).join(''));
+  }
+
+  var cosmetic = byType('cosmetic');
+  if (cosmetic.length) {
+    add('<h2>Bez efekta na ponašanje</h2>');
+    add('<details><summary>' + num(meta.cosmeticHunks) + ' hunkova u ' + num(meta.cosmeticFiles) +
+      ' fajlova — git ih je dokazao kao kozmetiku, navedeni radi potpunosti</summary>' +
+      cosmetic.map(function (c) { return claimCard(c, ''); }).join('') + '</details>');
+  }
+
+  var rejected = claims.filter(function (c) { return c.verdict === 'rejected'; });
+  if (rejected.length) {
+    add('<h2>Odbačeno</h2>');
+    add('<div class="banner">Tvrdnje čiji se anchor ne rezolvuje u kodu. Prikazane, ne obrisane.</div>');
+    add(rejected.map(function (c) {
+      return '<div class="claim rej"><span class="t">' + esc(c.text) + '</span>' +
+        '<span class="mark bad">odbačeno</span>' +
+        '<div class="reason">' + esc(c.reason || 'anchor ne podržava tvrdnju') + '</div>' +
+        (c.anchors || []).map(anchorBlock).join('') + '</div>';
+    }).join(''));
+  }
+
+  /* --- footer --- */
+  var notExamined = meta.notExamined || [];
+  add('<footer>' +
+    '<p><b>Validacija:</b> ' + num(meta.rejected != null ? meta.rejected : rejected.length) +
+    ' tvrdnji odbačeno zbog anchora koji se ne rezolvuje, ' + notExamined.length + ' oblasti nije pregledano' +
+    (notExamined.length ? ': ' + esc(notExamined.join(', ')) : '') + '.</p>' +
+    '<p>Nema Verifier prolaza — kod stoji uz svaku tvrdnju da bi ti bio verifier.</p>' +
+    '<p>Greška? Nalepi agentu: <code>claim &lt;id&gt; je pogrešan: …</code></p>' +
+    '</footer>');
+})();
+</script>
+</body>
+</html>
