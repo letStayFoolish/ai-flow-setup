@@ -4,16 +4,21 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Diff brief</title>
+<link rel="stylesheet" media="(prefers-color-scheme:light)" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github.min.css">
+<link rel="stylesheet" media="(prefers-color-scheme:dark)" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
 <style>
 :root{
   --bg:#fbfbfa; --fg:#1d1d1b; --muted:#6b6b66; --line:#e3e3df;
   --card:#ffffff; --code:#f4f4f1; --accent:#2f5d7c; --warn:#8a5a00;
   --warn-bg:#fdf5e4; --bad:#8c2f2f; --bad-bg:#fbefef; --mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+  --add-bg:#e6ffec; --add-fg:#1a7f37; --del-bg:#ffebe9; --del-fg:#cf222e; --hh-bg:#ddf4ff;
 }
 @media (prefers-color-scheme:dark){
   :root{--bg:#16181a; --fg:#e6e6e3; --muted:#9a9a94; --line:#2c2f33;
   --card:#1d2023; --code:#111315; --accent:#8fbcd8; --warn:#d8ab52;
-  --warn-bg:#2a2317; --bad:#e08585; --bad-bg:#2a1a1a;}
+  --warn-bg:#2a2317; --bad:#e08585; --bad-bg:#2a1a1a;
+  --add-bg:#12261e; --add-fg:#3fb950; --del-bg:#2d1619; --del-fg:#f85149; --hh-bg:#131d2e;}
 }
 *{box-sizing:border-box}
 body{margin:0;background:var(--bg);color:var(--fg);
@@ -46,9 +51,15 @@ h2{font-size:1.15rem;margin:48px 0 12px;padding-bottom:6px;border-bottom:1px sol
 .chip:hover{border-color:var(--accent)}
 pre{font-family:var(--mono);font-size:.8rem;line-height:1.5;background:var(--code);
   border:1px solid var(--line);border-radius:6px;padding:10px 12px;overflow-x:auto;margin:10px 0 0}
-pre .add{color:#2e7d32}
-pre .del{color:#b23b3b}
-pre .hh{color:var(--muted)}
+pre.diff{padding:6px 0}
+pre.diff code{display:inline-block;min-width:100%}
+.ln{display:block;padding-right:12px;min-height:1.5em}
+.ln.hh{padding-left:12px;background:var(--hh-bg);color:var(--muted)}
+.ln.add{background:var(--add-bg)}
+.ln.del{background:var(--del-bg)}
+.sign{display:inline-block;width:3ch;text-align:center;user-select:none;color:var(--muted)}
+.ln.add .sign{color:var(--add-fg)}
+.ln.del .sign{color:var(--del-fg)}
 details{margin-top:10px}
 summary{cursor:pointer;color:var(--muted);font-size:.84rem}
 summary:hover{color:var(--accent)}

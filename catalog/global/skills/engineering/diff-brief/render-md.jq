@@ -1,4 +1,4 @@
-# Markdown projection of data.json — for the MR. English, ~30 lines, no code bodies.
+# Markdown projection of data.json — for the MR. English, ~30 visible lines; diffs collapsed under each delta.
 # Deterministic: never hand-write this output.
 
 def live: map(select(.verdict != "rejected"));
@@ -8,6 +8,12 @@ def ref: (.anchors // [])[0] as $a
     else " — `\($a.path):\(($a.lines // [])[0] // "")`" end;
 def plu($n; $w): "\($n) \($w)\(if $n == 1 then "" else "s" end)";
 def para: (.text | gsub("\n"; " ") | gsub(" +"; " "));
+def hydrated_hunks: [ (.hunks // [])[] | select(type == "object" and (.patch // "") != "") ];
+def diff_block: hydrated_hunks as $h
+  | if ($h | length) == 0 then empty
+    else ("", "<details><summary>Diff (\(plu($h | length; "hunk")))</summary>", "",
+          ($h[] | ("`\(.id | split("@@")[0])`", "", "````diff", .patch, "````", "")),
+          "</details>", "") end;
 
 . as $d
 | $d.meta as $m
@@ -16,9 +22,8 @@ def para: (.text | gsub("\n"; " ") | gsub(" +"; " "));
   "",
   ( oftype("delta")
     | to_entries
-    | if length == 0 then ["_No behaviour delta identified._"]
-      else map("\(.key + 1). \(.value | para)\(.value | ref)") end
-    | .[] ),
+    | if length == 0 then "_No behaviour delta identified._"
+      else .[] | ("\(.key + 1). \(.value | para)\(.value | ref)", (.value | diff_block)) end ),
   "",
   ( oftype("flow") as $f
     | if ($f | length) == 0 then empty

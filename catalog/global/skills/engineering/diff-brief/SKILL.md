@@ -15,13 +15,13 @@ Two projections of one `data.json`, different density because the audiences diff
 |---|---|---|
 | Delta ponašanja | all | all |
 | Kako teče | yes | yes |
-| Code beside a claim | `file.cs:42` only | hydrated, inline |
+| Code beside a claim | `file.cs:42` + delta hunks as collapsed ` ```diff ` | hydrated, inline, syntax-highlighted |
 | Pokrivenost | uncovered deltas only | full map |
 | Pitanja | top 5 | all, rest collapsed |
 | Merge Danger | yes | yes |
 | Proveri ručno | **no** | yes — this is the exit criterion |
 | Nisam utvrdio / Odbačeno | counts | full text |
-| length | ~30 lines | as long as it needs |
+| length | ~30 visible lines | as long as it needs |
 
 `Proveri ručno` stays out of the markdown on purpose: what you verified before pushing is your process, not information for the MR.
 
