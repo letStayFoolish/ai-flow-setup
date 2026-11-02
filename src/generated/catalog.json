@@ -91,6 +91,13 @@
     "destPath": "~/.claude/skills/UPSTREAM-LICENSE-mattpocock-skills.txt"
   },
   {
+    "id": "global:skills/engineering/address-review/SKILL.md",
+    "scope": "global",
+    "type": "skill",
+    "sourcePath": "catalog/global/skills/engineering/address-review/SKILL.md",
+    "destPath": "~/.claude/skills/address-review/SKILL.md"
+  },
+  {
     "id": "global:skills/engineering/code-review/SKILL.md",
     "scope": "global",
     "type": "skill",
