@@ -133,6 +133,76 @@
     "destPath": "~/.claude/skills/codebase-design/agents/openai.yaml"
   },
   {
+    "id": "global:skills/engineering/diff-brief/CHALLENGER.md",
+    "scope": "global",
+    "type": "skill",
+    "sourcePath": "catalog/global/skills/engineering/diff-brief/CHALLENGER.md",
+    "destPath": "~/.claude/skills/diff-brief/CHALLENGER.md"
+  },
+  {
+    "id": "global:skills/engineering/diff-brief/CLAIM-SCHEMA.md",
+    "scope": "global",
+    "type": "skill",
+    "sourcePath": "catalog/global/skills/engineering/diff-brief/CLAIM-SCHEMA.md",
+    "destPath": "~/.claude/skills/diff-brief/CLAIM-SCHEMA.md"
+  },
+  {
+    "id": "global:skills/engineering/diff-brief/NAVIGATOR.md",
+    "scope": "global",
+    "type": "skill",
+    "sourcePath": "catalog/global/skills/engineering/diff-brief/NAVIGATOR.md",
+    "destPath": "~/.claude/skills/diff-brief/NAVIGATOR.md"
+  },
+  {
+    "id": "global:skills/engineering/diff-brief/SKILL.md",
+    "scope": "global",
+    "type": "skill",
+    "sourcePath": "catalog/global/skills/engineering/diff-brief/SKILL.md",
+    "destPath": "~/.claude/skills/diff-brief/SKILL.md"
+  },
+  {
+    "id": "global:skills/engineering/diff-brief/SOURCES.md",
+    "scope": "global",
+    "type": "skill",
+    "sourcePath": "catalog/global/skills/engineering/diff-brief/SOURCES.md",
+    "destPath": "~/.claude/skills/diff-brief/SOURCES.md"
+  },
+  {
+    "id": "global:skills/engineering/diff-brief/agents/openai.yaml",
+    "scope": "global",
+    "type": "skill",
+    "sourcePath": "catalog/global/skills/engineering/diff-brief/agents/openai.yaml",
+    "destPath": "~/.claude/skills/diff-brief/agents/openai.yaml"
+  },
+  {
+    "id": "global:skills/engineering/diff-brief/example-data.json",
+    "scope": "global",
+    "type": "skill",
+    "sourcePath": "catalog/global/skills/engineering/diff-brief/example-data.json",
+    "destPath": "~/.claude/skills/diff-brief/example-data.json"
+  },
+  {
+    "id": "global:skills/engineering/diff-brief/head.html",
+    "scope": "global",
+    "type": "skill",
+    "sourcePath": "catalog/global/skills/engineering/diff-brief/head.html",
+    "destPath": "~/.claude/skills/diff-brief/head.html"
+  },
+  {
+    "id": "global:skills/engineering/diff-brief/render-md.jq",
+    "scope": "global",
+    "type": "skill",
+    "sourcePath": "catalog/global/skills/engineering/diff-brief/render-md.jq",
+    "destPath": "~/.claude/skills/diff-brief/render-md.jq"
+  },
+  {
+    "id": "global:skills/engineering/diff-brief/tail.html",
+    "scope": "global",
+    "type": "skill",
+    "sourcePath": "catalog/global/skills/engineering/diff-brief/tail.html",
+    "destPath": "~/.claude/skills/diff-brief/tail.html"
+  },
+  {
     "id": "global:skills/engineering/domain-modeling/ADR-FORMAT.md",
     "scope": "global",
     "type": "skill",
