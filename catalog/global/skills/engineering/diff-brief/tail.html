@@ -36,25 +36,44 @@
     var ref = a.path + ':' + (a.lines ? a.lines[0] : '');
     var label = esc(a.path) + (a.symbol ? ' · ' + esc(a.symbol) : '') +
       (a.lines ? ':' + a.lines[0] + '-' + a.lines[1] : '');
-    var code = a.code ? '<pre>' + esc(a.code) + '</pre>' : '';
+    var code = a.code ? '<pre>' + highlight(a.code, languageOf(a.path)) + '</pre>' : '';
     return '<div class="chips"><span class="chip" data-ref="' + esc(ref) + '">' + label + '</span></div>' + code;
   }
 
-  function patch(p) {
-    return esc(p).split('\n').map(function (l) {
-      if (l.indexOf('@@') === 0) return '<span class="hh">' + l + '</span>';
-      if (l.indexOf('+') === 0) return '<span class="add">' + l + '</span>';
-      if (l.indexOf('-') === 0) return '<span class="del">' + l + '</span>';
-      return l;
-    }).join('\n');
+  var EXTENSION_LANGUAGE = { csproj: 'xml', props: 'xml', targets: 'xml', config: 'xml', razor: 'cshtml' };
+  var DIFF_LINE_KIND = { '+': 'add', '-': 'del', ' ': 'ctx' };
+
+  function languageOf(path) {
+    var ext = String(path || '').split('.').pop().toLowerCase();
+    var language = EXTENSION_LANGUAGE[ext] || ext;
+    return window.hljs && hljs.getLanguage(language) ? language : null;
+  }
+
+  function highlight(code, language) {
+    if (!language) return esc(code);
+    return hljs.highlight(code, { language: language, ignoreIllegals: true }).value;
+  }
+
+  function diffLine(line, language) {
+    if (line.indexOf('@@') === 0) return '<span class="ln hh">' + esc(line) + '</span>';
+    var kind = DIFF_LINE_KIND[line.charAt(0)];
+    if (!kind) return '<span class="ln ctx"><span class="sign"></span>' + esc(line) + '</span>';
+    return '<span class="ln ' + kind + '"><span class="sign">' + line.charAt(0) + '</span>' +
+      highlight(line.slice(1), language) + '</span>';
+  }
+
+  function patch(hunk) {
+    var language = languageOf(hunk.id.split('@@')[0]);
+    return '<pre class="diff"><code>' + hunk.patch.split('\n').map(function (line) {
+      return diffLine(line, language);
+    }).join('') + '</code></pre>';
   }
 
   function hunkBlock(c) {
     var hs = (c.hunks || []).filter(function (x) { return x && x.patch; });
     if (!hs.length) return '';
     return '<details><summary>' + hs.length + ' hunk' + (hs.length > 1 ? 'ova' : '') +
-      '</summary>' + hs.map(function (x) { return '<pre>' + patch(x.patch) + '</pre>'; }).join('') +
-      '</details>';
+      '</summary>' + hs.map(patch).join('') + '</details>';
   }
 
   function claimCard(c, n) {
