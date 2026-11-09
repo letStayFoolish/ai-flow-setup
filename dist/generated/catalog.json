@@ -672,6 +672,20 @@
     "destPath": "CONTEXT-MAP.md"
   },
   {
+    "id": "project:skills/iws/fix-failing-test/SKILL.md",
+    "scope": "project",
+    "type": "skill",
+    "sourcePath": "catalog/project/skills/iws/fix-failing-test/SKILL.md",
+    "destPath": ".claude/skills/fix-failing-test/SKILL.md"
+  },
+  {
+    "id": "project:skills/iws/fix-failing-test/WORKER.md",
+    "scope": "project",
+    "type": "skill",
+    "sourcePath": "catalog/project/skills/iws/fix-failing-test/WORKER.md",
+    "destPath": ".claude/skills/fix-failing-test/WORKER.md"
+  },
+  {
     "id": "project:skills/iws/scada-review/DOTNET-BEST-PRACTICES.md",
     "scope": "project",
     "type": "skill",
