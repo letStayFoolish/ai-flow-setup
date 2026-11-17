@@ -38,6 +38,7 @@ These are **not** auto-loaded — read the relevant file(s) from `~/.claude/docs
 | `docs/design-patterns.md` | Designing a module, choosing where behaviour lives, reviewing new abstractions |
 | `docs/react-conventions.md` | Creating or modifying React components, hooks, or frontend build config |
 | `docs/deployment.md` | Environments, deploy process, rollback |
+| `docs/software-factory.md` | Running a Line (`implement-spec`, worktrees, unattended work), hitting an ambiguity, classifying a review/QA finding, logging the pilot |
 
 ## Tool Preferences
 
