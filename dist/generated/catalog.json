@@ -7,6 +7,13 @@
     "destPath": "~/.claude/CLAUDE.md"
   },
   {
+    "id": "global:bin/factory-line",
+    "scope": "global",
+    "type": "doc",
+    "sourcePath": "catalog/global/bin/factory-line",
+    "destPath": "~/.claude/bin/factory-line"
+  },
+  {
     "id": "global:docs/api-guidelines.md",
     "scope": "global",
     "type": "doc",
@@ -75,6 +82,13 @@
     "type": "doc",
     "sourcePath": "catalog/global/docs/security.md",
     "destPath": "~/.claude/docs/security.md"
+  },
+  {
+    "id": "global:docs/software-factory.md",
+    "scope": "global",
+    "type": "doc",
+    "sourcePath": "catalog/global/docs/software-factory.md",
+    "destPath": "~/.claude/docs/software-factory.md"
   },
   {
     "id": "global:docs/testing-strategy.md",

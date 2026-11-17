@@ -1,4 +1,4 @@
-import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
+import { existsSync, mkdirSync, readFileSync, statSync, writeFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import * as clack from "@clack/prompts";
 import { packageRoot } from "./catalog.js";
@@ -29,10 +29,11 @@ export async function installEntries(entries, cwd, destResolver = resolveDest) {
     const conflicts = [];
     for (const entry of entries) {
         const destAbs = destResolver(entry, cwd);
-        const incoming = readFileSync(join(packageRoot, entry.sourcePath), "utf-8");
+        const sourceAbs = join(packageRoot, entry.sourcePath);
+        const incoming = readFileSync(sourceAbs, "utf-8");
         if (!existsSync(destAbs)) {
             mkdirSync(dirname(destAbs), { recursive: true });
-            writeFileSync(destAbs, incoming);
+            writeFileSync(destAbs, incoming, { mode: statSync(sourceAbs).mode });
             clack.log.success(`created ${destAbs}`);
             continue;
         }
