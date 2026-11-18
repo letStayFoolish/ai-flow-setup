@@ -44,7 +44,7 @@ curl -sf -H "PRIVATE-TOKEN: $GITLAB_TOKEN" "$API/merge_requests/$MR_ID/notes?per
 
 ## 5. Spawn all three axis sub-agents in parallel
 
-Send **one message with three `Agent` tool calls**, run in the background — `subagent_type: review-standards`, `review-best-practices`, `review-spec`. Each agent definition owns its model and effort. They must not share context; each gets only what its prompt carries.
+Send **one message with three `Agent` tool calls**, run in the background — `subagent_type: review-standards`, `review-best-practices`, `review-spec`. Each agent definition owns its model and effort; when those agent types aren't installed, use `general-purpose` for all three. They must not share context; each gets only what its prompt carries.
 
 Every prompt carries: the diff (from step 3, with new_line numbers already mapped), the Diff scope rule (findings must trace to a touched line; pre-existing issues merely touched are carry-overs, not blocking), and the finding format each must return — `file`, `new_line`, category, priority (🔴🟠🟡🟢), comment text, carry-over flag (yes/no).
 
@@ -64,7 +64,7 @@ Every prompt carries: the diff (from step 3, with new_line numbers already mappe
 
 - The full diff, mapped to `new_line`.
 - The Jira ticket checklist built in step 2.
-- Brief: "Cross off each checklist item as you find evidence in the diff it's satisfied (file:line). Report: (a) checklist items with no evidence in the diff — spec gap, priority 🔴 unless the ticket marks it optional; (b) diff behaviour not asked for by any checklist item — scope creep; (c) checklist items that look addressed but where the implementation looks wrong. Return one finding per line using the format above, category always 'spec gap' or 'scope creep'. Under 400 words."
+- Brief: "Cross off each checklist item as you find evidence in the diff it's satisfied (file:line). Report: (a) checklist items with no evidence in the diff — spec gap, priority 🔴 unless the ticket marks it optional; (b) diff behaviour not asked for by any checklist item — scope creep; (c) checklist items that look addressed but where the implementation looks wrong; (d) sibling copies — when a hunk changes one of several parallel copies of a flow (per editor mode, WebSocket vs REST, per service), `git grep` the siblings and report any left without the same change as a spec gap. Return one finding per line using the format above, category always 'spec gap' or 'scope creep'. Under 400 words."
 
 **Done when:** all three sub-agents have returned.
 
