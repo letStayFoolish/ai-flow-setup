@@ -532,6 +532,13 @@
     "destPath": "~/.claude/skills/retro/agents/openai.yaml"
   },
   {
+    "id": "global:skills/engineering/review-primer/SKILL.md",
+    "scope": "global",
+    "type": "skill",
+    "sourcePath": "catalog/global/skills/engineering/review-primer/SKILL.md",
+    "destPath": "~/.claude/skills/review-primer/SKILL.md"
+  },
+  {
     "id": "global:skills/engineering/review-to-learn/HOSTS.md",
     "scope": "global",
     "type": "skill",
