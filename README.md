@@ -58,6 +58,25 @@ $ npx github:letStayFoolish/ai-flow-setup grilling
 them day to day. Read it before your first `npx github:letStayFoolish/ai-flow-setup`
 run if the skill names above don't mean anything yet.
 
+## Software Factory
+
+[`catalog/global/docs/software-factory.md`](./catalog/global/docs/software-factory.md)
+describes running several specs (Lines) in parallel, each in its own git
+worktree, with humans at the gates (grilling, QA, review, push).
+
+```bash
+npx github:letStayFoolish/ai-flow-setup factory-line software-factory
+ln -sf ~/.claude/bin/factory-line ~/.local/bin/factory-line   # once per machine
+factory-line fix IWS-1234-alarm-ack-timeout
+```
+
+The first run fetches the base branch, creates the worktree
+`.claude/worktrees/<name>` on `<type>/<name>` (no upstream), initializes
+submodules, and opens `claude` with `/grill-with-docs <JIRA-KEY>`. Later runs
+open a fresh session in the existing worktree. Override defaults with
+`FACTORY_BASE_BRANCH` (default `develop`) and `FACTORY_SUBMODULES`
+(space-separated paths). Requires git ≥ 2.31.
+
 ## Catalog contents
 
 See `catalog/global/` (installs under `~/.claude/`) and `catalog/project/`

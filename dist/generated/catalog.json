@@ -70,6 +70,13 @@
     "destPath": "~/.claude/agents/ticket-splitter.md"
   },
   {
+    "id": "global:bin/factory-line",
+    "scope": "global",
+    "type": "doc",
+    "sourcePath": "catalog/global/bin/factory-line",
+    "destPath": "~/.claude/bin/factory-line"
+  },
+  {
     "id": "global:docs/api-guidelines.md",
     "scope": "global",
     "type": "doc",

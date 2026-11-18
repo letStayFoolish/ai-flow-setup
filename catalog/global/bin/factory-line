@@ -1,0 +1,43 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+readonly USAGE="usage: factory-line <feature|fix|refactor|chore|docs> <JIRA-KEY>-<short-kebab-desc>"
+readonly BASE_BRANCH="${FACTORY_BASE_BRANCH:-develop}"
+read -r -a SUBMODULES <<< "${FACTORY_SUBMODULES:-vendor/claude-shared IwsServer/paho.mqtt.m2mqtt}"
+readonly SUBMODULES
+
+fail() {
+  echo "factory-line: $*" >&2
+  exit 1
+}
+
+[ $# -eq 2 ] || fail "$USAGE"
+readonly branch_type=$1
+readonly line_name=$2
+
+case $branch_type in
+  feature|fix|refactor|chore|docs) ;;
+  *) fail "$USAGE" ;;
+esac
+
+jira_key=$(echo "$line_name" | grep -oE '^[A-Z]+-[0-9]+') || fail "$USAGE"
+readonly jira_key
+
+repo_root=$(dirname "$(git rev-parse --path-format=absolute --git-common-dir)")
+readonly repo_root
+readonly worktree_path="$repo_root/.claude/worktrees/$line_name"
+
+create_line() {
+  git -C "$repo_root" fetch origin "$BASE_BRANCH"
+  git -C "$repo_root" worktree add --no-track -b "$branch_type/$line_name" "$worktree_path" "origin/$BASE_BRANCH"
+  git -C "$worktree_path" submodule update --init "${SUBMODULES[@]}"
+}
+
+if [ -d "$worktree_path" ]; then
+  cd "$worktree_path"
+  exec claude
+fi
+
+create_line
+cd "$worktree_path"
+exec claude "/grill-with-docs $jira_key"
