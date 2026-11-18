@@ -28,6 +28,15 @@
 
 **Pravilo:** Native queryji samo uz opravdan razlog (SQLite limitacije). ORM mora biti kompatibilan sa svim bazama.
 
+**Opravdan izuzetak — optimizer hint samo za MySQL (IWS-12413):** `FromSqlRaw` koji samo zamenjuje izvor tabele hintom (npr. `SELECT * FROM iws_script IGNORE INDEX FOR ORDER BY (PRIMARY)`) je prihvatljiv kada:
+
+- je uslovljen sa `DBHelper.IsMySQL(...)`, a ostali provideri dobijaju običan `DbSet`;
+- filter, projekcija, sort i paging ostaju u LINQ-u (raw SQL ne sadrži uslove ni parametre);
+- MR nosi dokaz pre/posle (`EXPLAIN`/`ANALYZE` sa produkcije ili seed-a sličnog obima);
+- je razlog dokumentovan u ADR-u ili kratkom komentaru iznad metode.
+
+Hint bez dokaza iz plana izvršavanja, ili raw SQL koji nosi celu logiku upita → i dalje "Native SQL bez razloga". `IGNORE INDEX` ima prednost nad `FORCE INDEX(<ime>)` jer ne puca kad se indeks preimenuje.
+
 ### AsNoTracking
 
 **Pravilo:** Za read-only operacije uvek `AsNoTracking()`.
@@ -220,11 +229,31 @@
 
 ### Format komentara — plain text, bez emoji/boja
 
-**Pravilo:** MR komentar se objavljuje kao plain text. Code snippet ide u komentar
-samo ako je neophodan za razumevanje nalaza (npr. konkretna izmena, ili isečak
-pronađen tokom `/research`). Nema emoji indikatora ni boja za prioritet/severity
-u samom komentaru — 🔴/🟠/🟡/🟢 iz Sekcije 8 su interna klasifikacija za trijažu
-findinga unutar skill-a, ne deo teksta koji ide na GitLab.
+**Pravilo:** MR komentar se objavljuje kao plain text, markdown-formatiran po
+GitLab konvenciji. Nema emoji indikatora ni boja za prioritet/severity u samom
+komentaru — 🔴/🟠/🟡/🟢 iz Sekcije 8 su interna klasifikacija za trijažu findinga
+unutar skill-a, ne deo teksta koji ide na GitLab.
+
+Svaki naziv promenljive, metode, klase, fajla ili drugi code-reference termin
+pomenut u rečenici ide u inline `code` formatu (npr. "`workRequest.Status`
+mora biti postavljen posle `uow.Complete()`"), nikad go tekst.
+
+Code snippet u fenced bloku (```csharp, ```typescript, ...) ide u komentar
+samo ako je neophodan za razumevanje nalaza — konkretna izmena koju treba
+primeniti, ili isečak pronađen tokom `/research`. Predloženi snippet prati
+postojeću konvenciju projekta (ostatak RULES.md, `~/.claude/docs/*.md`) i,
+gde je primenljivo, best practice iz `DOTNET-BEST-PRACTICES.md` — ne generički
+stil koji ignoriše kako ovaj kod inače izgleda.
+
+### Jezik komentara — srpski
+
+**Pravilo:** MR komentari koji se objavljuju na GitLab-u idu na srpskom jeziku,
+bez obzira na opšte pravilo da "shared artifacts" (PRD, RFC, MR opisi i sl.)
+idu na engleskom — GitLab review komentar je izuzetak od tog pravila u ovom
+repou. Ne prevodi se: nazivi jezika/framework-a i njihovi API pojmovi (`async`,
+`IEnumerable`, `foreach`) i InViewWebScada-specifični termini (`WorkRequest`,
+`ReadUnitOfWork`, `ProjectId`, imena servisa/klasa iz koda). Sve ostalo —
+objašnjenje, obrazloženje, poziv na akciju — ide na srpskom.
 
 ## 9a. Nesigurnost → eskalacija na `/research`
 
