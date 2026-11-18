@@ -70,7 +70,7 @@ Both directions are judgement calls of the same weight as the smells above, and 
 
 ### 4. Spawn both sub-agents in parallel
 
-Send a single message with two `Agent` tool calls. Use the `general-purpose` subagent for both.
+Send a single message with two `Agent` tool calls, run in the background: `subagent_type: review-standards` for Standards, `subagent_type: review-spec` for Spec. Each agent definition owns its model and effort.
 
 **Standards sub-agent prompt** — include:
 

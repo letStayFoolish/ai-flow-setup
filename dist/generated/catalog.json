@@ -7,13 +7,6 @@
     "destPath": "~/.claude/CLAUDE.md"
   },
   {
-    "id": "global:agents/code-reviewer.md",
-    "scope": "global",
-    "type": "agent",
-    "sourcePath": "catalog/global/agents/code-reviewer.md",
-    "destPath": "~/.claude/agents/code-reviewer.md"
-  },
-  {
     "id": "global:agents/implementer.md",
     "scope": "global",
     "type": "agent",
@@ -35,11 +28,32 @@
     "destPath": "~/.claude/agents/qa.md"
   },
   {
+    "id": "global:agents/review-best-practices.md",
+    "scope": "global",
+    "type": "agent",
+    "sourcePath": "catalog/global/agents/review-best-practices.md",
+    "destPath": "~/.claude/agents/review-best-practices.md"
+  },
+  {
     "id": "global:agents/review-responder.md",
     "scope": "global",
     "type": "agent",
     "sourcePath": "catalog/global/agents/review-responder.md",
     "destPath": "~/.claude/agents/review-responder.md"
+  },
+  {
+    "id": "global:agents/review-spec.md",
+    "scope": "global",
+    "type": "agent",
+    "sourcePath": "catalog/global/agents/review-spec.md",
+    "destPath": "~/.claude/agents/review-spec.md"
+  },
+  {
+    "id": "global:agents/review-standards.md",
+    "scope": "global",
+    "type": "agent",
+    "sourcePath": "catalog/global/agents/review-standards.md",
+    "destPath": "~/.claude/agents/review-standards.md"
   },
   {
     "id": "global:agents/spec-writer.md",

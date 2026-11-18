@@ -44,7 +44,7 @@ curl -sf -H "PRIVATE-TOKEN: $GITLAB_TOKEN" "$API/merge_requests/$MR_ID/notes?per
 
 ## 5. Spawn all three axis sub-agents in parallel
 
-Send **one message with three `Agent` tool calls** — Standards, Best Practices, Spec — using the `general-purpose` subagent for each. They must not share context; each gets only what its prompt carries.
+Send **one message with three `Agent` tool calls**, run in the background — `subagent_type: review-standards`, `review-best-practices`, `review-spec`. Each agent definition owns its model and effort. They must not share context; each gets only what its prompt carries.
 
 Every prompt carries: the diff (from step 3, with new_line numbers already mapped), the Diff scope rule (findings must trace to a touched line; pre-existing issues merely touched are carry-overs, not blocking), and the finding format each must return — `file`, `new_line`, category, priority (🔴🟠🟡🟢), comment text, carry-over flag (yes/no).
 
