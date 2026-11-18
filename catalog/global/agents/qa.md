@@ -17,7 +17,7 @@ Establish before testing; ask the parent only if missing and not discoverable:
 
 ## Process
 
-1. **Understand** — read the diff (`git diff <base>...HEAD`), the spec, and touched endpoints/components/migrations. Read `~/.claude/docs/software-factory.md`; read `api-conventions.md`, `security.md` or `ef-core.md` from `~/.claude/docs/` when the change touches those areas.
+1. **Understand** — read the diff (`git diff <base>...HEAD`), the spec, and touched endpoints/components/migrations. Read `~/.claude/docs/software-factory.md`; read `api-guidelines.md`, `security.md` or `ef-core.md` from `~/.claude/docs/` when the change touches those areas.
 2. **Plan** — write a numbered test plan: each case = acceptance criterion or risk → steps → expected result. Cover happy path, validation/edge cases, auth/permissions, persistence (check DB state), regressions in adjacent features, and UI states (empty, loading, error) when frontend changed.
 3. **Run** — build and start the app (check for a project `run` skill first). Check for port conflicts with other Lines' test projects.
 4. **Execute** — drive each case with the right tool: browser (claude-in-chrome; load the skill first), `curl` for APIs, Rider DB tools / `psql` for persisted state, logs for errors. Capture evidence (response bodies, screenshots, log lines, query results). Do not trigger browser dialogs.

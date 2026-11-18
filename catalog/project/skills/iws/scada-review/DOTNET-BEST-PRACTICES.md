@@ -1,14 +1,14 @@
 # .NET / C# — Modern Best Practices
 
-Disclosed from [`SKILL.md`](SKILL.md). Generic, framework/language-level guidance that isn't already in `~/.claude/rules/*.md` (rung 1) and isn't a team-specific override in [`RULES.md`](RULES.md) (rung 3). Sits at rung 2 — see "Standards sources" in `SKILL.md`. RULES.md always wins on conflict.
+Disclosed from [`SKILL.md`](SKILL.md). Generic, framework/language-level guidance that isn't already in `~/.claude/docs/*.md` (rung 1) and isn't a team-specific override in [`RULES.md`](RULES.md) (rung 3). Sits at rung 2 — see "Standards sources" in `SKILL.md`. RULES.md always wins on conflict.
 
-Use this to flag findings the global rules and RULES.md don't cover — not as a second pass that re-derives what rung 1 already checks (EF query shape, primary constructors, Result pattern, naming — those live in `~/.claude/rules/`).
+Use this to flag findings the global rules and RULES.md don't cover — not as a second pass that re-derives what rung 1 already checks (EF query shape, primary constructors, Result pattern, naming — those live in `~/.claude/docs/`).
 
 ---
 
 ## 1. SOLID — the four global rules don't spell out
 
-`~/.claude/rules/clean-code.md` covers SRP/DRY/KISS/YAGNI. These four are the rest of SOLID:
+`~/.claude/docs/clean-code.md` covers SRP/DRY/KISS/YAGNI. These four are the rest of SOLID:
 
 - **Open/Closed** — new behavior should be addable without editing tested, working code. A `switch` on a type enum that grows every sprint is a smell; polymorphism or a lookup table beats another `case`. But don't pre-build extension points for a variant that doesn't exist yet — that's YAGNI winning over OCP.
 - **Liskov Substitution** — a derived type must be usable anywhere the base is expected without surprising the caller. An override that throws `NotSupportedException` for a subset of inputs the base type accepts is a violation — split the abstraction instead.
@@ -17,7 +17,7 @@ Use this to flag findings the global rules and RULES.md don't cover — not as a
 
 ## 2. Structure — too much, and too little
 
-`~/.claude/rules/design-patterns.md` (rung 1) carries the general symptom→pattern table, each pattern's cost, and the confusion pairs. Open it only once a finding is genuinely structural. This section is the C#/SCADA translation.
+`~/.claude/docs/design-patterns.md` (rung 1) carries the general symptom→pattern table, each pattern's cost, and the confusion pairs. Open it only once a finding is genuinely structural. This section is the C#/SCADA translation.
 
 **Check the over-abstraction direction first.** This codebase has a DI container and settled layering, so surplus structure is the more common defect — and a reviewer who only ever asks for *more* structure trains the wrong instinct.
 

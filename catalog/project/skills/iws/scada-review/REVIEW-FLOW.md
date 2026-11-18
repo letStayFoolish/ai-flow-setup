@@ -51,7 +51,7 @@ Every prompt carries: the diff (from step 3, with new_line numbers already mappe
 **Standards sub-agent prompt** — include:
 
 - The full diff, mapped to `new_line`.
-- The complete text of `RULES.md` §1–§8 (priority table), and the generic `~/.claude/rules/*.md` files listed in SKILL.md's Standards row, and the repo-root `CLAUDE.md`.
+- The complete text of `RULES.md` §1–§8 (priority table), and the generic `~/.claude/docs/*.md` files listed in SKILL.md's Standards row, and the repo-root `CLAUDE.md`.
 - Brief: "Check every changed hunk against RULES.md §1–§7 first (priority per §8's table), then against the generic rules files and CLAUDE.md for anything RULES.md doesn't cover. RULES.md always wins on conflict. Mark violations the diff merely touches (doesn't introduce) as carry-over. Return one finding per line using the format above. Under 400 words."
 
 **Best Practices sub-agent prompt** — include:
@@ -83,7 +83,9 @@ Two dedup passes, in order:
 
 Show findings grouped by axis, then by priority within axis; ticket checklist with verdicts; and a "what's done well" section. Ask: "Šta da pošaljem? Sve nalaze, samo kritične/visoke, ili odaberi brojeve?" **Never post anything before this confirmation.**
 
-## 8. Post inline comments
+## 8. Create draft notes (GitLab review mode)
+
+Post each confirmed finding as a **draft note**, never a published discussion. Draft notes sit pending on the MR until the human submits the review from GitLab's own UI — that submit dialog is where they pick Approve / Comment / Request changes, or save the whole review as a draft. This skill never makes that call for them.
 
 ```bash
 VERSIONS=$(curl -sf -H "PRIVATE-TOKEN: $GITLAB_TOKEN" "$API/merge_requests/$MR_ID/versions")
@@ -92,14 +94,14 @@ START=$(echo "$VERSIONS" | jq -r '.[0].start_commit_sha')
 HEAD=$(echo "$VERSIONS" | jq -r '.[0].head_commit_sha')
 
 curl -sf -X POST -H "PRIVATE-TOKEN: $GITLAB_TOKEN" -H "Content-Type: application/json" \
-  "$API/merge_requests/$MR_ID/discussions" \
-  -d "{\"body\": \"$BODY\", \"position\": {\"base_sha\": \"$BASE\", \"start_sha\": \"$START\", \"head_sha\": \"$HEAD\", \"position_type\": \"text\", \"new_path\": \"$FILE\", \"new_line\": $LINE, \"old_path\": \"$FILE\"}}"
+  "$API/merge_requests/$MR_ID/draft_notes" \
+  -d "{\"note\": \"$BODY\", \"position\": {\"base_sha\": \"$BASE\", \"start_sha\": \"$START\", \"head_sha\": \"$HEAD\", \"position_type\": \"text\", \"new_path\": \"$FILE\", \"new_line\": $LINE, \"old_path\": \"$FILE\"}}"
 ```
 
-Duplicates against step 4's existing comments were already dropped in step 6 — nothing further to skip here. Sleep ~300ms between posts (rate limiting).
+Duplicates against step 4's existing comments were already dropped in step 6 — nothing further to skip here. Sleep ~300ms between posts (rate limiting). Never call `draft_notes/bulk_publish` or any endpoint that submits the review — publishing is exclusively a manual action the human takes in GitLab.
 
-**Done when:** every confirmed finding has been posted.
+**Done when:** every confirmed finding exists as a draft note on the MR.
 
-## 9. Offer draft
+## 9. Hand off
 
-If any 🔴 or 🟠 finding was posted, offer to mark the MR as draft (`PUT` with `{"title": "Draft: <original title>"}` if the `draft` field isn't supported by this GitLab version).
+Tell the user the draft notes are waiting in GitLab's review panel on the MR, and that submitting (Approve / Request changes / save as draft) happens there, not here.
