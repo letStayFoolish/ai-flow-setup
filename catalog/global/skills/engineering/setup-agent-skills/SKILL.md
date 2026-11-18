@@ -1,9 +1,9 @@
 ---
 name: setup-agent-skills
-description: Scaffold the per-repo files that to-spec, to-tickets, research, wayfinder, and code-review read — where issues/specs live and where domain docs live — and migrate any existing specs, PRDs, issue lists, or research notes into that structure. Use when docs/agents/issue-tracker.md or docs/agents/domain.md is missing and another skill needs it, or the user wants to set up, reconfigure, or migrate a repo's agent-skill scaffolding.
+description: Scaffold the per-repo files that to-spec, to-tickets, research, and code-review read — where issues/specs live and where domain docs live — and migrate any existing specs, PRDs, issue lists, or research notes into that structure. Use when docs/agents/issue-tracker.md or docs/agents/domain.md is missing and another skill needs it, or the user wants to set up, reconfigure, or migrate a repo's agent-skill scaffolding.
 ---
 
-Scaffolds the per-repo files that `to-spec`, `to-tickets`, `research`, `wayfinder`, and `code-review` read: where issues and specs live (`docs/agents/issue-tracker.md`) and where domain docs live (`docs/agents/domain.md`). Prompt-driven, not a script — explore, present findings, confirm with the user section by section, then write. The same process handles a greenfield repo (nothing exists yet) and a brownfield one (existing docs need moving into place, including ones a prior `CLAUDE.md`/`AGENTS.md` setup already left behind).
+Scaffolds the per-repo files that `to-spec`, `to-tickets`, `research`, and `code-review` read: where issues and specs live (`docs/agents/issue-tracker.md`) and where domain docs live (`docs/agents/domain.md`). Prompt-driven, not a script — explore, present findings, confirm with the user section by section, then write. The same process handles a greenfield repo (nothing exists yet) and a brownfield one (existing docs need moving into place, including ones a prior `CLAUDE.md`/`AGENTS.md` setup already left behind).
 
 ## 1. Explore
 

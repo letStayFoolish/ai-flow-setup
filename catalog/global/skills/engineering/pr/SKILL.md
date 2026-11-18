@@ -1,6 +1,6 @@
 ---
 name: pr
-description: "Use when writing a PR body."
+description: "Use when writing a PR or MR body."
 metadata:
   credits:
     skill: show-me
@@ -31,6 +31,12 @@ Use this template for writing the PR body:
 
 <optional: potential ramifications of merge>
 ```
+
+## Output
+
+The deliverable is a file: write the finished body to `PR.md` at the repository root, overwriting any earlier one, with the suggested PR title as its first line (`# <title>`). Leave it untracked; pushing, opening the PR/MR, and pasting the body belong to the developer.
+
+Done when `PR.md` holds every template section filled in and `git status` lists it as untracked. Reply with its path.
 
 ## Sections
 

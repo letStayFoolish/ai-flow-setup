@@ -22,11 +22,4 @@ Issues, specs, and tickets for this repo live on <tracker name>.
 
 <the CLI/API call, e.g. `gh issue view <n> --comments`, or the MCP tool name>
 
-## Wayfinding operations
-
-- Map: <a single issue/ticket labelled `wayfinder:map`, or equivalent>
-- Child ticket: <sub-issue or linked ticket; Type/Status recorded as labels or a body line>
-- Blocking: <the tracker's native blocking relationship, or a body line if it has none>
-- Frontier: <the query that finds unblocked, unclaimed tickets>
-- Claim / Resolve: <how status changes are recorded — label, state field, or body line>
 ```

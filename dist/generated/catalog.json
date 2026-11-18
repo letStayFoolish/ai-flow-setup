@@ -7,6 +7,69 @@
     "destPath": "~/.claude/CLAUDE.md"
   },
   {
+    "id": "global:agents/implementer.md",
+    "scope": "global",
+    "type": "agent",
+    "sourcePath": "catalog/global/agents/implementer.md",
+    "destPath": "~/.claude/agents/implementer.md"
+  },
+  {
+    "id": "global:agents/pr-writer.md",
+    "scope": "global",
+    "type": "agent",
+    "sourcePath": "catalog/global/agents/pr-writer.md",
+    "destPath": "~/.claude/agents/pr-writer.md"
+  },
+  {
+    "id": "global:agents/qa.md",
+    "scope": "global",
+    "type": "agent",
+    "sourcePath": "catalog/global/agents/qa.md",
+    "destPath": "~/.claude/agents/qa.md"
+  },
+  {
+    "id": "global:agents/review-best-practices.md",
+    "scope": "global",
+    "type": "agent",
+    "sourcePath": "catalog/global/agents/review-best-practices.md",
+    "destPath": "~/.claude/agents/review-best-practices.md"
+  },
+  {
+    "id": "global:agents/review-responder.md",
+    "scope": "global",
+    "type": "agent",
+    "sourcePath": "catalog/global/agents/review-responder.md",
+    "destPath": "~/.claude/agents/review-responder.md"
+  },
+  {
+    "id": "global:agents/review-spec.md",
+    "scope": "global",
+    "type": "agent",
+    "sourcePath": "catalog/global/agents/review-spec.md",
+    "destPath": "~/.claude/agents/review-spec.md"
+  },
+  {
+    "id": "global:agents/review-standards.md",
+    "scope": "global",
+    "type": "agent",
+    "sourcePath": "catalog/global/agents/review-standards.md",
+    "destPath": "~/.claude/agents/review-standards.md"
+  },
+  {
+    "id": "global:agents/spec-writer.md",
+    "scope": "global",
+    "type": "agent",
+    "sourcePath": "catalog/global/agents/spec-writer.md",
+    "destPath": "~/.claude/agents/spec-writer.md"
+  },
+  {
+    "id": "global:agents/ticket-splitter.md",
+    "scope": "global",
+    "type": "agent",
+    "sourcePath": "catalog/global/agents/ticket-splitter.md",
+    "destPath": "~/.claude/agents/ticket-splitter.md"
+  },
+  {
     "id": "global:bin/factory-line",
     "scope": "global",
     "type": "doc",
@@ -586,20 +649,6 @@
     "type": "skill",
     "sourcePath": "catalog/global/skills/engineering/wait-what/agents/openai.yaml",
     "destPath": "~/.claude/skills/wait-what/agents/openai.yaml"
-  },
-  {
-    "id": "global:skills/engineering/wayfinder/SKILL.md",
-    "scope": "global",
-    "type": "skill",
-    "sourcePath": "catalog/global/skills/engineering/wayfinder/SKILL.md",
-    "destPath": "~/.claude/skills/wayfinder/SKILL.md"
-  },
-  {
-    "id": "global:skills/engineering/wayfinder/agents/openai.yaml",
-    "scope": "global",
-    "type": "skill",
-    "sourcePath": "catalog/global/skills/engineering/wayfinder/agents/openai.yaml",
-    "destPath": "~/.claude/skills/wayfinder/agents/openai.yaml"
   },
   {
     "id": "global:skills/teach/GLOSSARY-FORMAT.md",

@@ -18,7 +18,7 @@ Applies when: writing, modifying, or reviewing any code.
 ## Comments
 
 - The only truly good comment is the one you found a way not to write. Never comment bad code — rewrite it.
-- Delete stale, redundant, journal-style, or commented-out code on sight — source control remembers it for you.
+- Delete stale, redundant, journal-style, or commented-out code inside the hunks your change touches — source control remembers it for you.
 
 ## Formatting
 
