@@ -7,6 +7,55 @@
     "destPath": "~/.claude/CLAUDE.md"
   },
   {
+    "id": "global:agents/code-reviewer.md",
+    "scope": "global",
+    "type": "agent",
+    "sourcePath": "catalog/global/agents/code-reviewer.md",
+    "destPath": "~/.claude/agents/code-reviewer.md"
+  },
+  {
+    "id": "global:agents/implementer.md",
+    "scope": "global",
+    "type": "agent",
+    "sourcePath": "catalog/global/agents/implementer.md",
+    "destPath": "~/.claude/agents/implementer.md"
+  },
+  {
+    "id": "global:agents/pr-writer.md",
+    "scope": "global",
+    "type": "agent",
+    "sourcePath": "catalog/global/agents/pr-writer.md",
+    "destPath": "~/.claude/agents/pr-writer.md"
+  },
+  {
+    "id": "global:agents/qa.md",
+    "scope": "global",
+    "type": "agent",
+    "sourcePath": "catalog/global/agents/qa.md",
+    "destPath": "~/.claude/agents/qa.md"
+  },
+  {
+    "id": "global:agents/review-responder.md",
+    "scope": "global",
+    "type": "agent",
+    "sourcePath": "catalog/global/agents/review-responder.md",
+    "destPath": "~/.claude/agents/review-responder.md"
+  },
+  {
+    "id": "global:agents/spec-writer.md",
+    "scope": "global",
+    "type": "agent",
+    "sourcePath": "catalog/global/agents/spec-writer.md",
+    "destPath": "~/.claude/agents/spec-writer.md"
+  },
+  {
+    "id": "global:agents/ticket-splitter.md",
+    "scope": "global",
+    "type": "agent",
+    "sourcePath": "catalog/global/agents/ticket-splitter.md",
+    "destPath": "~/.claude/agents/ticket-splitter.md"
+  },
+  {
     "id": "global:docs/api-guidelines.md",
     "scope": "global",
     "type": "doc",

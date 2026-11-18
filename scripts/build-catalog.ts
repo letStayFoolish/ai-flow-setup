@@ -26,6 +26,7 @@ function classify(relPath: string): CatalogEntry["type"] {
   if (relPath.startsWith("skills/")) return "skill";
   if (relPath.startsWith("rules/")) return "rule";
   if (relPath.startsWith("commands/")) return "command";
+  if (relPath.startsWith("agents/")) return "agent";
   return "doc";
 }
 
