@@ -39,10 +39,3 @@ These are **not** auto-loaded — read the relevant file(s) from `~/.claude/docs
 | `docs/react-conventions.md` | Creating or modifying React components, hooks, or frontend build config |
 | `docs/deployment.md` | Environments, deploy process, rollback |
 | `docs/software-factory.md` | Running a Line (`implement-spec`, worktrees, unattended work), hitting an ambiguity, classifying a review/QA finding, logging the pilot |
-
-## Tool Preferences
-
-- Use `Read` not `cat` / `head` / `tail`
-- Use `Grep` not `rg` / `grep`
-- Use `Edit` not `sed` / `awk`
-- Reserve `Bash` for commands that require shell execution
