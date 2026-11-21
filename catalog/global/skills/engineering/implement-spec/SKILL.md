@@ -26,6 +26,8 @@ Communication to and from subagents should be sparse. Communicate primarily thro
 
 4. Use **implementer subagents** (`subagent_type: implementer`) to implement each ticket, each in its own worktree on its own branch. Pass only pointers: ticket, spec, integration branch, worktree path, exploration notes dir. The `implementer` agent definition owns the per-ticket protocol: rebase onto the integration branch, `tdd`, merge the integration tip, commit.
 
+   Commit each ticket file to the integration branch before dispatching its implementer, so the worktree starts from the tracked ticket and the implementer's `Assumptions:` merge back cleanly.
+
 5. Once an **implementer subagent** completes, merge its work to the integration branch with a **merger subagent**.
 
 6. If this changes the **frontier** of available tickets, kick off more **implementer subagents** to work on the new tickets. This allows for maximum concurrency.

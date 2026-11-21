@@ -72,6 +72,8 @@ return (
 
 For sub-shape A (existing page): keep all the existing data fetching above the switcher; only the rendered subtree changes per variant.
 
+Sub-shape A edits production components, so run the touched feature's existing tests once after wiring: the prototype skips its own tests, the suite stays green. Read the search param null-safely (`searchParams?.get(...)`) — test renderers often provide no router.
+
 For sub-shape B (new page): the throwaway route under `/prototype/<name>` mounts the same switcher.
 
 ### 4. Build the floating switcher
