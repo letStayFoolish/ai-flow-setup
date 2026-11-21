@@ -79,6 +79,8 @@ Hand the **broken** items to an `implementer` Agent. Pass pointers only: the rep
 
 Then rerun only the failed items through their own gate (step 3 or 5) on the new local `HEAD`, and update the report. Two fix rounds at most; whatever still fails after that goes to the developer.
 
+Work beyond the broken items (a new ticket, a developer request mid-verify) gets its own Fix-rounds row and runs gate 3 like any change; the report's `$HEAD` and verdict always track the latest commit. Before the developer pushes, check the MR/PR body still describes the full scope; if not, offer `/pr`.
+
 **Done when:** every broken item is MET/PASS, or two rounds ran. Tell the developer: what was fixed (commits), what still fails, every **gap** item with the question it needs answered, and that the fix commits are local, waiting for their push.
 
 ## 7b. VERIFIED → QA brief
