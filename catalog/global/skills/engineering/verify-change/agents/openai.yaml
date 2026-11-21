@@ -1,0 +1,5 @@
+interface:
+  display_name: "Verify Change"
+  short_description: "Verify a pushed MR/PR against spec, ticket, and live QA"
+policy:
+  allow_implicit_invocation: false

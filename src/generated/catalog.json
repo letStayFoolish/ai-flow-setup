@@ -644,6 +644,20 @@
     "destPath": "~/.claude/skills/to-tickets/agents/openai.yaml"
   },
   {
+    "id": "global:skills/engineering/verify-change/SKILL.md",
+    "scope": "global",
+    "type": "skill",
+    "sourcePath": "catalog/global/skills/engineering/verify-change/SKILL.md",
+    "destPath": "~/.claude/skills/verify-change/SKILL.md"
+  },
+  {
+    "id": "global:skills/engineering/verify-change/agents/openai.yaml",
+    "scope": "global",
+    "type": "skill",
+    "sourcePath": "catalog/global/skills/engineering/verify-change/agents/openai.yaml",
+    "destPath": "~/.claude/skills/verify-change/agents/openai.yaml"
+  },
+  {
     "id": "global:skills/engineering/wait-what/SKILL.md",
     "scope": "global",
     "type": "skill",
