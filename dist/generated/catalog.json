@@ -175,6 +175,20 @@
     "destPath": "~/.claude/skills/address-review/SKILL.md"
   },
   {
+    "id": "global:skills/engineering/address-review-watch/SKILL.md",
+    "scope": "global",
+    "type": "skill",
+    "sourcePath": "catalog/global/skills/engineering/address-review-watch/SKILL.md",
+    "destPath": "~/.claude/skills/address-review-watch/SKILL.md"
+  },
+  {
+    "id": "global:skills/engineering/address-review-watch/poll.sh",
+    "scope": "global",
+    "type": "skill",
+    "sourcePath": "catalog/global/skills/engineering/address-review-watch/poll.sh",
+    "destPath": "~/.claude/skills/address-review-watch/poll.sh"
+  },
+  {
     "id": "global:skills/engineering/code-review/SKILL.md",
     "scope": "global",
     "type": "skill",
