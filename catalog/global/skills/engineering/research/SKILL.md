@@ -9,6 +9,8 @@ The issue tracker should have been provided to you — run `/setup-agent-skills`
 
 Its job:
 
-1. Investigate the question against **primary sources** — official docs, source code, specs, first-party APIs — not a secondary write-up of them. Follow every claim back to the source that owns it.
+1. Investigate the question against **primary sources** — official docs, source code, specs, first-party APIs — not a secondary write-up of them. Follow every claim back to the source that owns it. Production logs and metrics are primary sources too: when a conclusion hinges on them, query them through a listed observability skill (e.g. `platform-analyze`) before marking the question `needs-info`.
 2. Write the findings to a single Markdown file, citing each claim's source.
 3. Save it per `docs/agents/issue-tracker.md`'s research convention. If that file doesn't exist, save it where the repo already keeps such notes; match the existing convention, and if there is none, put it somewhere sensible and say where.
+
+When the agent reports back, read the findings file before relaying it or asking the user for anything. Quote queries, names and facts from the file, not from the summary.
