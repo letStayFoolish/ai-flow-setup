@@ -189,6 +189,13 @@
     "destPath": "~/.claude/skills/address-review-watch/poll.sh"
   },
   {
+    "id": "global:skills/engineering/agent-queue/SKILL.md",
+    "scope": "global",
+    "type": "skill",
+    "sourcePath": "catalog/global/skills/engineering/agent-queue/SKILL.md",
+    "destPath": "~/.claude/skills/agent-queue/SKILL.md"
+  },
+  {
     "id": "global:skills/engineering/code-review/SKILL.md",
     "scope": "global",
     "type": "skill",
