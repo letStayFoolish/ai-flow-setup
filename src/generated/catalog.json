@@ -567,6 +567,20 @@
     "destPath": "~/.claude/skills/review-to-learn/SKILL.md"
   },
   {
+    "id": "global:skills/engineering/scada-review-watch/SKILL.md",
+    "scope": "global",
+    "type": "skill",
+    "sourcePath": "catalog/global/skills/engineering/scada-review-watch/SKILL.md",
+    "destPath": "~/.claude/skills/scada-review-watch/SKILL.md"
+  },
+  {
+    "id": "global:skills/engineering/scada-review-watch/poll.sh",
+    "scope": "global",
+    "type": "skill",
+    "sourcePath": "catalog/global/skills/engineering/scada-review-watch/poll.sh",
+    "destPath": "~/.claude/skills/scada-review-watch/poll.sh"
+  },
+  {
     "id": "global:skills/engineering/setup-agent-skills/MIGRATION.md",
     "scope": "global",
     "type": "skill",
