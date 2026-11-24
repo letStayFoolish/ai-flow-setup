@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 interval="${1:-1800}"
-state_file="$HOME/.claude/state/review-watch.seen"
+state_file="$HOME/.claude/state/scada-review-watch.seen"
 touch "$state_file"
 
 me=$(glab api user 2>&1) && me=$(jq -r .username <<< "$me") || {

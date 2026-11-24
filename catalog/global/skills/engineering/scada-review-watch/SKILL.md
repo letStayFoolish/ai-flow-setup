@@ -1,19 +1,19 @@
 ---
-name: review-watch
+name: scada-review-watch
 description: Watch GitLab MRs where I am reviewer or assignee and run scada-review on each new or updated one, leaving GitLab draft notes for me to check and submit.
 disable-model-invocation: true
 argument-hint: "[poll seconds, default 1800]"
 ---
 
-# MR review watch
+# scada-review-watch
 
 Long-running session in the repo root. Counterpart to `mr-watch`: there I am the author, here I am the reviewer. Read-only on code — no worktree edits, no commits, no push, no labels. I own the review decision; you only prepare draft notes.
 
 ## 1. Arm the watch
 
-Start a Monitor running `bash ~/.claude/skills/review-watch/poll.sh ` from the repo root, `timeout_ms` 1800000, description `MRs awaiting my review`. Pass my arguments through verbatim. Each event line is `MR !<iid> <source_branch> <head_sha>`. On expiry, re-arm it. An `ERROR …` line breaks the watch: `PushNotification` it and stop until I fix it. Handle events one at a time; queue the rest.
+Start a Monitor running `bash ~/.claude/skills/scada-review-watch/poll.sh ` from the repo root, `timeout_ms` 1800000, description `MRs awaiting my review`. Pass my arguments through verbatim. Each event line is `MR !<iid> <source_branch> <head_sha>`. On expiry, re-arm it. An `ERROR …` line breaks the watch: `PushNotification` it and stop until I fix it. Handle events one at a time; queue the rest.
 
-The script dedupes on `iid + head_sha` in `~/.claude/state/review-watch.seen`: a new push re-triggers, an unchanged MR does not. On an iid's first sighting it skips MRs where I already left a comment. Delete that file to reset.
+The script dedupes on `iid + head_sha` in `~/.claude/state/scada-review-watch.seen`: a new push re-triggers, an unchanged MR does not. On an iid's first sighting it skips MRs where I already left a comment. Delete that file to reset.
 
 Done when the monitor is armed; report one line and stay idle.
 
