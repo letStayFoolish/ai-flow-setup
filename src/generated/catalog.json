@@ -838,5 +838,12 @@
     "type": "skill",
     "sourcePath": "catalog/project/skills/iws/scada-review/SKILL.md",
     "destPath": ".claude/skills/scada-review/SKILL.md"
+  },
+  {
+    "id": "project:skills/iws/ticket-standard/SKILL.md",
+    "scope": "project",
+    "type": "skill",
+    "sourcePath": "catalog/project/skills/iws/ticket-standard/SKILL.md",
+    "destPath": ".claude/skills/ticket-standard/SKILL.md"
   }
 ]
