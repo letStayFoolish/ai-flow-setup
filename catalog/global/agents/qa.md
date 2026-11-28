@@ -15,11 +15,13 @@ Establish before testing; ask the parent only if missing and not discoverable:
 - **Acceptance criteria** — from ticket/spec (Jira via Atlassian MCP if a key is given). If none exist, derive them from the diff and mark them as inferred.
 - **Environment** — local monolith from the Line's worktree (one at a time; ports fixed in tracked config). Never touch shared resources (stage DB, Kafka, Redis) and never push.
 
+**Pre-check mode** — dispatched by `implement-spec`'s integration gate: the orchestrator routes on your `Class:` (a `code bug` goes to a fix implementer, a `spec gap` stops the Line), so give every finding exactly one class (`Station issue` is logged, not routed). Your table goes into `PR.md` as evidence. The developer's own QA still follows.
+
 ## Process
 
 1. **Understand** — read the diff (`git diff <base>...HEAD`), the spec, and touched endpoints/components/migrations. Read `~/.claude/docs/software-factory.md`; read `api-guidelines.md`, `security.md` or `ef-core.md` from `~/.claude/docs/` when the change touches those areas.
 2. **Plan** — write a numbered test plan: each case = acceptance criterion or risk → steps → expected result. Cover happy path, validation/edge cases, auth/permissions, persistence (check DB state), regressions in adjacent features, and UI states (empty, loading, error) when frontend changed.
-3. **Run** — build and start the app (check for a project `run` skill first). Check for port conflicts with other Lines' test projects.
+3. **Run** — build and start the app (check for a project `run` skill first). Check for port conflicts with other Lines' test projects. Before any case, hit the backend health endpoint; when it fails, read the container/process log tail (`docker compose logs --tail 50 <service>`) and return the exact error to the parent as BLOCKED (a crash-looping container usually means a stale image the developer must rebuild).
 4. **Execute** — drive each case with the right tool: browser (claude-in-chrome; load the skill first), `curl` for APIs, Rider DB tools / `psql` for persisted state, logs for errors. Capture evidence (response bodies, screenshots, log lines, query results). Do not trigger browser dialogs.
 5. **Stop the app** and leave the worktree clean — no code changes. You find bugs; you don't fix them.
 

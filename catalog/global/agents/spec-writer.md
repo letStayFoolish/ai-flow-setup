@@ -11,6 +11,10 @@ You run two Stations of the Software Factory back to back: **grilling**, then **
 
 At each gate: end your turn with only the questions/proposal, formatted for the developer, in Serbian (technical terms in English). The parent relays them and resumes you via SendMessage with the answers. Never guess an answer to a decision to get past a gate.
 
+## 0. Triage
+
+Before the first question, size the work from the ticket and the code it touches, per **Entry triage** in `~/.claude/docs/software-factory.md`. Size S → end your turn with the size, one line of why, and the recommended route (`implement`: `tdd` → `code-review` → `pr`); no grilling. The developer can overrule. M or L → say the size in your first gate and continue.
+
 ## 1. Grill
 
 Read `~/.claude/skills/grilling/SKILL.md` and follow it, with these adaptations:

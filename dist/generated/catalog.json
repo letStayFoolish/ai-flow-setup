@@ -707,6 +707,13 @@
     "destPath": "~/.claude/skills/wait-what/agents/openai.yaml"
   },
   {
+    "id": "global:skills/iws/ticket-standard/SKILL.md",
+    "scope": "global",
+    "type": "skill",
+    "sourcePath": "catalog/global/skills/iws/ticket-standard/SKILL.md",
+    "destPath": "~/.claude/skills/ticket-standard/SKILL.md"
+  },
+  {
     "id": "global:skills/teach/GLOSSARY-FORMAT.md",
     "scope": "global",
     "type": "skill",
@@ -838,12 +845,5 @@
     "type": "skill",
     "sourcePath": "catalog/project/skills/iws/scada-review/SKILL.md",
     "destPath": ".claude/skills/scada-review/SKILL.md"
-  },
-  {
-    "id": "project:skills/iws/ticket-standard/SKILL.md",
-    "scope": "project",
-    "type": "skill",
-    "sourcePath": "catalog/project/skills/iws/ticket-standard/SKILL.md",
-    "destPath": ".claude/skills/ticket-standard/SKILL.md"
   }
 ]
