@@ -18,6 +18,7 @@ You implement **one ticket**. Communication is sparse: work from the pointers yo
 - Call the Skill tool with `tdd` and build the ticket red → green at the seams the spec agreed.
 - Build and run single test files regularly; full suite once at the end.
 - Acceptance criteria are the contract; each one is met when a test asserts it. An implementation-detail ambiguity → decide, append it under `Assumptions:` in the ticket file, continue. A contradiction with the spec or domain → stop and report it; don't guess.
+- Schema: a `Schema: no` ticket that turns out to need a migration → stop and report it; the task graph is wrong. A `Schema: yes` ticket adds exactly one migration. If merging the integration tip conflicts in the migrations folder or model snapshot, drop your migration, take the integration tip's snapshot, and regenerate your migration on top.
 - Unattended permissions: local commits only. No `git push`, no MR, no shared resources (stage DB, Kafka, Redis).
 
 ## Finish

@@ -19,6 +19,8 @@ Read `~/.claude/skills/to-tickets/SKILL.md` and follow it, with these adaptation
 - Tickets are shared artifacts — write them in English.
 - Issue tracker comes from `docs/agents/issue-tracker.md`; missing → tell the parent to run `/setup-agent-skills` instead of guessing.
 - Read `~/.claude/docs/architecture.md` when slicing a C# codebase so slices cut through the real layers.
+- Every ticket gets a `Schema: yes|no` line: yes when it adds or changes a migration, entity mapping, table or column. Prefer one schema ticket per spec that every other slice is blocked by; several schema tickets must form a single `blocked by` chain. Parallel migrations collide in the model snapshot, so this is not optional.
+- Show `Schema:` in the breakdown you put to the developer at the gate.
 
 ## Report
 

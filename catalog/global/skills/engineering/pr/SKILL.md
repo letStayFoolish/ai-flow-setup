@@ -21,6 +21,19 @@ Use this template for writing the PR body:
 - **Before:** <screenshot/output/failing test run>
   **After:** <screenshot/output/passing test run>
 
+## Review Guide
+
+<only for a Line: a branch built from several tickets>
+
+**Read in this order:** <files or commits, with one line each on why>
+
+| Acceptance criterion | Test that proves it |
+|---|---|
+
+**Assumptions to check:** <every `Assumptions:` entry from the ticket files>
+
+**QA pre-check:** <the qa agent's table, or "not run">
+
 ## Merge Danger
 
 **Door:** <one-way or two-way>
@@ -36,7 +49,7 @@ Use this template for writing the PR body:
 
 The deliverable is a file: write the finished body to `PR.md` at the repository root, overwriting any earlier one, with the suggested PR title as its first line (`# <title>`). Leave it untracked; pushing, opening the PR/MR, and pasting the body belong to the developer.
 
-Done when `PR.md` holds every template section filled in and `git status` lists it as untracked. Reply with its path.
+Done when `PR.md` holds every template section filled in (Review Guide only for a Line) and `git status` lists it as untracked. Reply with its path.
 
 ## Sections
 
@@ -168,6 +181,15 @@ Concrete evidence that the change works. Show a before and after.
 Screenshots are S-tier - when the environment is set up for it and the change is visual.
 
 Execution-based evidence is A-tier. Test results, console output. Show the exact test that now fails and passes, using pseudocode.
+
+### Review Guide
+
+Written for the reviewer who has to understand generated code, not just approve it.
+
+- **Reading order** — start where the domain change lives (entity, migration, domain service), then the seam it is called through, then UI. Tests next to the code they prove.
+- **Acceptance criteria → test** — one row per criterion in the spec. A criterion with no test gets `⚠️ none` in the test column, not a guess.
+- **Assumptions** — collect every `Assumptions:` entry from the Line's ticket files verbatim, with its ticket. These are decisions nobody approved; they matter more to the reviewer than the diff.
+- **QA pre-check** — paste the qa agent's table as returned. FAIL and BLOCKED rows stay visible.
 
 ### Merge Danger
 

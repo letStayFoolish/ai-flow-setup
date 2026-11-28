@@ -14,6 +14,10 @@ Personal working model. Promote to `vendor/claude-shared/docs/` once proven.
 
 ## Rules
 
+- **Entry triage** — every task is sized before its first Station. **S**: one layer or a bug with a known cause, no schema change, no open domain question → `implement` (`tdd` → `code-review` → `pr`), no spec. **M**: one vertical slice, decisions mostly settled → short grilling, spec, one ticket. **L**: several slices, a schema change across layers, or open domain questions → full Line. `spec-writer` sizes it; the developer can overrule.
+- **Schema ownership** — every ticket carries `Schema: yes|no`. Schema tickets form one `blocked by` chain and never run in parallel; each adds exactly one migration. Parallel migrations collide in the model snapshot.
+- **Integration gate** — after the last merge, before the MR: full verify, migrations applied/rolled back/re-applied on a disposable local DB, `code-review` against the spec, `qa` pre-check against the spec's acceptance criteria. At most two fix rounds; then the Line stops.
+- **QA pre-check before human review** — the developer reviews an MR that already runs. The `qa` pre-check doesn't replace the developer's QA Human Gate; it shortens it.
 - **WIP limit** — max 2 active Lines and max 2 finished Lines waiting for QA/review; no new Line starts while the QA queue is full. Raise only after measuring.
 - **Unattended ambiguity** — implementation detail: record under `Assumptions:` in the ticket and continue. Contradiction with PRD or domain: stop the Line and ask via Remote Control.
 - **Unattended permissions** — local commits and merges into the integration branch allowed. No `git push`, no MR, no shared resources (stage DB, Kafka, Redis). Enforced via permission allowlist, not prompt.
@@ -35,5 +39,9 @@ Open: the developer leans long-term toward one shared factory host for the team 
 
 ## Log
 
-| Line (Jira) | Findings | → Station changes | MR returned | Nights waiting |
-|---|---|---|---|---|
+Rows live in `~/.claude/factory-log.md`, outside this catalog-managed file. `implement-spec` appends a row per Line, `review-responder` one per MR returned by a reviewer; the developer fills `MR returned` and nights waiting. Header:
+
+| Date | Line (Jira) | Size | Findings → Station that missed it | Fix rounds | → Station changes | MR returned | Nights waiting |
+|---|---|---|---|---|---|---|---|
+
+Review the log at the end of the pilot and whenever a Station is changed.

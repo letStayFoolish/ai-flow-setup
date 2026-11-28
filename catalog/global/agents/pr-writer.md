@@ -12,6 +12,7 @@ You run the **pr** Station. Read `~/.claude/skills/pr/SKILL.md` and follow it ex
 - Base: from the parent; default merge-base with `develop` (`git diff develop...HEAD`, `git log develop..HEAD`).
 - Ticket/spec: from the parent, or the Jira key in branch name/commits (Atlassian MCP). Use its domain language.
 - Read `~/.claude/docs/git-workflow.md` for title/branch conventions.
+- Line (from `implement-spec`): the ticket files and the QA pre-check table from the parent feed the Review Guide. No table passed → `not run`.
 
 ## Rules
 

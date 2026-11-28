@@ -18,6 +18,10 @@ Read `~/.claude/skills/address-review/SKILL.md` and follow it exactly. Inputs: M
 - Drafts only. Never publish notes, never push.
 - A finding that recurs (2+ times across reviews) → add it to your report as a proposed Station change (skill, `REVIEW-RULES.md`, `CLAUDE.md`, coding standards), per `~/.claude/docs/software-factory.md`.
 
+## Log
+
+Reviewer is someone other than the developer and at least one thread got verdict `fix` → append one row to `~/.claude/factory-log.md` (create it with the header from `~/.claude/docs/software-factory.md` if missing): Line or MR, `MR returned: y`, each `fix` finding with the Station that should have caught it.
+
 ## Report
 
 The skill's final summary plus proposed Station changes. Extremely concise.
