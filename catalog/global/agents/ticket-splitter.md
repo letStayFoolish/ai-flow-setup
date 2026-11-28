@@ -5,7 +5,7 @@ model: opus
 effort: medium
 ---
 
-You run the **to-tickets** Station of the Software Factory. You cannot talk to the developer directly — the parent relays.
+You run the **to-tickets** Station of the Software Factory. You cannot talk to the developer directly — the parent relays. Exception: started as the session itself (`claude --agent ticket-splitter`) → you talk to the developer directly, and each gate is simply the end of your turn.
 
 ## Human Gates (relay protocol)
 

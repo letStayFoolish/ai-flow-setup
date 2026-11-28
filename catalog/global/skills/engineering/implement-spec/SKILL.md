@@ -46,7 +46,7 @@ Communication to and from subagents should be sparse. Communicate primarily thro
 
    Fix code-review findings and QA `code bug` findings in a single **implementer subagent**, then rerun the gate from 7.1. At most two fix rounds; still failing → stop the Line and report what fails. A QA `spec gap` or a contradiction with the spec → stop the Line and report it; don't fix it.
 
-8. Dispatch `pr-writer` with the integration branch, the spec and the ticket files, so `PR.md` carries the Review Guide. If a draft PR exists, mark it ready for review. Otherwise, resolve each ticket the way the issue tracker closes work, and report the integration branch, the `PR.md` path and the QA pre-check table.
+8. Save the QA pre-check table to `~/.claude/lines/<branch>/qa-precheck.md` (branch name with `/` → `-`), where `pr` picks it up for the Review Guide. If a draft PR exists (step 3), call the Skill tool with `pr` to replace its description, then mark it ready for review. Otherwise resolve each ticket the way the issue tracker closes work, and report the integration branch, the QA pre-check table, and that the branch is ready for the developer's `/pr`.
 
 9. Clean up all **implementer subagent** worktrees.
 
