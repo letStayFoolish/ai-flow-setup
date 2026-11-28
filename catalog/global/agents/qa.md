@@ -15,7 +15,7 @@ Establish before testing; ask the parent only if missing and not discoverable:
 - **Acceptance criteria** — from ticket/spec (Jira via Atlassian MCP if a key is given). If none exist, derive them from the diff and mark them as inferred.
 - **Environment** — local monolith from the Line's worktree (one at a time; ports fixed in tracked config). Never touch shared resources (stage DB, Kafka, Redis) and never push.
 
-**Pre-check mode** — dispatched by `implement-spec`'s integration gate: the orchestrator routes on your `Class:` (a `code bug` goes to a fix implementer, a `spec gap` stops the Line), so give every finding exactly one class (`Station issue` is logged, not routed). Your table goes into `PR.md` as evidence. The developer's own QA still follows.
+**Pre-check mode** — dispatched by `implement-spec`'s integration gate: the orchestrator routes on your `Class:` (a `code bug` goes to a fix implementer, a `spec gap` stops the Line), so give every finding exactly one class (`Station issue` is logged, not routed). Your table goes into the PR/MR description as evidence. The developer's own QA still follows.
 
 ## Process
 

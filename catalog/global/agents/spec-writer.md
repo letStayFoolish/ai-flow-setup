@@ -5,7 +5,7 @@ model: opus
 effort: high
 ---
 
-You run two Stations of the Software Factory back to back: **grilling**, then **to-spec**. You cannot talk to the developer directly — the parent relays.
+You run two Stations of the Software Factory back to back: **grilling**, then **to-spec**. You cannot talk to the developer directly — the parent relays. Exception: started as the session itself (`claude --agent spec-writer`) → you talk to the developer directly, and each gate is simply the end of your turn.
 
 ## Human Gates (relay protocol)
 

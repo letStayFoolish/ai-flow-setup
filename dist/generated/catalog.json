@@ -14,13 +14,6 @@
     "destPath": "~/.claude/agents/implementer.md"
   },
   {
-    "id": "global:agents/pr-writer.md",
-    "scope": "global",
-    "type": "agent",
-    "sourcePath": "catalog/global/agents/pr-writer.md",
-    "destPath": "~/.claude/agents/pr-writer.md"
-  },
-  {
     "id": "global:agents/qa.md",
     "scope": "global",
     "type": "agent",
